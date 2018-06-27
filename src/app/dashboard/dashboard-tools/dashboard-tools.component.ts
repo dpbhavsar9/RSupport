@@ -44,7 +44,7 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
   }, {
     'status': 'Cancel',
     'data': []
-  }];
+    }];
 
   collpaseArray: any[] = [];
   isCollapsed = true;
@@ -62,6 +62,7 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
   Oid: string;
   allocationType = 'Team';
   searchIn = 'Multiple';
+  condensedView = false;
 
   constructor(private engineService: EngineService,
     // tslint:disable-next-line:max-line-length
@@ -389,6 +390,20 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
       }).catch(err => {
         this.alertService.danger('Server response error @refreshData');
       });
+  }
+
+  private selectRow(row) {
+    this.val = row.TicketNo;
+    this.searchIn = 'TicketNo';
+    this.condensedView = false;
+    this.updateFilter();
+  }
+
+  public clearSerchCriteria() {
+    this.condensedView = false;
+    this.val = '';
+    this.searchIn = 'Multiple';
+    this.updateFilter();
   }
 
   private openTicketMessage(index, pindex) {

@@ -16,37 +16,6 @@
           </div>
           <hr>
           <div class="row">
-            <div class="md-form col-12">
-              <div class="card">
-                <div class="card-header">Please add subject line</div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <label for="Subject">Subject</label>
-                      <input mdbInputDirective type="text" formControlName="Subject" class="form-control" mdbActive>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="md-form col-12">
-              <div class="card">
-                <div class="card-header">Description</div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <textarea mdbInputDirective mdbActive type="text" class="md-textarea
-                        form-control" rows="3" formControlName="TicketDescription"></textarea>
-                      <label for="TicketDescription">Description</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
             <div class="md-form col-6">
               <div class="card">
                 <div class="card-header">Please select company</div>
@@ -78,59 +47,104 @@
           </div>
           <div class="row">
             <div class="md-form col-md-6">
-              <div class="card">
-                <div class="card-header">Please select ticket type</div>
-                <div class="card-body">
-                  <mat-select placeholder="TicketType" name="TicketType" formControlName="TicketType" ngDefaultControl>
-                    <mat-option *ngFor="let item of ticketTypeList" [value]="item.Oid">
-                      {{item.TypeName}}
-                    </mat-option>
-                  </mat-select>
+              <div [hidden]="createTicketForm.get('ProjectID').value == null">
+                <div class="card animated zoomIn">
+                  <div class="card-header">Please select ticket type</div>
+                  <div class="card-body">
+                    <mat-select placeholder="TicketType" name="TicketType" formControlName="TicketType" ngDefaultControl>
+                      <mat-option *ngFor="let item of ticketTypeList" [value]="item.Oid">
+                        {{item.TypeName}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="md-form col-md-6">
-              <div class="card">
-                <div class="card-header">Please provide priority</div>
-                <div class="card-body">
-                  <mat-select placeholder="Priority" name="Priority" formControlName="Priority" ngDefaultControl>
-                    <mat-option *ngFor="let item of priorityList" [value]="item.value">
-                      {{item.viewValue}}
-                    </mat-option>
-                  </mat-select>
+              <div [hidden]="createTicketForm.get('TicketType').value == null">
+                <div class="card animated zoomIn">
+                  <div class="card-header">Please provide priority</div>
+                  <div class="card-body">
+                    <mat-select placeholder="Priority" name="Priority" formControlName="Priority" ngDefaultControl>
+                      <mat-option *ngFor="let item of priorityList" [value]="item.value">
+                        {{item.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="row">
-            <div class="md-form col-md-6">
-              <div class="card">
-                <div class="card-header">Please select team</div>
-                <div class="card-body">
-                  <mat-select placeholder="Team" name="TeamID" formControlName="TeamID" (selectionChange)="loadTeamMembers()" ngDefaultControl>
-                    <mat-option *ngFor="let item of teamList" [value]="item.Oid">
-                      {{item.TeamName}}
-                    </mat-option>
-                  </mat-select>
+            <div class="md-form col-12">
+              <div [hidden]="createTicketForm.get('Priority').value == null">
+                <div class="card animated zoomIn">
+                  <div class="card-header">Please add subject line</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <label for="Subject">Subject</label>
+                        <input mdbInputDirective type="text" formControlName="Subject" class="form-control" mdbActive>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="md-form col-md-6">
-              <div class="card">
-                <div class="card-header">Assign ticket to</div>
-                <div class="card-body">
-                  <mat-select placeholder="AssignUser" name="AssignTo" formControlName="AssignTo" ngDefaultControl>
-                    <mat-option *ngFor="let item of assignToUserList" [value]="item.Oid">
-                      {{item.UserName}}
-                    </mat-option>
-                  </mat-select>
+          </div>
+          <div class="row">
+            <div class="md-form col-12">
+              <div [hidden]="createTicketForm.get('Subject').value == null">
+                <div class="card animated zoomIn">
+                  <div class="card-header">Description</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <textarea mdbInputDirective mdbActive type="text" class="md-textarea
+                        form-control" rows="3" formControlName="TicketDescription"></textarea>
+                        <label for="TicketDescription">Description</label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="text-right">
+
+          <div class="row">
+            <div class="md-form col-md-6">
+              <div [hidden]="createTicketForm.get('TicketDescription').value == null">
+                <div class="card animated zoomIn">
+                  <div class="card-header">Please select team</div>
+                  <div class="card-body">
+                    <mat-select placeholder="Team" name="TeamID" formControlName="TeamID" (selectionChange)="loadTeamMembers()" ngDefaultControl>
+                      <mat-option *ngFor="let item of teamList" [value]="item.Oid">
+                        {{item.TeamName}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="md-form col-md-6">
+              <div [hidden]="createTicketForm.get('TeamID').value == null">
+                <div class="card animated zoomIn">
+                  <div class="card-header">Assign ticket to</div>
+                  <div class="card-body">
+                    <mat-select placeholder="AssignUser" name="AssignTo" formControlName="AssignTo" ngDefaultControl>
+                      <mat-option *ngFor="let item of assignToUserList" [value]="item.Oid">
+                        {{item.UserName}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-right animated zoomIn" [hidden]="createTicketForm.get('TeamID').value == null">
             <input mdbInputDirective type="file" id="file" (change)="handleFileInput($event.target.files); uploadFileToActivity()">
             <button class="btn indigo waves-light" type="submit" mdbWavesEffect [disabled]="!createTicketForm.valid">
               Save

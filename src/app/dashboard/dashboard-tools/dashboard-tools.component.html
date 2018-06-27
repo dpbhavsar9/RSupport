@@ -4,7 +4,7 @@
     <div class="row justify-content-center" style="padding-top: 35px">
       <div class="col" *ngFor="let item of data; let id= index;" style="padding-top: 10px; ">
         <div class="card hoverable" style="margin-bottom: 10px;
-          background-color: rgb(255, 255, 255); cursor: pointer;" (click)="updateTicketLogTypeSelector(id)" >
+          background-color: rgb(255, 255, 255); cursor: pointer;" (click)="updateTicketLogTypeSelector(id)">
           <div class="card-body text-center">
             <h2 style="color: rgb(3, 0, 34)">
               <strong>{{item.Count}}</strong>
@@ -24,74 +24,73 @@
     </div>
 
     <div class="row" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around; align-items: center; padding-left: 10px; padding-right: 10px; padding-bottom: 10px;">
-        <div class="md-form form-sm">
-          <input mdbInputDirective type='text' placeholder='Type to filter tickets...' (keyup)='updateFilter()' [(ngModel)]="val" data-success=''
-            data-error='' class="form-control" style="border-bottom: 1px solid rgb(131, 131, 131)"/>
-        </div>
-        <mat-form-field>
-            <mat-select placeholder="Searching In" name="SearchHere" (selectionChange)="updateFilter()"
-              [(ngModel)]="searchIn" ngDefaultControl>
-  
-              <mat-option value="Multiple">Multiple</mat-option>
-              <mat-option value="TicketNo">TicketNo</mat-option>
-              <mat-option value="Subject">Subject</mat-option>
-              <mat-option value="TicketDescription">Description</mat-option>
-              <mat-option value="TeamName">Team</mat-option>
-              <mat-option value="ProjectName">Project</mat-option>
-              <mat-option value="CompanyName">Company</mat-option>
-              <mat-option value="Priority">Priority</mat-option>
-              <mat-option value="AssignByName">Assign By</mat-option>
-              <mat-option value="AssignToName">Assign To</mat-option>
-              <mat-option value="CancelByName">Cancel By</mat-option>
-              <mat-option value="CloseByName">Close By</mat-option>
-              <mat-option value="CreatedByName">Craeted By</mat-option>
-              <mat-option value="HoldByName">Hold By</mat-option>
-              <mat-option value="WIPByName">WIP By</mat-option>
-  
-            </mat-select>
-          </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="Sorting On" name="SortHere" (selectionChange)="updateFilter()"
-            [(ngModel)]="valSort" ngDefaultControl>
+      <div class="md-form form-sm">
+        <input mdbInputDirective type='text' placeholder='Type to filter tickets...' (keyup)='updateFilter()' [(ngModel)]="val" data-success=''
+          data-error='' class="form-control" style="border-bottom: 1px solid rgb(131, 131, 131)" />
 
-            <mat-option value="">None</mat-option>
+      </div>
+      <mat-form-field>
+        <mat-select placeholder="Searching In" name="SearchHere" (selectionChange)="updateFilter()" [(ngModel)]="searchIn" ngDefaultControl>
 
-            <mat-option value="TicketNo">TicketNo</mat-option>
+          <mat-option value="Multiple">Multiple</mat-option>
+          <mat-option value="TicketNo">TicketNo</mat-option>
+          <mat-option value="Subject">Subject</mat-option>
+          <mat-option value="TicketDescription">Description</mat-option>
+          <mat-option value="TeamName">Team</mat-option>
+          <mat-option value="ProjectName">Project</mat-option>
+          <mat-option value="CompanyName">Company</mat-option>
+          <mat-option value="Priority">Priority</mat-option>
+          <mat-option value="AssignByName">Assign By</mat-option>
+          <mat-option value="AssignToName">Assign To</mat-option>
+          <mat-option value="CancelByName">Cancel By</mat-option>
+          <mat-option value="CloseByName">Close By</mat-option>
+          <mat-option value="CreatedByName">Craeted By</mat-option>
+          <mat-option value="HoldByName">Hold By</mat-option>
+          <mat-option value="WIPByName">WIP By</mat-option>
 
-            <mat-option value="Priority">Priority</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Sorting On" name="SortHere" (selectionChange)="updateFilter()" [(ngModel)]="valSort" ngDefaultControl>
 
-            <mat-option value="Subject">Subject</mat-option>
+          <mat-option value="">None</mat-option>
 
-            <mat-option value="TicketDescription">Description</mat-option>
+          <mat-option value="TicketNo">TicketNo</mat-option>
 
-            <mat-option value="CreatedDate">Creation Date</mat-option>
+          <mat-option value="Priority">Priority</mat-option>
 
-          </mat-select>
-        </mat-form-field>
+          <mat-option value="Subject">Subject</mat-option>
 
-        <mat-form-field>
-          <mat-select placeholder="Sort Type" name="SortType" (selectionChange)="updateFilter()"
-            [(ngModel)]="ascSort" ngDefaultControl>
+          <mat-option value="TicketDescription">Description</mat-option>
 
-            <mat-option value=true>Ascending</mat-option>
+          <mat-option value="CreatedDate">Creation Date</mat-option>
 
-            <mat-option value=false>Descending</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Sort Type" name="SortType" (selectionChange)="updateFilter()" [(ngModel)]="ascSort" ngDefaultControl>
 
-          <mat-select placeholder="Allocation" name="SortType" (selectionChange)="updateFilter()"
-            [(ngModel)]="allocationType" ngDefaultControl>
+          <mat-option value=true>Ascending</mat-option>
 
-            <mat-option value="Team">Team</mat-option>
+          <mat-option value=false>Descending</mat-option>
 
-            <mat-option value="OnlyMe">My Tickets Only</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
 
-            <mat-option value="ExceptMe">Team but Except Me</mat-option>
+        <mat-select placeholder="Allocation" name="SortType" (selectionChange)="updateFilter()" [(ngModel)]="allocationType" ngDefaultControl>
 
-          </mat-select>
-        </mat-form-field>
+          <mat-option value="Team">Team</mat-option>
+
+          <mat-option value="OnlyMe">My Tickets Only</mat-option>
+
+          <mat-option value="ExceptMe">Team but Except Me</mat-option>
+
+        </mat-select>
+      </mat-form-field>
+      <mat-checkbox color="primary" [(ngModel)]="condensedView">Condensed View</mat-checkbox>
+      <i class="fa fa-close" (click)="clearSerchCriteria()" style="padding-bottom: 10px;"></i>
     </div>
 
 
@@ -118,7 +117,7 @@
                     <strong>{{src.status}}</strong>
                   </div>
 
-                  <div class="card hoverable">
+                  <div class="card hoverable" *ngIf="!condensedView">
                     <div id="cardPanel">
                       <div class="row ticketBody" *ngIf="src.data.length==0">No data found</div>
                       <div class="card-body hoverable" *ngFor="let data of
@@ -349,6 +348,45 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="card hoverable" *ngIf="condensedView">
+                    <ngx-datatable #table class="material" [rows]="src.data" [columns]="columns" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+                      [rowHeight]="50" [reorderable]="'true'" [limit]="7" [scrollbarH]="true" [loadingIndicator]="loadingIndicator">
+
+                      <ngx-datatable-column name="" [width]="60" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+
+                          <a class="fa fa-link" (click)="selectRow(row)"></a>&nbsp;
+
+                        </ng-template>
+
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Ticket" prop="TicketNo"></ngx-datatable-column>
+                      <ngx-datatable-column name="Subject" prop="Subject"></ngx-datatable-column>
+                      <ngx-datatable-column name="Description" prop="TicketDescription"></ngx-datatable-column>
+                      <ngx-datatable-column name="Team" prop="TeamName"></ngx-datatable-column>
+                      <ngx-datatable-column name="Assign To" prop="AssignToName"></ngx-datatable-column>
+                      <ngx-datatable-column name="Company" prop="CompanyName"></ngx-datatable-column>
+                      <ngx-datatable-column name="Project" prop="ProjectName"></ngx-datatable-column>
+                      <ngx-datatable-column name="Priority" prop="Priority"></ngx-datatable-column>
+                      <ngx-datatable-column name="Last Update By" prop="Message.OperationByName"></ngx-datatable-column>
+                      <ngx-datatable-column name="Last Update On" prop="Message.OperationDate">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+
+                         <time>{{value | timeAgo}}</time>
+
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column [width]="150" name="Last Update" prop="Message.MessageLog"></ngx-datatable-column>
+                      <ngx-datatable-column name="Assign By" prop="AssignByName"></ngx-datatable-column>
+                      <ngx-datatable-column name="Cancel By" prop="CancelByName"></ngx-datatable-column>
+                      <ngx-datatable-column name="Close By" prop="CloseByName"></ngx-datatable-column>
+                      <ngx-datatable-column name="Created By" prop="CreatedByName"></ngx-datatable-column>
+                      <ngx-datatable-column name="Hold By" prop="HoldByName"></ngx-datatable-column>
+                      <ngx-datatable-column name="WIP By" prop="WIPByName"></ngx-datatable-column>
+                    </ngx-datatable>
+                  </div>
+
                 </div>
               </div>
             </div>

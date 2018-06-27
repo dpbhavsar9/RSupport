@@ -14,7 +14,7 @@
   </header>
   <div style="margin-left: 5px; margin-right: 5px; padding: 0px; margin: 0px; background-color: white">
     <form [formGroup]="chatForm" (ngSubmit)="sendMessage()">
-      <div class="md-form form-sm" style="padding: 0px; margin: 0px;display: flex; flex-direction: row">
+      <div class="md-form form-sm" style="padding-left: 10px; margin: 0px;display: flex; flex-direction: row">
         <input mdbInputDirective class="form-control" type='text' style="display: inline;" formControlName="chatmessage" placeholder='Type to filter in columns...' />
         <button [disabled]="!chatForm.valid" class="btn btn-sm btn-primary" type="submit" style="display: inline">
           <i class="fa fa-paper-plane-o" aria-hidden="true"></i>

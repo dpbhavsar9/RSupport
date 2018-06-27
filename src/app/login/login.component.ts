@@ -66,6 +66,7 @@ export class LoginComponent implements OnInit {
           Oid: result.Oid,
           User: this.UserName,
           UserName: result.UserName,
+          Email: result.Email,
           LoggedIn: this.loggedIn,
           UserRole: result.UserRole,
           UserCompany: result.UserCompany
