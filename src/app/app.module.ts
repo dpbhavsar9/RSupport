@@ -9,7 +9,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 // tslint:disable-next-line:max-line-length
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule, MatSelectModule, MatProgressSpinnerModule, MatCheckboxModule, MAT_CHECKBOX_CLICK_ACTION } from '@angular/material';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule, 
+         MatSelectModule, MatProgressSpinnerModule,
+         MatInputModule,
+         MatCheckboxModule, MAT_CHECKBOX_CLICK_ACTION } from '@angular/material';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -96,6 +100,7 @@ import { EditAuthGuard } from './services/edit-auth-guard.service';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
+    MatInputModule,
     NgxSpinnerModule,
     AlertModule.forRoot({ maxMessages: 5, timeout: 3000 })
   ],

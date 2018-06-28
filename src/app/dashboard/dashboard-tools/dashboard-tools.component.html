@@ -1,34 +1,32 @@
 <div class="pt-5 mx-auto animated zoomIn">
   <div class="container-fluid" *ngIf="userRole!=='Administrator'">
 
-    <div class="row justify-content-center" style="padding-top: 35px">
+    <div class="row justify-content-center" style="padding-top: 25px">
       <div class="col" *ngFor="let item of data; let id= index;" style="padding-top: 10px; ">
         <div class="card hoverable" style="margin-bottom: 10px;
-          background-color: rgb(255, 255, 255); cursor: pointer;" (click)="updateTicketLogTypeSelector(id)">
-          <div class="card-body text-center">
-            <h2 style="color: rgb(3, 0, 34)">
+           cursor: pointer; " (click)="updateTicketLogTypeSelector(id)">
+          <div class="card-body text-center" style="background-color: rgba(255,255,255,0.4); ">
+            <div class="h2-responsive" style="color: rgb(3, 0, 34)">
               <strong>{{item.Count}}</strong>
-            </h2>
+            </div>
+            <span class="card-text">{{item.TicketStatus}}</span>
           </div>
-          <div class="card-footer text-center btn" [ngClass]="{
-            'badge-default':item.TicketStatus==='Open' ,
-            'badge-primary':item.TicketStatus==='WIP',
-            'badge-warning':item.TicketStatus==='Hold',
-            'badge-success':item.TicketStatus==='Close',
-            'badge-grey':item.TicketStatus==='Cancel'
+          <div class="" [ngClass]="{
+            'badge-default2':item.TicketStatus==='Open' ,
+            'badge-primary2':item.TicketStatus==='WIP',
+            'badge-warning2':item.TicketStatus==='Hold',
+            'badge-success2':item.TicketStatus==='Close',
+            'badge-grey2':item.TicketStatus==='Cancel'
             }">
-            <strong>{{item.TicketStatus}}</strong>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="row" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around; align-items: center; padding-left: 10px; padding-right: 10px; padding-bottom: 10px;">
-      <div class="md-form form-sm">
-        <input mdbInputDirective type='text' placeholder='Type to filter tickets...' (keyup)='updateFilter()' [(ngModel)]="val" data-success=''
-          data-error='' class="form-control" style="border-bottom: 1px solid rgb(131, 131, 131)" />
-
-      </div>
+    <div class="row" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around; align-items: center; padding-left: 10px; padding-right: 10px; ">
+      <mat-form-field>
+        <input matInput placeholder="Search here" (keyup)='updateFilter()' [(ngModel)]="val">
+      </mat-form-field>
       <mat-form-field>
         <mat-select placeholder="Searching In" name="SearchHere" (selectionChange)="updateFilter()" [(ngModel)]="searchIn" ngDefaultControl>
 
@@ -107,240 +105,65 @@
 
                 <div>
 
-                  <div class="card-header" [ngClass]="{
-                    'badge-default':src.status==='Open',
-                    'badge-primary':src.status==='WIP',
-                    'badge-warning':src.status==='Hold',
-                    'badge-success':src.status==='Close',
-                    'badge-grey':src.status==='Cancel'
-                    }" style="border-radius: 5px">
+                  <div class="card-header" style="border-radius: 5px; background-color: white; text-align: center; font-weight: bold; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);">
                     <strong>{{src.status}}</strong>
                   </div>
 
-                  <div class="card hoverable" *ngIf="!condensedView">
+                  <div class="card" *ngIf="!condensedView">
                     <div id="cardPanel">
                       <div class="row ticketBody" *ngIf="src.data.length==0">No data found</div>
-                      <div class="card-body hoverable" *ngFor="let data of
-                        src.data; let p= index;" id="ticket" [ngClass]="{'high':data.Priority==='High',
-                        'low':data.Priority==='Low',
-                        'med':data.Priority==='Medium'}">
+                      <div class="card-body" *ngFor="let data of
+                        src.data; let p= index;" id="ticket">
 
                         <div class="row ticketBody" aria-expanded="true">
                           <div class="col-2">
-                            <a (click)="test.toggle()">
+                            <a (click)="demoBasic.show(); updateModal(data);" style="color: #32375f">
                               <strong>#{{data.TicketNo}}</strong>
                             </a>
                           </div>
-                          <div class="col-10">
+                          <div class="col-10" data-target="#basicExample" >
 
-                            <div class="row">
-                              <div class="col" (click)="test.toggle()" style="display: flex;flex-direction: row; justify-content: space-between; align-items: center">
-                                <strong>{{data.Subject}}</strong>
-                                <span *ngIf="data.Priority!==''" class="badge" [ngClass]="{'badge-danger':data.Priority==='High',
-                            'badge-primary':data.Priority==='Medium',
-                            'badge-default':data.Priority==='Low'}" style="width:75px;">{{data.Priority}}</span>
-                              </div>
+                            <div style="padding-left: 10px ;display: flex;flex-direction: row; justify-content: space-between; 
+                                   align-items: center; color: #32375f" (click)="demoBasic.show(); updateModal(data);">
+
+                              <strong>{{data.Subject}}</strong>
+                              <span *ngIf="data.Priority!==''" class="badge" [ngClass]="{
+                                  'red': data.Priority === 'High',
+                                  'blue': data.Priority === 'Medium',
+                                  'green': data.Priority === 'Low'
+                                }" style="width:75px;">{{data.Priority}}</span>
                             </div>
-                            <hr>
-                            <div class="row" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between">
-                              <div (click)="test.toggle()" style="display: flex; flex-direction: row; justify-content: flex-start">
-                                <div class="card-text" style="padding-left: 15px ;display: flex; flex-direction: row; flex-wrap: wrap">
-                                  <div class="text-center" style="padding: 10px;  margin-top: 5px; border-bottom: 1px solid rgba(255, 255, 255, 0); margin-right: 10px; display: flex; align-items: center; border-radius: 5px; background-color: beige">
-                                    <time>
-                                      <strong>{{ data.CreatedDate | timeAgo}}</strong>
-                                    </time>
-                                  </div>
-                                  <div class="text-center" style="padding: 10px; margin-top: 5px; border: 1px solid rgba(255, 255, 255, 0); margin-right: 10px; display: flex; align-items: center; border-radius: 5px; background-color: beige">
-                                    <strong> {{data.TeamName | titlecase}} </strong>
-                                  </div>
-                                  <div *ngIf="data.AssignToName !== ''" class="list-group-item text-center" style="padding: 10px; margin-top: 5px;border-radius: 5px; border-color: blue; color: darkblue; display: flex; align-items: center">
-                                    <strong>{{ data.AssignToName | titlecase}}</strong>
-                                  </div>
-                                </div>
+                            <div class="card-text text-center" style="padding: 10px;  margin-top: 5px; border-bottom: 1px solid rgba(255, 255, 255, 0); margin-right: 10px; display: flex; align-items: center; border-radius: 5px; "
+                              (click)="demoBasic.show(); updateModal(data);">
+                              <strong>Description:</strong>&nbsp;{{data.TicketDescription}}
+                            </div>
+
+                            <div class="card-text" style="padding-left: 10px; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; font-size: medium; justify-items: center;">
+                              <div class="badge grey mr-1" (click)="demoBasic.show(); updateModal(data);">
+                                <time>
+                                  <strong>{{ data.CreatedDate | timeAgo}}</strong>
+                                </time>
                               </div>
+                              <div class="badge-light2 mr-1" (click)="demoBasic.show(); updateModal(data);">
+                                Team: {{data.TeamName | titlecase}}
+                              </div>
+                              <div class="badge-light2 mr-1" (click)="demoBasic.show(); updateModal(data);">
+                                Assign To: {{ data.AssignToName | titlecase}}
+                              </div>
+                              <div class="badge-light2 mr-1" (click)="demoBasic.show(); updateModal(data);">
+                                Created By:{{ data.CreatedByName | titlecase}}
+                              </div>
+                              <div class="badge-light2" (click)="openTicketMessage(i,p)">
+                                {{data.Message.OperationByName | titlecase}}: {{data.Message.MessageLog}} -
+                                <time> {{data.Message.OperationDate | timeAgo }} </time>
+                              </div>
+
+                            </div>
+                            <div class="row" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between">
 
                               <div style="display: flex; flex-direction: row; justify-content: flex-end; flex-wrap: wrap; padding-right: 10px;">
 
-                                <button class="btn btn-sm btn-outline-grey
-                                      waves-light" *ngIf="src.status=== 'Open'
-                                      || src.status=== 'WIP' || src.status===
-                                      'Hold' || src.status===
-                                      'Close' || src.status===
-                                      'Cancel'" (click)="openTicketMessage(i,p)">
-                                  <i class="fa fa-comment"></i>
-                                </button>
 
-                                <button class="btn btn-sm btn-outline-info" *ngIf="src.status=== 'Open' && 
-                                      dashboardState==='mytickets'" (click)="processTicket(data.Oid,2)">
-                                  <strong>Take Ticket
-                                  </strong>
-                                </button>
-
-                                <button class="btn btn-sm btn-outline-info" *ngIf="((src.status=== 'Hold' || src.status==='Close') && userRole==='Manager') || (src.status==='Hold' &&  userRole==='User' && dashboardState==='mytickets') || ((src.status=== 'Hold' || src.status==='Close') && userRole==='User' && dashboardState==='mytickets' && Oid===data.TeamLeader.toString())"
-                                  (click)="processTicket(data.Oid,1)">
-                                  <strong>Re-open</strong>
-                                </button>
-
-                                <button class="btn btn-sm
-                                      btn-outline-warning" *ngIf="(src.status==='Open' || src.status==='WIP') && (userRole==='Manager'
-                                      || (dashboardState==='mytickets' && userRole==='User' && Oid===data.TeamLeader.toString()))"
-                                  (click)="processTicket(data.Oid,3)">
-                                  <strong>Hold</strong>
-                                </button>
-
-                                <button class="btn btn-sm
-                                      btn-outline-success" *ngIf="(userRole==='Manager' || (src.status==='WIP' && (dashboardState==='mytickets' && userRole==='User'))) && src.status!=='Close' && src.status!=='Cancel'"
-                                  (click)="processTicket(data.Oid,4)">
-                                  <strong>Close</strong>
-                                </button>
-
-                                <button class="btn btn-sm
-                                      btn-outline-danger" *ngIf="userRole==='Manager' || (dashboardState==='mytickets' && userRole==='User' && Oid===data.TeamLeader.toString()) && (src.TicketStatus==='Open' || src.TicketStatus==='WIP' || src.TicketStatus==='Hold')"
-                                  (click)="processTicket(data.Oid,5)">
-                                  <strong>Cancel</strong>
-                                </button>
-
-                              </div>
-                            </div>
-                            <div class="row">
-
-                            </div>
-
-                          </div>
-                        </div>
-                        <div class="row" style="margin-top: 10px" (click)="test.toggle()">
-                          <div class="col-2"></div>
-                          <div class="col-10">
-                            <div class="row card-text" class="card-text text-center" style="padding: 10px; border-bottom: 1px solid rgb(244, 244, 244); align-items: center; border-radius: 5px; display: flex; flex-direction: row; justify-content: space-between; background-color: rgb(212, 253, 244)">
-                              <div class="col text-left" style="padding: 0px">
-                                <strong>{{data.Message.OperationByName | titlecase}}: {{data.Message.MessageLog}} </strong>
-                              </div>
-                              <div class="col text-right" style="padding: 0px">
-                                <time> {{data.Message.OperationDate | timeAgo }} </time>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="content" [mdbCollapse]="isCollapsed" #test="bs-collapse" mdbWavesEffect>
-                              <hr>
-                              <div class="list-group">
-                                <a class="list-group-item waves-light" mdbWavesEffect>
-                                  <strong>Detail</strong>
-                                </a>
-                                <a class="list-group-item
-                                      list-group-item-action waves-light" mdbWavesEffect>
-                                  <div>
-                                    {{data.TicketDescription}}
-                                  </div>
-                                </a>
-                              </div>
-                              <br>
-                              <div class="row" style="align-items:
-                                    flex-start">
-
-                                <div class="col-md-3 col-sm-6 col-xs-12" *ngIf="data.CreatedDate!==null">
-                                  <div class="list-group">
-                                    <a class="list-group-item waves-light" mdbWavesEffect>
-                                      <strong>Create</strong>
-                                    </a>
-                                    <a class="list-group-item
-                                          list-group-item-action waves-light" mdbWavesEffect>
-                                      <div>
-                                        <strong>On: </strong>
-                                        {{data.CreatedDate | date }} at {{data.CreatedDate | date: 'shortTime'}}
-                                        <strong>
-                                          <br>By: </strong>{{data.CreatedByName | titlecase}}
-                                      </div>
-                                    </a>
-                                  </div>
-                                </div>
-
-                                <div class="col-md-3 col-sm-6 col-xs-12" *ngIf="data.AssignDate!==null">
-                                  <div class="list-group">
-                                    <a class="list-group-item waves-light" mdbWavesEffect>
-                                      <strong>Assign</strong>
-                                    </a>
-                                    <a class="list-group-item
-                                          list-group-item-action waves-light" mdbWavesEffect>
-                                      <div>
-                                        <strong>On: </strong>
-                                        {{data.AssignDate | date }} at {{data.AssignDate | date: 'shortTime'}}
-                                        <strong>
-                                          <br> By: </strong>{{data.AssignByName | titlecase}}
-                                      </div>
-                                    </a>
-                                  </div>
-                                </div>
-
-                                <div class="col-md-3 col-sm-6 col-xs-12" *ngIf="data.WIPDate!==null">
-                                  <div class="list-group">
-                                    <a class="list-group-item waves-light" mdbWavesEffect>
-                                      <strong>WIP</strong>
-                                    </a>
-                                    <a class="list-group-item
-                                          list-group-item-action waves-light" mdbWavesEffect>
-                                      <div>
-                                        <strong>On: </strong>
-                                        {{data.WIPDate | date}} at {{data.WIPDate | date: 'shortTime'}}
-                                        <strong>
-                                          <br> By: </strong>{{data.WIPByName | titlecase}}
-                                      </div>
-                                    </a>
-                                  </div>
-                                </div>
-
-                                <div class="col-md-3 col-sm-6 col-xs-12" *ngIf="data.HoldDate!==null">
-                                  <div class="list-group">
-                                    <a class="list-group-item waves-light" mdbWavesEffect>
-                                      <strong>Hold</strong>
-                                    </a>
-                                    <a class="list-group-item
-                                          list-group-item-action waves-light" mdbWavesEffect>
-                                      <div>
-                                        <strong>On: </strong>
-                                        {{data.HoldDate | date}} at {{data.HoldDate | date: 'shortTime'}}
-                                        <strong>
-                                          <br> By: </strong>{{data.HoldByName | titlecase}}
-                                      </div>
-                                    </a>
-                                  </div>
-                                </div>
-
-                                <div class="col-md-3 col-sm-6 col-xs-12" *ngIf="data.CloseDate!==null">
-                                  <div class="list-group">
-                                    <a class="list-group-item waves-light" mdbWavesEffect>
-                                      <strong>Close</strong>
-                                    </a>
-                                    <a class="list-group-item
-                                          list-group-item-action waves-light" mdbWavesEffect>
-                                      <div>
-                                        <strong>On: </strong>
-                                        {{data.CloseDate | date}} at {{data.CloseDate | date: 'shortTime'}}
-                                        <strong>
-                                          <br> By: </strong>{{data.CloseByName | titlecase}}
-                                      </div>
-                                    </a>
-                                  </div>
-                                </div>
-
-                                <div class="col-md-3 col-sm-6 col-xs-12" *ngIf="data.CancelDate!==null">
-                                  <div class="list-group">
-                                    <a class="list-group-item waves-light" mdbWavesEffect>
-                                      <strong>Cancel</strong>
-                                    </a>
-                                    <a class="list-group-item
-                                          list-group-item-action waves-light" mdbWavesEffect>
-                                      <div>
-                                        <strong>On: </strong>
-                                        {{data.CancelDate | date}} at {{data.CancelDate | date: 'shortTime'}}
-                                        <strong>
-                                          <br> By: </strong>{{data.CancelByName | titlecase}}
-                                      </div>
-                                    </a>
-                                  </div>
-                                </div>
                               </div>
                             </div>
                           </div>
@@ -353,37 +176,103 @@
                     <ngx-datatable #table class="material" [rows]="src.data" [columns]="columns" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
                       [rowHeight]="50" [reorderable]="'true'" [limit]="7" [scrollbarH]="true" [loadingIndicator]="loadingIndicator">
 
-                      <ngx-datatable-column name="" [width]="60" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+                      <ngx-datatable-column name="" [width]="80" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
 
-                          <a class="fa fa-link" (click)="selectRow(row)"></a>&nbsp;
+                          <a class="fa fa-reply" (click)="selectRow(row)"></a>&nbsp;
+                          <a class="fa fa-link" data-target="#basicExample" (click)="demoBasic.show(); updateModal(row);"></a>&nbsp;
 
                         </ng-template>
 
                       </ngx-datatable-column>
                       <ngx-datatable-column name="Ticket" prop="TicketNo"></ngx-datatable-column>
-                      <ngx-datatable-column name="Subject" prop="Subject"></ngx-datatable-column>
-                      <ngx-datatable-column name="Description" prop="TicketDescription"></ngx-datatable-column>
-                      <ngx-datatable-column name="Team" prop="TeamName"></ngx-datatable-column>
-                      <ngx-datatable-column name="Assign To" prop="AssignToName"></ngx-datatable-column>
-                      <ngx-datatable-column name="Company" prop="CompanyName"></ngx-datatable-column>
-                      <ngx-datatable-column name="Project" prop="ProjectName"></ngx-datatable-column>
+                      <ngx-datatable-column name="Subject" prop="Subject" [width]="300">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          <strong style="color: #32375f">{{value }}</strong>
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Description" prop="TicketDescription" [width]="400"></ngx-datatable-column>
+                      <ngx-datatable-column name="Team" prop="TeamName" [width]="180">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          {{value | titlecase}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Created By" prop="CreatedByName">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          <div class="text-center" style="border: 1px solid rgba(255, 255, 255, 0); border-radius: 5px; background-color: beige">
+                            {{value | titlecase}}
+                          </div>
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Created On" prop="CreatedDate">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          <time>{{value | timeAgo}}</time>
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Assign To" prop="AssignToName">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          <div class="badge blue text-center" style="border: 1px solid rgba(255, 255, 255, 0); border-radius: 5px; background-color: beige">
+                            {{value | titlecase}}
+                          </div>
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Assign On" prop="AssignDate">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          <time>{{value | timeAgo}}</time>
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Company" prop="CompanyName">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          {{value | titlecase}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Project" prop="ProjectName">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          {{value | titlecase}}
+                        </ng-template>
+                      </ngx-datatable-column>
                       <ngx-datatable-column name="Priority" prop="Priority"></ngx-datatable-column>
-                      <ngx-datatable-column name="Last Update By" prop="Message.OperationByName"></ngx-datatable-column>
+                      <ngx-datatable-column name="Last Update By" prop="Message.OperationByName">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          {{value | titlecase}}
+                        </ng-template>
+                      </ngx-datatable-column>
                       <ngx-datatable-column name="Last Update On" prop="Message.OperationDate">
                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-
-                         <time>{{value | timeAgo}}</time>
-
+                          <time>{{value | timeAgo}}</time>
                         </ng-template>
                       </ngx-datatable-column>
                       <ngx-datatable-column [width]="150" name="Last Update" prop="Message.MessageLog"></ngx-datatable-column>
-                      <ngx-datatable-column name="Assign By" prop="AssignByName"></ngx-datatable-column>
-                      <ngx-datatable-column name="Cancel By" prop="CancelByName"></ngx-datatable-column>
-                      <ngx-datatable-column name="Close By" prop="CloseByName"></ngx-datatable-column>
-                      <ngx-datatable-column name="Created By" prop="CreatedByName"></ngx-datatable-column>
-                      <ngx-datatable-column name="Hold By" prop="HoldByName"></ngx-datatable-column>
-                      <ngx-datatable-column name="WIP By" prop="WIPByName"></ngx-datatable-column>
+                      <ngx-datatable-column name="Assign By" prop="AssignByName">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          {{value | titlecase}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Cancel By" prop="CancelByName">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          {{value | titlecase}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Close By" prop="CloseByName">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          {{value | titlecase}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Created By" prop="CreatedByName">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          {{value | titlecase}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Hold By" prop="HoldByName">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          {{value | titlecase}}
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="WIP By" prop="WIPByName">
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                          {{value | titlecase}}
+                        </ng-template>
+                      </ngx-datatable-column>
                     </ngx-datatable>
                   </div>
 
@@ -489,6 +378,210 @@
                 </a>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div mdbModal #demoBasic="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+
+  <div class="modal-dialog modal-fluid" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabel" style="color: #32375f;">
+          <strong>#{{modalData.TicketNo}}:&nbsp;{{modalData.Subject}}</strong>
+        </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="demoBasic.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+
+            <div class="mt-1 mb-1" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; ">
+
+              <div class="list-group">
+                <a class="list-group-item list-group-item-action waves-light" [ngClass]="{
+                  'badge-default-2':modalData.TicketStatus=='1',
+                  'badge-primary-2':modalData.TicketStatus=='2',
+                  'badge-warning-2':modalData.TicketStatus=='3',
+                  'badge-success-2':modalData.TicketStatus=='4',
+                  'badge-grey-2':modalData.TicketStatus=='5'
+                  }" mdbWavesEffect>
+                  <div style="color: white;">Details</div>
+                </a>
+                <a class="list-group-item list-group-item-action waves-light" mdbWavesEffect>
+                  <div> Created: &nbsp;{{ modalData.CreatedDate | timeAgo}}</div>
+                </a>
+                <a class="list-group-item list-group-item-action waves-light" mdbWavesEffect>
+                  <div> Team: &nbsp;
+                    <strong> {{modalData.TeamName | titlecase}} </strong>
+                  </div>
+                </a>
+
+                <a class="list-group-item list-group-item-action waves-light" mdbWavesEffect>
+                  <div> Assign To: &nbsp;
+                    <strong>{{ modalData.AssignToName | titlecase}}</strong>
+                  </div>
+                </a>
+
+                <a class="list-group-item list-group-item-action waves-light" mdbWavesEffect>
+                  <div> Created By: &nbsp;
+                    <strong>{{ modalData.CreatedByName | titlecase}}</strong>
+                  </div>
+                </a>
+              </div>
+
+              <div class="list-group" *ngIf="modalData.CreatedByName !== ''">
+                <a class="list-group-item waves-light" mdbWavesEffect [ngClass]="{
+                  'badge-default-2':modalData.TicketStatus=='1',
+                  'badge-primary-2':modalData.TicketStatus=='2',
+                  'badge-warning-2':modalData.TicketStatus=='3',
+                  'badge-success-2':modalData.TicketStatus=='4',
+                  'badge-grey-2':modalData.TicketStatus=='5'
+                  }">
+                  <strong style="color: white;">Create</strong>
+                </a>
+                <a class="list-group-item
+                                        list-group-item-action waves-light" mdbWavesEffect>
+                  <div>
+                    <strong>On: </strong>
+                    {{modalData.CreatedDate | date }} at {{modalData.CreatedDate | date: 'shortTime'}}
+                    <strong>
+                      <br>By: </strong>{{modalData.CreatedByName | titlecase}}
+                  </div>
+                </a>
+              </div>
+
+              <div class="list-group" *ngIf="modalData.AssignByName !== ''">
+                <a class="list-group-item waves-light" [ngClass]="{
+                  'badge-default-2':modalData.TicketStatus=='1',
+                  'badge-primary-2':modalData.TicketStatus=='2',
+                  'badge-warning-2':modalData.TicketStatus=='3',
+                  'badge-success-2':modalData.TicketStatus=='4',
+                  'badge-grey-2':modalData.TicketStatus=='5'
+                  }" mdbWavesEffect>
+                  <strong style="color: white;">Assign</strong>
+                </a>
+                <a class="list-group-item
+                                          list-group-item-action waves-light" mdbWavesEffect>
+                  <div>
+                    <strong>On: </strong>
+                    {{modalData.AssignDate | date }} at {{modalData.AssignDate | date: 'shortTime'}}
+                    <strong>
+                      <br> By: </strong>{{modalData.AssignByName | titlecase}}
+                  </div>
+                </a>
+              </div>
+
+              <div class="list-group" *ngIf="modalData.WIPByName !== ''">
+                <a class="list-group-item waves-light" [ngClass]="{
+                  'badge-default-2':modalData.TicketStatus=='1',
+                  'badge-primary-2':modalData.TicketStatus=='2',
+                  'badge-warning-2':modalData.TicketStatus=='3',
+                  'badge-success-2':modalData.TicketStatus=='4',
+                  'badge-grey-2':modalData.TicketStatus=='5'
+                  }" mdbWavesEffect>
+                  <strong style="color: white;">WIP</strong>
+                </a>
+                <a class="list-group-item
+                                            list-group-item-action waves-light" mdbWavesEffect>
+                  <div>
+                    <strong>On: </strong>
+                    {{modalData.WIPDate | date}} at {{modalData.WIPDate | date: 'shortTime'}}
+                    <strong>
+                      <br> By: </strong>{{modalData.WIPByName | titlecase}}
+                  </div>
+                </a>
+              </div>
+
+              <div class="list-group" *ngIf="modalData.HoldByName !== ''">
+                <a class="list-group-item waves-light" [ngClass]="{
+                  'badge-default-2':modalData.TicketStatus=='1',
+                  'badge-primary-2':modalData.TicketStatus=='2',
+                  'badge-warning-2':modalData.TicketStatus=='3',
+                  'badge-success-2':modalData.TicketStatus=='4',
+                  'badge-grey-2':modalData.TicketStatus=='5'
+                  }" mdbWavesEffect>
+                  <strong style="color: white;">Hold</strong>
+                </a>
+                <a class="list-group-item
+                                              list-group-item-action waves-light" mdbWavesEffect>
+                  <div>
+                    <strong>On: </strong>
+                    {{modalData.HoldDate | date}} at {{modalData.HoldDate | date: 'shortTime'}}
+                    <strong>
+                      <br> By: </strong>{{modalData.HoldByName | titlecase}}
+                  </div>
+                </a>
+              </div>
+
+              <div class="list-group" *ngIf="modalData.CloseByName !== ''">
+                <a class="list-group-item waves-light" [ngClass]="{
+                  'badge-default-2':modalData.TicketStatus=='1',
+                  'badge-primary-2':modalData.TicketStatus=='2',
+                  'badge-warning-2':modalData.TicketStatus=='3',
+                  'badge-success-2':modalData.TicketStatus=='4',
+                  'badge-grey-2':modalData.TicketStatus=='5'
+                  }" mdbWavesEffect>
+                  <strong style="color: white;">Close</strong>
+                </a>
+                <a class="list-group-item
+                                                list-group-item-action waves-light" mdbWavesEffect>
+                  <div>
+                    <strong>On: </strong>
+                    {{modalData.CloseDate | date}} at {{modalData.CloseDate | date: 'shortTime'}}
+                    <strong>
+                      <br> By: </strong>{{modalData.CloseByName | titlecase}}
+                  </div>
+                </a>
+              </div>
+
+              <div class="list-group" *ngIf="modalData.CancelByName !== ''">
+                <a class="list-group-item waves-light" [ngClass]="{
+                  'badge-default-2':modalData.TicketStatus=='1',
+                  'badge-primary-2':modalData.TicketStatus=='2',
+                  'badge-warning-2':modalData.TicketStatus=='3',
+                  'badge-success-2':modalData.TicketStatus=='4',
+                  'badge-grey-2':modalData.TicketStatus=='5'
+                  }" mdbWavesEffect>
+                  <strong style="color: white;">Cancel</strong>
+                </a>
+                <a class="list-group-item
+                                                  list-group-item-action waves-light" mdbWavesEffect>
+                  <div>
+                    <strong>On: </strong>
+                    {{modalData.CancelDate | date}} at {{modalData.CancelDate | date: 'shortTime'}}
+                    <strong>
+                      <br> By: </strong>{{modalData.CancelByName | titlecase}}
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div class="list-group">
+              <a class="list-group-item waves-light" [ngClass]="{
+                'badge-default-2':modalData.TicketStatus=='1',
+                'badge-primary-2':modalData.TicketStatus=='2',
+                'badge-warning-2':modalData.TicketStatus=='3',
+                'badge-success-2':modalData.TicketStatus=='4',
+                'badge-grey-2':modalData.TicketStatus=='5'
+                }" mdbWavesEffect>
+                <strong style="color: white;">Detail</strong>
+              </a>
+              <a class="list-group-item
+                                  list-group-item-action waves-light" mdbWavesEffect>
+                <div>
+                  {{modalData.TicketDescription}}
+                </div>
+              </a>
+            </div>
+
           </div>
         </div>
       </div>

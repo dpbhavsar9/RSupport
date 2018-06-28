@@ -69,9 +69,11 @@ export class LoginComponent implements OnInit {
           Email: result.Email,
           LoggedIn: this.loggedIn,
           UserRole: result.UserRole,
-          UserCompany: result.UserCompany
+          UserCompany: result.UserCompany,
+          Password: result.Password
         };
         const stringData = JSON.stringify(data);
+        
         const Encrypt = crypto.AES.encrypt(stringData, this.cryptkey);
         this._cookieService.put('response', Encrypt.toString());
         this.router.navigate(['dashboard']);

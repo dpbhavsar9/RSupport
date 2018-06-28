@@ -7,6 +7,11 @@
   margin: 0 auto;
 }
 
+.navbar {
+  color: black;
+  font-size: .81rem;
+}
+
 .fa,
 i.fa {
   width: 25px;
@@ -55,22 +60,30 @@ div>a:hover {
   min-height: 100px;
   z-index: 1;
 }
+#navbar-dynamic-download, #masterButton {
+  background-color: #33b5e5!important;
+  border-radius: 5px;
+  color: #fff!important;
+  box-shadow: 0 2px 10px 0 rgba(0,0,0,.12), 0 2px 10px 0 rgba(0,0,0,.12);
+  font-size: .81rem;
+}
 
 .badge-dashboard {
   // background: linear-gradient(to top, rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255));
-  background-color: white;
+  
   font-weight: bold;
-  box-shadow: 0px 0px 10px 0px rgb(255, 255, 255);
-  i {
-    color: darkblue;
-  }
-  span {
-    color: darkblue;
-  }
+  // i {
+  //   color: rgb(255, 255, 255);
+  // }
+  // span {
+  //   color: rgb(255, 255, 255);
+  // }
 }
 
 .badge-default {
-  background: linear-gradient(to right top, rgb(2, 161, 182), #26C6DA, rgb(71, 217, 236));
+  // border-bottom: 5px solid linear-gradient(to right top, rgb(2, 161, 182), #26C6DA, rgb(71, 217, 236));
+  background-color: #666;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16);
 }
 
 .badge-primary {

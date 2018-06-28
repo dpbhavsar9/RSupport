@@ -63,6 +63,7 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
   allocationType = 'Team';
   searchIn = 'Multiple';
   condensedView = false;
+  modalData: any = {};
 
   constructor(private engineService: EngineService,
     // tslint:disable-next-line:max-line-length
@@ -495,6 +496,11 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
     });
 
     return dialogRef.afterClosed();
+  }
+
+  public updateModal(data) {
+    console.log(data);
+    this.modalData = data;
   }
 
   ngOnDestroy() {

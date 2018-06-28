@@ -1,32 +1,30 @@
 <header>
-  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-expand-md navbar-dark
-    indigo scrolling-navbar fixed-top" [containerInside]="false">
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-expand-md navbar-light
+    white scrolling-navbar fixed-top" [containerInside]="false">
 
     <logo>
 
-
-      <a class="logo navbar-brand text-white" style="text-decoration: underline  tomato; text-shadow: 0px 2px 10px black">
-        <strong>R-Support </strong>
+      <img src="../../assets/images/rsupport.png" style="max-width: 25px; max-height: 30px">
+      <a class="logo navbar-brand" style="text-decoration: underline  tomato; text-shadow: 0px 2px 10px tomato; color: red;">
+        &nbsp;<strong>R-Support </strong>
       </a>
 
       <ul class="navbar-nav mr-auto" style="display: inline;">
-        <li *ngIf="userRole!=='Administrator'" class="nav-item dropdown btn-group" (click)="updateDashboardState('mytickets')" [routerLink]="['/dashboard']">
-          <a id="navbar-dynamic-download" class="nav-link border border-light
-            rounded waves-effect waves-light" [ngClass]="{
+        <li *ngIf="userRole!=='Administrator'" class="nav-item btn-group" (click)="updateDashboardState('mytickets')" [routerLink]="['/dashboard']" style="margin-right: 2px;">
+          <a id="navbar-dynamic-download" class="nav-link waves-effect waves-light" [ngClass]="{
               'badge-dashboard' : cloneDashboardState==='mytickets'
               }">
             <i class="fa fa-envelope" aria-hidden="true"></i>
             <span class="clearfix d-none d-sm-inline-block">For Me</span>
-          </a>&nbsp;
+          </a>
         </li>
 
         <li *ngIf="userRole!=='Administrator'" class="nav-item dropdown btn-group" (click)="updateDashboardState('byme')" [routerLink]="['/dashboard']">
-          <span *ngIf="openTicketCounter!=0" class="badge badge-dark openTicketCounter">
+          <span *ngIf="openTicketCounter!=0" class="badge badge-light openTicketCounter">
             <!-- data-toggle="modal" data-target="#basicExample" (click)="demoBasic.show()" -->
             <strong>{{openTicketCounter}}</strong>
           </span>
-          <a id="navbar-dynamic-download" class="nav-link border border-light
-            rounded waves-effect waves-light" [ngClass]="{
+          <a id="navbar-dynamic-download" class="nav-link waves-effect waves-light" [ngClass]="{
               'badge-dashboard' : cloneDashboardState==='byme'
               }">
             <i class="fa fa-send" aria-hidden="true"></i>
@@ -35,10 +33,16 @@
         </li>
 
         <li *ngIf="userRole==='Administrator'" class="nav-item dropdown btn-group" [routerLink]="['/dashboard']">
-          <a id="navbar-dynamic-download" class="nav-link border border-light
-            rounded waves-effect waves-light badge-dashboard">
+          <a id="navbar-dynamic-download" class="nav-link waves-effect waves-light badge-dashboard">
             <i class="fa fa-cog" aria-hidden="true"></i>
             <span class="clearfix d-none d-sm-inline-block">Dashboard</span>
+          </a>
+        </li>
+
+        <li *ngIf="userRole!=='Administrator'" class="nav-item dropdown btn-group" [routerLink]="['create-ticket']" style="padding-left: 15px">
+          <a id="navbar-dynamic-download" class="nav-link waves-effect waves-light">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            <span class="clearfix d-none d-sm-inline-block">Create Ticket</span>
           </a>
         </li>
       </ul>
@@ -48,11 +52,11 @@
     <links style="padding-left: 25px;">
 
 
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto" style="padding-top: 5px;">
 
         <li class="nav-item dropdown btn-group" dropdown>
           <a dropdownToggle mdbWavesEffect type="button" class="nav-link
-            dropdown-toggle waves-light" style="text-shadow: 0px 2px 20px white" mdbWavesEffect>
+            dropdown-toggle waves-dark" id="masterButton" mdbWavesEffect>
             Master
             <span class="caret"></span>
           </a>
@@ -74,30 +78,18 @@
           </div>
         </li>
 
-        <li class="nav-item dropdown btn-group" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link
-            dropdown-toggle waves-light" style="text-shadow: 0px 2px 20px white" mdbWavesEffect>
-            Ticket
-            <span class="caret"></span>
-          </a>
-          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary
-            hoverable" role="menu">
-            <a [routerLink]="['create-ticket']" class="dropdown-item
-              waves-light" routerLinkActive="animated" mdbWavesEffect href="#">
-              <i class="fa fa-plus" aria-hidden="true"></i>Create Ticket</a>
-          </div>
-        </li>
-
       </ul>
 
-      <ul class="navbar-nav" style="text-shadow: 0px 2px 10px tomato">
+      <ul class="navbar-nav">
         <li>
           <a class="text-white mr-auto" (click)="logout()" data-toggle="tooltip" data-html="true" title="Logout">
-
-            Logout {{userName | titlecase}}
-
-          </a>
+            Logout </a>
         </li>
+
+        <div data-target="#basicExample" (click)="basicModal.show()">
+          <span data-toggle="modal" style="cursor: pointer;margin-left: 15px !important;padding: 6px;" class="badge badge-pill badge-light">
+            <i class="fa fa-user" aria-hidden="true"></i>{{userName | titlecase}}</span>
+        </div>
       </ul>
 
     </links>
@@ -110,7 +102,77 @@
 
 <!--Main Layout-->
 <main>
-  
- <router-outlet (activate)="changeOfRoutes()"></router-outlet>
+
+  <div mdbModal #basicModal="mdb-modal" class="modal fade card-header" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+    aria-hidden="true" [config]="{backdrop: true}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <!--Header-->
+        <div style="border-radius: 5%;margin-top: -50px !important;" class="modal-header light-blue darken-3 white-text">
+          <h4 class="title" style="font-weight: bold;">
+            <i style="margin-right: 5px;" class="fa fa-user"></i>User Details</h4>
+          <button type="button" class="close waves-effect waves-light" data-dismiss="modal" (click)="basicModal.hide()" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <!--Header Over-->
+
+
+        <!--Body-->
+        <div class="modal-body mb-0">
+
+          <form [formGroup]="passForm" (ngSubmit)="submitPass()">
+          <div class="mat-form">
+            <i class="fa fa-lock"></i>
+            <mat-form-field style="width: 80%;">
+              <input type="{{typeVar}}" matInput 
+                     placeholder="Current Password" 
+                     formControlName="currPass" 
+                     name="currPass"
+                     (focus)="focusChanged()"
+                     class="form-control">
+            </mat-form-field>
+
+          </div>
+
+          <div>
+            <i class="fa fa-lock prefix"></i>
+            <mat-form-field style="width: 80%;">
+              <input type="{{typeVar}}" matInput 
+                     placeholder="Change Password" 
+                     formControlName="newPass" 
+                     name="newPass"      
+                     class="form-control">
+            </mat-form-field>
+
+          </div>
+
+          <div style="text-align: center; cursor: pointer;" (click)="updateTypeVar()">
+            <i class="fa fa-eye"></i>Show Password
+          </div>
+
+
+          <div class="text-center mt-1-half">
+            <button type="submit" 
+            [disabled]="!passForm.valid"class="btn btn-info mb-2 waves-effect waves-light">Update
+              <i class="fa fa-send ml-1"></i>
+            </button>
+          </div>
+        </form>
+
+        <div *ngIf="checkPassword" style="color: red; font-weight: bold; text-align: center">Password Not Matched !</div>
+        </div>
+
+
+        <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+            <button type="button" class="btn btn-primary relative waves-light" mdbWavesEffect>Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <router-outlet (activate)="changeOfRoutes()"></router-outlet>
 
 </main>
