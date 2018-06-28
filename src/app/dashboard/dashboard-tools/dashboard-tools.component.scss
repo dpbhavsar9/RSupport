@@ -88,19 +88,15 @@
   margin: 2px;
   font-size: 75%;
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.5;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
   border-radius: 0.25rem;
 }
 
-.badge-light2 :hove {
-  transform: scale(1.2);
-}
-
-.dropdown-item:active,
-.dropdown-item:hover {
+.actionsButton:active,
+.actionsButton:hover {
   -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
   box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
   background-color: #33b5e5;

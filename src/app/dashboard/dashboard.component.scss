@@ -69,15 +69,15 @@ div>a:hover {
 }
 
 .badge-dashboard {
-  // background: linear-gradient(to top, rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255));
+   background: linear-gradient(to top, rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255));
   
   font-weight: bold;
-  // i {
-  //   color: rgb(255, 255, 255);
-  // }
-  // span {
-  //   color: rgb(255, 255, 255);
-  // }
+   i {
+     color: #33b5e5;
+   }
+   span {
+     color: #33b5e5;
+   }
 }
 
 .badge-default {

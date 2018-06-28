@@ -9,11 +9,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 // tslint:disable-next-line:max-line-length
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule, 
-         MatSelectModule, MatProgressSpinnerModule,
-         MatInputModule,
-         MatCheckboxModule, MAT_CHECKBOX_CLICK_ACTION } from '@angular/material';
-
+import {
+  MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule,
+  MatSelectModule, MatProgressSpinnerModule,
+  MatInputModule,
+  MatCheckboxModule, MAT_CHECKBOX_CLICK_ACTION
+} from '@angular/material';
+import { MatMenuModule } from '@angular/material/menu';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -101,6 +103,7 @@ import { EditAuthGuard } from './services/edit-auth-guard.service';
     MatProgressSpinnerModule,
     MatCheckboxModule,
     MatInputModule,
+    MatMenuModule,
     NgxSpinnerModule,
     AlertModule.forRoot({ maxMessages: 5, timeout: 3000 })
   ],
@@ -129,7 +132,7 @@ import { EditAuthGuard } from './services/edit-auth-guard.service';
       useClass: AuthInterceptor,
       multi: true
     },
-    {provide: MAT_CHECKBOX_CLICK_ACTION, useValue: 'check'}
+    { provide: MAT_CHECKBOX_CLICK_ACTION, useValue: 'check' }
   ],
   bootstrap: [AppComponent]
 })

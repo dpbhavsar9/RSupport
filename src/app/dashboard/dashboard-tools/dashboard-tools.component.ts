@@ -44,7 +44,7 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
   }, {
     'status': 'Cancel',
     'data': []
-    }];
+  }];
 
   collpaseArray: any[] = [];
   isCollapsed = true;
@@ -64,6 +64,51 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
   searchIn = 'Multiple';
   condensedView = false;
   modalData: any = {};
+
+  public chartType = 'bar';
+
+  public chartDatasets: Array<any> = [
+    // tslint:disable-next-line:max-line-length
+    { data: [0, 0, 0], label: 'Status comparison' }
+  ];
+
+  public chartLabels: Array<any> = ['Open', 'WIP', 'Hold'];
+
+  public chartColors: Array<any> = [
+    {
+      backgroundColor: 'rgba(248, 126, 126, 0.8)',
+      borderColor: 'rgba(248, 126, 126, 0.1)',
+      borderWidth: 2,
+      pointBackgroundColor: 'rgba(220,220,220,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(220,220,220,1)'
+    },
+    {
+      backgroundColor: 'rgba(38,192,218,0.8)',
+      borderColor: 'rgba(38,192,218,1)',
+      borderWidth: 2,
+      pointBackgroundColor: 'rgba(151,187,205,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(151,187,205,1)'
+    },
+    {
+      backgroundColor: 'rgba(151,187,205,0.8)',
+      borderColor: 'rgba(151,187,205,1)',
+      borderWidth: 2,
+      pointBackgroundColor: 'rgba(151,187,205,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(151,187,205,1)'
+    }
+  ];
+
+  public chartOptions: any = {
+    responsive: true
+  };
+  public chartClicked(e: any): void { }
+  public chartHovered(e: any): void { }
 
   constructor(private engineService: EngineService,
     // tslint:disable-next-line:max-line-length
@@ -326,6 +371,10 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
     this.data[2].Count = this.source[2].data.length;
     this.data[3].Count = this.source[3].data.length;
     this.data[4].Count = this.source[4].data.length;
+    this.chartDatasets = [
+      // tslint:disable-next-line:max-line-length
+      { data: [this.data[0].Count, this.data[1].Count, this.data[2].Count], label: 'Status comparison' }
+    ];
   }
 
   updateTickets(tickets: any) {
