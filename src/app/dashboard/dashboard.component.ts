@@ -17,7 +17,7 @@ import { AlertService } from 'ngx-alerts';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  checkPassword: boolean = false;
+  checkPassword = false;
   title = 'Welcome';
   logoutflag = false;
   rows: any[] = [];
@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   currPass: any;
   newPass: any;
   passForm: FormGroup;
+  changePasswordVisible = false;
 
   constructor(
     private alertService: AlertService,
@@ -50,11 +51,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.passForm = new FormGroup({
       currPass: new FormControl(null, [
         Validators.required,
-       
       ]),
       newPass: new FormControl(null, [
         Validators.required,
-        
       ])
     });
 
@@ -65,12 +64,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.userRole = JSON.parse(cookieData.toString(crypto.enc.Utf8)).UserRole;
     this.password = JSON.parse(cookieData.toString(crypto.enc.Utf8)).Password;
 
-    console.log("------- ngONIT -------------"+this.password)
+    // console.log("------- ngONIT -------------"+this.password)
 
     this.url = 'Ticket/GetMyTickets/' + this._cookieService.get('Oid');
     this.engineService.getData(this.url).toPromise().then(res => {
       this.rows = res;
-       this.openTicketCounter = res.filter(data => {
+      this.openTicketCounter = res.filter(data => {
         if (data.TicketStatus.toString() === '1' ||
           data.TicketStatus.toString() === '2' ||
           data.TicketStatus.toString() === '3') {
@@ -85,6 +84,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
       this.engineService.getCookieData();
     }).catch();
+  }
+
+  toggleChangePasswordVisible() {
+    this.changePasswordVisible = !this.changePasswordVisible;
+  }
+
+  resetForm() {
+    this.changePasswordVisible = false;
+    this.passForm.reset();
+    this.passForm.markAsPristine();
+    this.passForm.markAsUntouched();
+    this.checkPassword = false;
   }
 
   updateDashboardState(state: string) {
@@ -130,40 +141,38 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   updateTypeVar() {
-    if(this.typeVar === 'password') {
+    if (this.typeVar === 'password') {
       this.typeVar = 'text';
     } else {
       this.typeVar = 'password';
     }
   }
 
-  submitPass(){
-    let curPass = this.passForm.get('currPass').value;
-    let newPass = this.passForm.get('newPass').value;
+  submitPass() {
+    const curPass = this.passForm.get('currPass').value;
+    const newPass = this.passForm.get('newPass').value;
 
-    let data ={
-        Oid: this.Oid,
-        Pass: newPass
-    }
-    let url = "Users/ChangePassword";
-    if(curPass === this.password){
-       this.engineService.updateData(url,data).then(res=>
-        {
-          this.alertService.success("Password Changed SuccessFully")
-          this._cookieService.removeAll();
-          this.logoutflag = true;
-          this.router.navigate(['/']);
-        }).catch(err=>{
-          console.log("---- Error ----"+err)
-        })
-    }
-    else{
+    const data = {
+      Oid: this.Oid,
+      Pass: newPass
+    };
+    const url = 'Users/ChangePassword';
+    if (curPass === this.password) {
+      this.engineService.updateData(url, data).then(res => {
+        this.alertService.success('Password Changed SuccessFully');
+        this._cookieService.removeAll();
+        this.logoutflag = true;
+        this.router.navigate(['/']);
+      }).catch(err => {
+        console.log('---- Error ----' + err);
+      });
+    } else {
       this.checkPassword = true;
     }
   }
 
-  focusChanged(){
-   this.checkPassword = false;
+  focusChanged() {
+    this.checkPassword = false;
   }
 
   ngOnDestroy(): void {

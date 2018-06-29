@@ -19,6 +19,7 @@ import { TeamComponent } from './master/team/team.component';
 import { CreateTicketTypeComponent } from './master/ticket-type/create-ticket-type/create-ticket-type.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { EditAuthGuard } from './services/edit-auth-guard.service';
+import { MasterAuthGuard } from './services/master-auth-guard.service';
 
 
 
@@ -36,15 +37,15 @@ const appRoutes: Routes = [
     canDeactivate: [CanDeactivateGuard],
     children: [
       { path: '', component: DashboardToolsComponent },
-      { path: 'company', component: CompanyComponent },
+      { path: 'company', component: CompanyComponent, canActivate: [MasterAuthGuard] },
       { path: 'company/create-company', component: CreateCompanyComponent, canActivate: [EditAuthGuard] },
-      { path: 'project', component: ProjectComponent },
+      { path: 'project', component: ProjectComponent, canActivate: [MasterAuthGuard] },
       { path: 'project/create-project', component: CreateProjectComponent, canActivate: [EditAuthGuard] },
-      { path: 'team', component: TeamComponent },
+      { path: 'team', component: TeamComponent, canActivate: [MasterAuthGuard] },
       { path: 'team/create-team', component: CreateTeamComponent, canActivate: [EditAuthGuard] },
-      { path: 'ticket-type', component: TicketTypeComponent },
+      { path: 'ticket-type', component: TicketTypeComponent, canActivate: [MasterAuthGuard] },
       { path: 'ticket-type/create-ticket-type', component: CreateTicketTypeComponent, canActivate: [EditAuthGuard] },
-      { path: 'user', component: UserComponent },
+      { path: 'user', component: UserComponent, canActivate: [MasterAuthGuard] },
       { path: 'user/create-user', component: CreateUserComponent, canActivate: [EditAuthGuard] },
       { path: 'create-ticket', component: CreateTicketComponent }
     ]

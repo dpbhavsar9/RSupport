@@ -1,15 +1,15 @@
-<div class="container-fluid mt-5 pt-5 animated fadeIn zoomIn">
+<div class="container-fluid mt-5 pt-5">
 
   <div class="row d-flex justify-content-center">
 
-    <div class="col-lg-7 col-md-5 col-sm-6 col-xs-12" style="align-items:
+    <div class="col-lg-7 col-md-5 col-sm-6 col-xs-12 animated pulse" style="align-items:
       center">
 
-      <div class="jumbotron hoverable effect8 sideNote text-center">
+      <div class="jumbotron sideNote text-center">
 
         <h1 class="h2-responsive blue-grey-text">
 
-          <img class="img-fluid" src="assets/images/rsupport.png" alt="Card
+          <img class="img-fluid animated pulse" src="assets/images/rsupport.png" alt="Card
             image cap">
           <br>
           <strong>Welcome to R-Support!</strong>
@@ -19,7 +19,7 @@
 
     </div>
 
-    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 animated zoomInRight">
 
       <div class="hoverable card loginBox">
 
@@ -28,59 +28,26 @@
 
         <div class="card-body effect8 hoverable">
 
-          <!--Title-->
+          <h4 class="card-title blue-grey-text">
+            <strong>Login</strong>
+          </h4>
 
-            <h4 class="card-title blue-grey-text">
+          <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="card-text">
 
-              <strong>Login</strong>
+            <mat-form-field style="width: 100%" >
+              <input matInput formControlName="UserName" placeholder="Username" value="" autofocus>
+            </mat-form-field>
+            <mat-form-field style="width: 100%" >
+              <input matInput='password' formControlName="Password" placeholder="Password" value="">
+            </mat-form-field>
 
-            </h4>
+            <div class="text-right">
 
-            <!--Text-->
-
-
-              <form [formGroup]="loginForm" (ngSubmit)="onLogin()"
-                class="card-text">
-
-                <div class="md-form form-sm">
-
-                  <input mdbInputDirective formControlName="UserName" type="text"
-                    class="form-control" id="user" name="user">
-
-                  <label for="UserName">Username</label>
-
-                </div>
-
-
-                <div class="md-form form-sm">
-
-                  <input mdbInputDirective formControlName="Password" type="password"
-                    class="form-control" id="Password" name="Password">
-
-                  <label for="Password">Password</label>
-
-                </div>
-
-
-                <div class="text-right">
-
-                  <button class="btn btn-sm btn-primary waves-light"
-                    type="submit"
-                    [disabled]="!loginForm.valid" mdbWavesEffect>Login</button>
-                  <!-- <button class="btn btn-sm btn-primary waves-light"
-                    mdbCheckbox mdbWavesEffect (click)="onSignup()">Signup</button>
-                -->
-
-              </div>
-
-            </form>
-
-          </div>
-
+              <button class="btn btn-sm btn-primary waves-light" type="submit" [disabled]="!loginForm.valid" mdbWavesEffect>Login</button>
+            </div>
+          </form>
         </div>
-
       </div>
-
     </div>
-
   </div>
+</div>

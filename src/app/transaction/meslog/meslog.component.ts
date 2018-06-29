@@ -63,7 +63,7 @@ export class MeslogComponent implements OnInit, OnDestroy {
     // console.log('---Ticket Id----', this.ticketId);
     this.checkMessage(this.ticketId);
 
-    const timerVar = timer(5000, 5000);
+    const timerVar = timer(10000, 10000);
 
     this.subscribe = timerVar.subscribe(t => {
       this.checkMessage(this.ticketId);

@@ -34,12 +34,9 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       UserName: new FormControl(null, [
         Validators.required,
-        // Validators.minLength(6)
       ]),
       Password: new FormControl(null, [
         Validators.required,
-        // Validators.minLength(6),
-        // Validators.maxLength(12)
       ])
     });
 
@@ -73,7 +70,6 @@ export class LoginComponent implements OnInit {
           Password: result.Password
         };
         const stringData = JSON.stringify(data);
-        
         const Encrypt = crypto.AES.encrypt(stringData, this.cryptkey);
         this._cookieService.put('response', Encrypt.toString());
         this.router.navigate(['dashboard']);

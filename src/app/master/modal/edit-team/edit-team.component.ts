@@ -77,7 +77,7 @@ export class EditTeamComponent implements OnInit {
       ProjectID: new FormControl(this.data.ProjectID, Validators.required),
       TeamLeader: new FormControl(this.data.TeamLeader, Validators.required),
       Users: new FormControl(null, Validators.required),
-      UsersForTeamWithRoles: new FormControl(null, Validators.required),
+      UsersForTeamWithRoles: new FormControl(null),
       TeamMemberList: new FormControl(this.data.TeamMembers),
       Status: new FormControl(this.data.Status, Validators.required),
       UpdatedBy: new FormControl(this._cookieService.get('Oid'))

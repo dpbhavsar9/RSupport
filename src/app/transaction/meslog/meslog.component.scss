@@ -144,19 +144,12 @@
 }
 
 .scroll2 {
-  overflow-y: auto !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
   background: rgba(224, 247, 250, 1);
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
-  height: 100%;
 }
 
-@media only screen and (max-width: 800px) {
-  .scroll2 {
-    overflow-y: auto !important;
-    background: rgba(224, 247, 250, 1);
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    height: 100%;
-  }
-}
+

@@ -78,6 +78,26 @@ export class EngineService implements OnInit {
     }
   }
 
+  isMasterAuthenticated(): boolean {
+    try {
+      const Decrypt = crypto.AES.decrypt(this._cookieService.get('response').toString(), this._cookieService.get('Oid') + 'India');
+      const decryptData = Decrypt.toString(crypto.enc.Utf8);
+      const Oid = JSON.parse(decryptData).Oid.toString();
+      if (this._cookieService.get('Oid') !== Oid) {
+        return false;
+      }
+      const userRole = JSON.parse(decryptData).UserRole;
+      if (userRole === 'User') {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (err) {
+      this.router.navigate(['']);
+      return false;
+    }
+  }
+
   // Authorization completed
 
   getCookieData() {

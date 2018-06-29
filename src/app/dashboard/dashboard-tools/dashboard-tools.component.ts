@@ -64,7 +64,7 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
   searchIn = 'Multiple';
   condensedView = false;
   modalData: any = {};
-
+  chartVisible = false;
   public chartType = 'bar';
 
   public chartDatasets: Array<any> = [
@@ -116,6 +116,10 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
     const cookieData = crypto.AES.decrypt(this._cookieService.get('response'), this._cookieService.get('Oid') + 'India');
     this.Oid = JSON.parse(cookieData.toString(crypto.enc.Utf8)).Oid;
     this.userName = JSON.parse(cookieData.toString(crypto.enc.Utf8)).UserName;
+  }
+
+  toggleChart() {
+    this.chartVisible = !this.chartVisible;
   }
 
   public updateFilter() {
@@ -471,9 +475,8 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
     const dialogRef = this
       .dialog
       .open(MeslogComponent, {
-        height: '80%',
-        maxHeight: '80%',
-        width: '80%',
+        minWidth: '60%',
+        maxWidth: '95%',
         panelClass: 'ticketDialog',
         data: data,
         hasBackdrop: true,
@@ -548,7 +551,7 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
   }
 
   public updateModal(data) {
-    console.log(data);
+    // console.log(data);
     this.modalData = data;
   }
 

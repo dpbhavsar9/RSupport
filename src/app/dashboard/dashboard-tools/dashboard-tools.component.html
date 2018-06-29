@@ -1,7 +1,7 @@
-<div class="pt-5 mx-auto animated zoomIn">
+<div class="pt-5 mx-auto">
   <div class="container-fluid" *ngIf="userRole!=='Administrator'">
 
-    <div class="row justify-content-center" style="padding-top: 25px">
+    <div class="row justify-content-center animated rotateInDownLeft" style="padding-top: 25px">
       <div class="col" *ngFor="let item of data; let id= index;" style="padding-top: 10px; ">
         <div class="card hoverable" style="margin-bottom: 10px;
            cursor: pointer; " (click)="updateTicketLogTypeSelector(id)">
@@ -21,27 +21,19 @@
           </div>
         </div>
       </div>
-      <div class="col" style="padding-top: 10px; ">
-          <div class="card hoverable" style="margin-bottom: 10px;
+      <div class="col animated slideInRight" style="padding-top: 10px;" *ngIf="chartVisible">
+        <div class="card hoverable" style="margin-bottom: 10px;
              cursor: pointer; " (click)="updateTicketLogTypeSelector(id)">
-            <div class="card-body text-center" style="display: block; ;background-color: rgba(255,255,255,0.4); ">
-                <canvas mdbChart
-                [chartType]="chartType"
-                [datasets]="chartDatasets"
-                [labels]="chartLabels"
-                [colors]="chartColors"
-                [options]="chartOptions"
-                [legend]="true"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)">
+          <div class="card-body text-center" style="display: block; ;background-color: rgba(255,255,255,0.4); ">
+            <canvas mdbChart [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels" [colors]="chartColors" [options]="chartOptions"
+              [legend]="true" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
             </canvas>
-            </div>
-        
           </div>
         </div>
+      </div>
     </div>
 
-    <div class="row" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around; align-items: center; padding-left: 10px; padding-right: 10px; ">
+    <div class="row animated rotateInDownLeft" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around; align-items: center; padding-left: 10px; padding-right: 10px; ">
       <mat-form-field>
         <input matInput placeholder="Search here" (keyup)='updateFilter()' [(ngModel)]="val">
       </mat-form-field>
@@ -105,14 +97,15 @@
 
         </mat-select>
       </mat-form-field>
-      <mat-checkbox color="primary" [(ngModel)]="condensedView">Condensed View</mat-checkbox>
-      <i class="fa fa-close" (click)="clearSerchCriteria()" style="padding-bottom: 10px;"></i>
+      <mat-checkbox color="primary" matTooltip="Grid view of tickets"  [(ngModel)]="condensedView">Condensed View</mat-checkbox>
+      <i class="fa fa-bar-chart" matTooltip="Click to see Chart" (click)="toggleChart()" style="padding-bottom: 10px"></i>
+      <i class="fa fa-refresh" matTooltip="Clear and refresh" (click)="clearSerchCriteria()" style="padding-bottom: 10px;"></i>
     </div>
 
 
     <!-- </div> -->
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center animated slideInUp">
       <div class="col">
         <div class="mx-auto">
           <div class="container-fluid" *ngFor="let src of source; let i=
@@ -135,7 +128,7 @@
 
                         <div class="row ticketBody" aria-expanded="true">
                           <div class="col-2">
-                            <a (click)="demoBasic.show(); updateModal(data);" style="color: #32375f">
+                            <a (click)="demoBasic.show(); updateModal(data);" matTooltip="Ticket No" style="color: #32375f">
                               <strong>#{{data.TicketNo}}</strong>
                             </a>
                           </div>
@@ -146,12 +139,16 @@
 
                               <strong (click)="demoBasic.show(); updateModal(data);">{{data.Subject}}</strong>
                               <div style="display: flex; flex-direction: row; flex-wrap: row">
-                                
-                                  <div class="text-center card-text z-depth-1" style="border-radius: 5px; padding-left: 5px; padding-right: 5px; margin-right: 5px; cursor: pointer;" mat-icon-button [matMenuTriggerFor]="menu">
-                                      <strong>Actions&nbsp;<i class="fa fa-caret-down" ></i></strong>
-                                  </div>
-                                
+
+                                <div class="text-center card-text z-depth-1" style="border-radius: 5px; padding-left: 5px; padding-right: 5px; margin-right: 5px; cursor: pointer;"
+                                  mat-icon-button [matMenuTriggerFor]="menu">
+                                  <strong>Actions&nbsp;
+                                    <i class="fa fa-caret-down"></i>
+                                  </strong>
+                                </div>
+
                                 <mat-menu class="actionsButton" #menu="matMenu">
+
                                   <button mat-menu-item [disabled]="!(src.status=== 'Open' && 
                                           dashboardState==='mytickets')" (click)="processTicket(data.Oid,2)">
                                     <span>Take Ticket</span>
@@ -173,8 +170,13 @@
                                     (click)="processTicket(data.Oid,5)">
                                     <span>Cancel</span>
                                   </button>
+                                  <mat-divider></mat-divider>
+                                  <button mat-menu-item style="font-style: oblique" (click)="openTicketMessage(i,p)">
+                                    <span style="margin-right: 10px">Message</span>
+                                    <i class="fa fa-comment"></i>
+                                  </button>
                                 </mat-menu>
-                                <span *ngIf="data.Priority!==''" class="badge" [ngClass]="{
+                                <span *ngIf="data.Priority!==''" class="badge" matTooltip="Priority" [ngClass]="{
                                       'red': data.Priority === 'High',
                                       'blue': data.Priority === 'Medium',
                                       'green': data.Priority === 'Low'
@@ -188,21 +190,21 @@
                             </div>
 
                             <div class="card-text" style="padding-left: 10px; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; font-size: medium; justify-items: center;">
-                              <div class="badge-light2 mr-1" (click)="demoBasic.show(); updateModal(data);">
+                              <div class="badge-light2 mr-1" matTooltip="Time after creation of ticket" (click)="demoBasic.show(); updateModal(data);">
                                 <time>
                                   <strong>{{ data.CreatedDate | timeAgo}}</strong>
                                 </time>
                               </div>
-                              <div class="badge-light2 mr-1" (click)="demoBasic.show(); updateModal(data);">
+                              <div class="badge-light2 mr-1" matTooltip="Ticket assigned to team" (click)="demoBasic.show(); updateModal(data);">
                                 Team: {{data.TeamName | titlecase}}
                               </div>
-                              <div class="badge-light2 mr-1" (click)="demoBasic.show(); updateModal(data);">
+                              <div class="badge-light2 mr-1" matTooltip="Ticket assigned to person" (click)="demoBasic.show(); updateModal(data);">
                                 Assign To: {{ data.AssignToName | titlecase}}
                               </div>
-                              <div class="badge-light2 mr-1" (click)="demoBasic.show(); updateModal(data);">
-                                Created By:{{ data.CreatedByName | titlecase}}
+                              <div class="badge-light2 mr-1" matTooltip="Ticket created by" (click)="demoBasic.show(); updateModal(data);">
+                                Created By: {{ data.CreatedByName | titlecase}}
                               </div>
-                              <div class="row badge-light2 mr-1" (click)="openTicketMessage(i,p)">
+                              <div class="row badge-light2 mr-1" matTooltip="Last communication" (click)="openTicketMessage(i,p)">
                                 {{data.Message.OperationByName | titlecase}}: {{data.Message.MessageLog}} -
                                 <time> {{data.Message.OperationDate | timeAgo }} </time>
                               </div>
@@ -251,7 +253,7 @@
                     </div>
                   </div>
 
-                  <div class="card hoverable" *ngIf="condensedView">
+                  <div class="card hoverable animated slideInUp" *ngIf="condensedView">
                     <ngx-datatable #table class="material" [rows]="src.data" [columns]="columns" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
                       [rowHeight]="50" [reorderable]="'true'" [limit]="7" [scrollbarH]="true" [loadingIndicator]="loadingIndicator">
 
@@ -465,204 +467,151 @@
   </div>
 </div>
 
-<div mdbModal #demoBasic="mdb-modal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+
+<div mdbModal #demoBasic="mdb-modal" class="modal fade fontclass" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
 
-  <div class="modal-dialog modal-fluid" role="document">
+  <div class="modal-dialog modal-fluid" role="document" style="width: 63%">
     <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title w-100" id="myModalLabel" style="color: #32375f;">
-          <strong>#{{modalData.TicketNo}}:&nbsp;{{modalData.Subject}}</strong>
+
+      <div class="modal-header" [ngClass]="{
+        'moddef':modalData.TicketStatus=='1',
+        'modpri':modalData.TicketStatus=='2',
+        'modwar':modalData.TicketStatus=='3',
+        'modsuc':modalData.TicketStatus=='4',
+        'modgre':modalData.TicketStatus=='5'
+        }">
+        <h4 style="color: rgb(69, 84, 92); font-weight: bold;" class="modal-title" id="myModalLabel">#{{modalData.TicketNo}}:&nbsp;
+          <strong>{{modalData.Subject}}</strong>
+          <br>
         </h4>
+
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="demoBasic.hide()">
           <span aria-hidden="true">×</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="row">
-          <div class="col">
 
-            <div class="mt-1 mb-1" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; ">
-
-              <div class="list-group">
-                <a class="list-group-item list-group-item-action waves-light" [ngClass]="{
-                  'badge-default-2':modalData.TicketStatus=='1',
-                  'badge-primary-2':modalData.TicketStatus=='2',
-                  'badge-warning-2':modalData.TicketStatus=='3',
-                  'badge-success-2':modalData.TicketStatus=='4',
-                  'badge-grey-2':modalData.TicketStatus=='5'
-                  }" mdbWavesEffect>
-                  <div style="color: white;">Details</div>
-                </a>
-                <a class="list-group-item list-group-item-action waves-light" mdbWavesEffect>
-                  <div> Created: &nbsp;{{ modalData.CreatedDate | timeAgo}}</div>
-                </a>
-                <a class="list-group-item list-group-item-action waves-light" mdbWavesEffect>
-                  <div> Team: &nbsp;
-                    <strong> {{modalData.TeamName | titlecase}} </strong>
-                  </div>
-                </a>
-
-                <a class="list-group-item list-group-item-action waves-light" mdbWavesEffect>
-                  <div> Assign To: &nbsp;
-                    <strong>{{ modalData.AssignToName | titlecase}}</strong>
-                  </div>
-                </a>
-
-                <a class="list-group-item list-group-item-action waves-light" mdbWavesEffect>
-                  <div> Created By: &nbsp;
-                    <strong>{{ modalData.CreatedByName | titlecase}}</strong>
-                  </div>
-                </a>
-              </div>
-
-              <div class="list-group" *ngIf="modalData.CreatedByName !== ''">
-                <a class="list-group-item waves-light" mdbWavesEffect [ngClass]="{
-                  'badge-default-2':modalData.TicketStatus=='1',
-                  'badge-primary-2':modalData.TicketStatus=='2',
-                  'badge-warning-2':modalData.TicketStatus=='3',
-                  'badge-success-2':modalData.TicketStatus=='4',
-                  'badge-grey-2':modalData.TicketStatus=='5'
-                  }">
-                  <strong style="color: white;">Create</strong>
-                </a>
-                <a class="list-group-item
-                                        list-group-item-action waves-light" mdbWavesEffect>
-                  <div>
-                    <strong>On: </strong>
-                    {{modalData.CreatedDate | date }} at {{modalData.CreatedDate | date: 'shortTime'}}
-                    <strong>
-                      <br>By: </strong>{{modalData.CreatedByName | titlecase}}
-                  </div>
-                </a>
-              </div>
-
-              <div class="list-group" *ngIf="modalData.AssignByName !== ''">
-                <a class="list-group-item waves-light" [ngClass]="{
-                  'badge-default-2':modalData.TicketStatus=='1',
-                  'badge-primary-2':modalData.TicketStatus=='2',
-                  'badge-warning-2':modalData.TicketStatus=='3',
-                  'badge-success-2':modalData.TicketStatus=='4',
-                  'badge-grey-2':modalData.TicketStatus=='5'
-                  }" mdbWavesEffect>
-                  <strong style="color: white;">Assign</strong>
-                </a>
-                <a class="list-group-item
-                                          list-group-item-action waves-light" mdbWavesEffect>
-                  <div>
-                    <strong>On: </strong>
-                    {{modalData.AssignDate | date }} at {{modalData.AssignDate | date: 'shortTime'}}
-                    <strong>
-                      <br> By: </strong>{{modalData.AssignByName | titlecase}}
-                  </div>
-                </a>
-              </div>
-
-              <div class="list-group" *ngIf="modalData.WIPByName !== ''">
-                <a class="list-group-item waves-light" [ngClass]="{
-                  'badge-default-2':modalData.TicketStatus=='1',
-                  'badge-primary-2':modalData.TicketStatus=='2',
-                  'badge-warning-2':modalData.TicketStatus=='3',
-                  'badge-success-2':modalData.TicketStatus=='4',
-                  'badge-grey-2':modalData.TicketStatus=='5'
-                  }" mdbWavesEffect>
-                  <strong style="color: white;">WIP</strong>
-                </a>
-                <a class="list-group-item
-                                            list-group-item-action waves-light" mdbWavesEffect>
-                  <div>
-                    <strong>On: </strong>
-                    {{modalData.WIPDate | date}} at {{modalData.WIPDate | date: 'shortTime'}}
-                    <strong>
-                      <br> By: </strong>{{modalData.WIPByName | titlecase}}
-                  </div>
-                </a>
-              </div>
-
-              <div class="list-group" *ngIf="modalData.HoldByName !== ''">
-                <a class="list-group-item waves-light" [ngClass]="{
-                  'badge-default-2':modalData.TicketStatus=='1',
-                  'badge-primary-2':modalData.TicketStatus=='2',
-                  'badge-warning-2':modalData.TicketStatus=='3',
-                  'badge-success-2':modalData.TicketStatus=='4',
-                  'badge-grey-2':modalData.TicketStatus=='5'
-                  }" mdbWavesEffect>
-                  <strong style="color: white;">Hold</strong>
-                </a>
-                <a class="list-group-item
-                                              list-group-item-action waves-light" mdbWavesEffect>
-                  <div>
-                    <strong>On: </strong>
-                    {{modalData.HoldDate | date}} at {{modalData.HoldDate | date: 'shortTime'}}
-                    <strong>
-                      <br> By: </strong>{{modalData.HoldByName | titlecase}}
-                  </div>
-                </a>
-              </div>
-
-              <div class="list-group" *ngIf="modalData.CloseByName !== ''">
-                <a class="list-group-item waves-light" [ngClass]="{
-                  'badge-default-2':modalData.TicketStatus=='1',
-                  'badge-primary-2':modalData.TicketStatus=='2',
-                  'badge-warning-2':modalData.TicketStatus=='3',
-                  'badge-success-2':modalData.TicketStatus=='4',
-                  'badge-grey-2':modalData.TicketStatus=='5'
-                  }" mdbWavesEffect>
-                  <strong style="color: white;">Close</strong>
-                </a>
-                <a class="list-group-item
-                                                list-group-item-action waves-light" mdbWavesEffect>
-                  <div>
-                    <strong>On: </strong>
-                    {{modalData.CloseDate | date}} at {{modalData.CloseDate | date: 'shortTime'}}
-                    <strong>
-                      <br> By: </strong>{{modalData.CloseByName | titlecase}}
-                  </div>
-                </a>
-              </div>
-
-              <div class="list-group" *ngIf="modalData.CancelByName !== ''">
-                <a class="list-group-item waves-light" [ngClass]="{
-                  'badge-default-2':modalData.TicketStatus=='1',
-                  'badge-primary-2':modalData.TicketStatus=='2',
-                  'badge-warning-2':modalData.TicketStatus=='3',
-                  'badge-success-2':modalData.TicketStatus=='4',
-                  'badge-grey-2':modalData.TicketStatus=='5'
-                  }" mdbWavesEffect>
-                  <strong style="color: white;">Cancel</strong>
-                </a>
-                <a class="list-group-item
-                                                  list-group-item-action waves-light" mdbWavesEffect>
-                  <div>
-                    <strong>On: </strong>
-                    {{modalData.CancelDate | date}} at {{modalData.CancelDate | date: 'shortTime'}}
-                    <strong>
-                      <br> By: </strong>{{modalData.CancelByName | titlecase}}
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <div class="list-group">
-              <a class="list-group-item waves-light" [ngClass]="{
-                'badge-default-2':modalData.TicketStatus=='1',
-                'badge-primary-2':modalData.TicketStatus=='2',
-                'badge-warning-2':modalData.TicketStatus=='3',
-                'badge-success-2':modalData.TicketStatus=='4',
-                'badge-grey-2':modalData.TicketStatus=='5'
-                }" mdbWavesEffect>
-                <strong style="color: white;">Detail</strong>
-              </a>
-              <a class="list-group-item
-                                  list-group-item-action waves-light" mdbWavesEffect>
-                <div>
-                  {{modalData.TicketDescription}}
-                </div>
-              </a>
-            </div>
-
-          </div>
+        <div class="big" style="padding-left: 10px;color: rgb(49, 49, 49);">
+          <span> Created &nbsp;: &nbsp;</span>
+          {{ modalData.CreatedDate | timeAgo}} &nbsp;By&nbsp; {{ modalData.CreatedByName | titlecase}}
+          <br>
+          <span *ngIf="modalData.AssignToName !== ''">Assignto&nbsp;:&nbsp;&nbsp;{{ modalData.AssignToName | titlecase}}</span>
         </div>
+
+        <table class="table table-responsive">
+          <thead>
+            <tr class="fontclass">
+              <th>Create</th>
+              <th>
+                <span [ngClass]="{'space': modalData.AssignByName == ''}">Assign</span>
+              </th>
+              <th>
+                <span [ngClass]="{'space': modalData.WIPByName == ''}">WIP</span>
+              </th>
+              <th>
+                <span [ngClass]="{'space': modalData.HoldByName == ''}">Hold</span>
+              </th>
+              <th>
+                <span [ngClass]="{'space': modalData.CloseByName == ''}">Close</span>
+              </th>
+              <th>
+                <span [ngClass]="{'space': modalData.CancelByName == ''}">Cancel</span>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+
+              <td class="w-20">
+                <div>
+                  Date:&nbsp;{{modalData.CreatedDate | date }}
+                  <br> Time:&nbsp;{{modalData.CreatedDate | date: 'shortTime'}}
+                  <hr> By:&nbsp;{{modalData.CreatedByName | titlecase}}
+                </div>
+              </td>
+
+              <td class="w-20">
+                <div *ngIf="modalData.AssignByName == ''">
+                  <span class="space">-----</span>
+                  <br>
+                  <span class="space">-----</span>
+                  <hr>
+                  <span class="space">-----</span>
+                </div>
+                <div *ngIf="modalData.AssignByName !== ''">
+                  Date:&nbsp;{{modalData.AssignDate | date }}
+                  <br> Time:&nbsp;{{modalData.AssignDate | date: 'shortTime'}}
+                  <hr> By:&nbsp;{{modalData.AssignByName | titlecase}}
+                </div>
+              </td>
+
+              <td class="w-20">
+                <div *ngIf="modalData.WIPByName == ''">
+                  <span class="space">-----</span>
+                  <br>
+                  <span class="space">-----</span>
+                  <hr>
+                  <span class="space">-----</span>
+                </div>
+                <div *ngIf="modalData.WIPByName !== ''">
+                  Date:&nbsp;{{modalData.WIPDate | date}}
+                  <br> Time:&nbsp;{{modalData.WIPDate | date: 'shortTime'}}
+                  <hr> By:&nbsp;{{modalData.WIPByName | titlecase}}
+                </div>
+              </td>
+
+              <td class="w-20">
+                <div *ngIf="modalData.HoldByName == ''">
+                  <span class="space">-----</span>
+                  <br>
+                  <span class="space">-----</span>
+                  <hr>
+                  <span class="space">-----</span>
+                </div>
+                <div *ngIf="modalData.HoldByName !== ''">
+                  Date:&nbsp;{{modalData.HoldDate | date}}
+                  <br> Time:&nbsp;{{modalData.HoldDate | date: 'shortTime'}}
+                  <hr> By:&nbsp;{{modalData.HoldByName | titlecase}}
+                </div>
+              </td>
+
+              <td class="w-20">
+                <div *ngIf="modalData.CloseByName == ''">
+                  <span class="space">-----</span>
+                  <br>
+                  <span class="space">-----</span>
+                  <hr>
+                  <span class="space">-----</span>
+                </div>
+                <div *ngIf="modalData.CloseByName !== ''">
+                  Date:&nbsp;{{modalData.CloseDate | date}}
+                  <br> Time:&nbsp;{{modalData.CloseDate | date: 'shortTime'}}
+                  <hr> By:&nbsp;{{modalData.CloseByName | titlecase}}
+                </div>
+              </td>
+
+              <td class="w-20">
+                <div *ngIf="modalData.CancelByName == ''">
+                  <span class="space">-----</span>
+                  <br>
+                  <span class="space">-----</span>
+                  <hr>
+                  <span class="space">-----</span>
+                </div>
+                <div *ngIf="modalData.CancelByName !== ''">
+                  Date:&nbsp;{{modalData.CancelDate | date}}
+                  <br> Time:&nbsp;{{modalData.CancelDate | date: 'shortTime'}}
+                  <hr> By:&nbsp;{{modalData.CancelByName | titlecase}}
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+
       </div>
 
     </div>

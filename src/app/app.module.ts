@@ -13,7 +13,7 @@ import {
   MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule,
   MatSelectModule, MatProgressSpinnerModule,
   MatInputModule,
-  MatCheckboxModule, MAT_CHECKBOX_CLICK_ACTION
+  MatCheckboxModule, MAT_CHECKBOX_CLICK_ACTION, MatSlideToggleModule, MatTooltipModule
 } from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
 import { AppComponent } from './app.component';
@@ -54,6 +54,7 @@ import { TimeAgoPipe } from 'time-ago-pipe';
 import { AlertComponent } from './master/modal/alert/alert.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { EditAuthGuard } from './services/edit-auth-guard.service';
+import { MasterAuthGuard } from './services/master-auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,8 @@ import { EditAuthGuard } from './services/edit-auth-guard.service';
     MatCheckboxModule,
     MatInputModule,
     MatMenuModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
     NgxSpinnerModule,
     AlertModule.forRoot({ maxMessages: 5, timeout: 3000 })
   ],
@@ -119,6 +122,7 @@ import { EditAuthGuard } from './services/edit-auth-guard.service';
   providers: [
     AuthGuard,
     EditAuthGuard,
+    MasterAuthGuard,
     CanDeactivateGuard,
     EngineService,
     {
