@@ -171,11 +171,19 @@
                                     <span>Cancel</span>
                                   </button>
                                   <mat-divider></mat-divider>
+                                  <button mat-menu-item style="font-style: oblique" [disabled]="src.status==='Close' || src.status==='Cancel'" [matMenuTriggerFor]="subMenu">
+                                    <span style="margin-right: 10px">Change Priority</span>
+                                  </button>
                                   <button mat-menu-item style="font-style: oblique" (click)="openTicketMessage(i,p)">
                                     <span style="margin-right: 10px">Message</span>
                                     <i class="fa fa-comment"></i>
                                   </button>
                                 </mat-menu>
+                                <mat-menu #subMenu="matMenu">
+                                    <button mat-menu-item (click)="changePriority(i, p, 'High')">High</button>
+                                    <button mat-menu-item (click)="changePriority(i, p, 'Medium')">Medium</button>
+                                    <button mat-menu-item (click)="changePriority(i, p, 'Low')">Low</button>
+                                  </mat-menu>
                                 <span *ngIf="data.Priority!==''" class="badge" matTooltip="Priority" [ngClass]="{
                                       'red': data.Priority === 'High',
                                       'blue': data.Priority === 'Medium',

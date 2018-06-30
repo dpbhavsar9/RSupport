@@ -15,7 +15,8 @@
   <div style="margin-left: 5px; margin-right: 5px; padding: 0px; margin: 0px; background-color: white">
       <form [formGroup]="chatForm" (ngSubmit)="sendMessage()">
         <div style="margin-left: 10px; display: flex; flex-direction: row">
-          <input matInput style="display: inline;" formControlName="chatmessage" placeholder='Message' />
+          <input matInput style="display: inline;" formControlName="chatmessage" placeholder='Message' autocomplete="off" autofocus />
+          <i class="fa fa-paperclip fa-2x"></i>
           <button [disabled]="!chatForm.valid" class="btn btn-sm btn-primary" type="submit" style="display: inline">
             <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
           </button>

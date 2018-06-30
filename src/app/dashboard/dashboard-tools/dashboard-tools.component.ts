@@ -489,6 +489,18 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
       });
   }
 
+  changePriority(i, p, priority) {
+    const row = this.source[i].data[p];
+    const Oid = row['Oid'];
+    const by = this._cookieService.get('Oid');
+    const data = { Oid: Oid, Priority: priority, By: by };
+    this.url = 'Ticket/ChangePriority';
+        this.engineService.updateData(this.url, data).then(result => {
+          this.manualUpdateFlag = true;
+          this.refreshData();
+        });
+  }
+
   processTicket(id, status) {
     let data;
     let message;

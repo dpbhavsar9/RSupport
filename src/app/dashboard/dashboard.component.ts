@@ -164,7 +164,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.logoutflag = true;
         this.router.navigate(['/']);
       }).catch(err => {
-        console.log('---- Error ----' + err);
+        // console.log('---- Error ----' + err);
       });
     } else {
       this.checkPassword = true;
