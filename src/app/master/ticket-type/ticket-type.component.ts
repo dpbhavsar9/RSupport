@@ -144,9 +144,9 @@ export class TicketTypeComponent implements OnInit, OnDestroy {
     const dialogRef = this
       .dialog
       .open(EditTicketTypeComponent, {
-        maxWidth: '80%',
-        minWidth: 320,
-        height: 'auto',
+        minWidth: '60%',
+        maxWidth: '95%',
+        panelClass: 'editDialog',
         data: row,
         hasBackdrop: true,
         closeOnNavigation: true

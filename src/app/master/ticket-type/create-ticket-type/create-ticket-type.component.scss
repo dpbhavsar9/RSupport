@@ -4,13 +4,15 @@ label {
 
 .customHeader {
   background: linear-gradient(to right, #6200EA, #651FFF);
+  margin: -110px 1rem 0px 1rem;
 }
 
-mat-select {
-  margin-top: 30px;
-  border-bottom: 0.5px solid lightgray;
-  -webkit-transition: 0.2s ease-out;
-  transition: 0.2s ease-out;
-  color: #757575;
-  font-size: 1rem;
+@media only screen and (max-width: 600px) {
+  .jumbotron {
+    margin-top: 30px;
+  }
+}
+
+mat-form-field {
+  width: 100%;
 }

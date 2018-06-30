@@ -1,10 +1,10 @@
 <div class="customDialog">
 
   <!--Contact Form-->
-  <form [formGroup]="updateTeamForm" (ngSubmit)="updateTeam()" class="md-form">
+  <form [formGroup]="updateTeamForm" (ngSubmit)="updateTeam()" class="custom-form-field">
 
     <mat-dialog-title>
-      <div class="customHeader h4">
+      <div class="customHeader h4-responsive">
         <i class="fa fa-group" aria-hidden="true"></i>
         <strong>Edit Team</strong>
       </div>
@@ -14,16 +14,15 @@
     <mat-dialog-content>
 
       <div class="row">
-        <div class="md-form col">
+        <div class="custom-form-field col">
           <div class="card animated zoomIn">
-            <div class="card-header">
-              Team Name
-            </div>
+
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <label for="TeamName">Name</label>
-                  <input mdbInputDirective type="text" formControlName="TeamName" class="form-control" mdbActive>
+                  <mat-form-field>
+                    <input matInput placeholder="Team" formControlName="TeamName">
+                  </mat-form-field>
                 </div>
               </div>
             </div>
@@ -34,39 +33,33 @@
 
       <div class="row">
 
-        <div class="md-form col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="custom-form-field col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <div class="card animated zoomIn">
-            <div class="card-header">
-              Please select Company
-            </div>
+
             <div class="card-body">
-              <mat-select placeholder="Company" 
-                          name="Company" 
-                          (selectionChange)="loadProjects()" 
-                          formControlName="CompanyID" ngDefaultControl>
-                <mat-option *ngFor="let item of companyList" [value]="item.Oid">
-                  {{item.CompanyName}}
-                </mat-option>
-              </mat-select>
+              <mat-form-field>
+                <mat-select placeholder="Company" (selectionChange)="loadProjects()" formControlName="CompanyID">
+                  <mat-option *ngFor="let item of companyList" [value]="item.Oid">
+                    {{item.CompanyName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
           </div>
         </div>
 
         <!-- Project Selection -->
-        <div class="md-form col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="custom-form-field col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <div class="card animated zoomIn">
-            <div class="card-header">
-              Please select Project
-            </div>
+
             <div class="card-body">
-              <mat-select placeholder="Project" 
-                          name="Project" 
-                          formControlName="ProjectID" 
-                          (selectionChange)="loadUsers()" ngDefaultControl>
-                <mat-option *ngFor="let item of projectList" [value]="item.Oid">
-                  {{item.ProjectName}}
-                </mat-option>
-              </mat-select>
+              <mat-form-field>
+                <mat-select placeholder="Project" formControlName="ProjectID" (selectionChange)="loadUsers()">
+                  <mat-option *ngFor="let item of projectList" [value]="item.Oid">
+                    {{item.ProjectName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
           </div>
         </div>
@@ -74,24 +67,19 @@
 
       <!-- Users List multiple -->
       <div class="row">
-        <div class="md-form col">
+        <div class="custom-form-field col">
           <div class="card animated zoomIn">
-            <div class="card-header">
-              Please select team members
-            </div>
+
             <div class="card-body">
-              <mat-select placeholder="Users" 
-                          name="Users" 
-                          formControlName="Users" 
-                          [hidden]="updateTeamForm.get('ProjectID').value== null"
-                          [(ngModel)]="selectedUsers" 
-                          [compareWith]="compareFnForSelectedUser" 
-                          (selectionChange)="onUserSelected()" multiple ngDefaultControl>
-                <mat-option *ngFor="let item of userList" [value]="{Oid:
+              <mat-form-field>
+                <mat-select placeholder="Users" formControlName="Users" [hidden]="updateTeamForm.get('ProjectID').value== null" [(ngModel)]="selectedUsers"
+                  [compareWith]="compareFnForSelectedUser" (selectionChange)="onUserSelected()" multiple>
+                  <mat-option *ngFor="let item of userList" [value]="{Oid:
                       item.Oid, UserName: item.UserName, UserRole: ''}">
-                  {{item.UserName}}
-                </mat-option>
-              </mat-select>
+                    {{item.UserName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
           </div>
         </div>
@@ -115,18 +103,16 @@
                 </div>
 
                 <div class="col">
-                  <mat-select placeholder="UserRole" 
-                              name="UserRole" 
-                              formControlName="UsersForTeamWithRoles" 
-                              [hidden]="updateTeamForm.get('ProjectID').value== null"
-                              (selectionChange)="onUserRoleSelected(item.Oid)" ngDefaultControl>
-                    <mat-option *ngFor="let childItem of userRoles" 
-                                [value]="{ UserID: item.Oid, 
+                  <mat-form-field>
+                    <mat-select placeholder="UserRole" formControlName="UsersForTeamWithRoles" [hidden]="updateTeamForm.get('ProjectID').value== null"
+                      (selectionChange)="onUserRoleSelected(item.Oid)">
+                      <mat-option *ngFor="let childItem of userRoles" [value]="{ UserID: item.Oid, 
                                            UserName: item.UserName,
                                            UserRole: childItem.value }">
-                      {{childItem.viewValue}}
-                    </mat-option>
-                  </mat-select>
+                        {{childItem.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
               </div>
             </div>
@@ -137,38 +123,35 @@
 
       <!-- Select Team Leader -->
       <div class="row" style="margin-top: 30px;">
-        <div class="md-form col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="custom-form-field col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
           <div class="card animated zoomIn">
-
-            <div class="card-header">
-              Please select Team Leader
-            </div>
-
             <div class="card-body">
-              <mat-select placeholder="TeamLeader" name="TeamLeader" formControlName="TeamLeader" ngDefaultControl>
-                <mat-option *ngFor="let item of finalUsersList" [value]="item.UserID">
-                  {{item.UserName}}
-                </mat-option>
-              </mat-select>
+              <mat-form-field>
+                <mat-select placeholder="TeamLeader" formControlName="TeamLeader">
+                  <mat-option *ngFor="let item of finalUsersList" [value]="item.UserID">
+                    {{item.UserName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
 
           </div>
 
         </div>
 
-        <div class="md-form col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="custom-form-field col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <div [hidden]="updateTeamForm.get('TeamLeader').value== null">
             <div class="card animated zoomIn">
-              <div class="card-header">
-                Status of Team
-              </div>
+
               <div class="card-body">
-                <mat-select placeholder="Status" name="Status" formControlName="Status" ngDefaultControl>
-                  <mat-option *ngFor="let item of statusList" [value]="item.value">
-                    {{item.viewValue}}
-                  </mat-option>
-                </mat-select>
+                <mat-form-field>
+                  <mat-select placeholder="Status" formControlName="Status">
+                    <mat-option *ngFor="let item of statusList" [value]="item.value">
+                      {{item.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
             </div>
           </div>
@@ -188,6 +171,5 @@
     </mat-dialog-actions>
 
   </form>
-  <!--Contact Form-->
 
 </div>

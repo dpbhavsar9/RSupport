@@ -166,8 +166,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
     const dialogRef = this
       .dialog
       .open(EditProjectComponent, {
-        width: '60%',
-        height: 'auto',
+        minWidth: '60%',
+        maxWidth: '95%',
+        panelClass: 'editDialog',
         data: row,
         hasBackdrop: true,
         closeOnNavigation: true

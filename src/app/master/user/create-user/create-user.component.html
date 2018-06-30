@@ -7,86 +7,104 @@
       <div class="jumbotron hoverable">
 
         <!--Contact Form-->
-        <form [formGroup]="createUserForm" (ngSubmit)="createUser()" class="md-form">
+        <form [formGroup]="createUserForm" (ngSubmit)="createUser()" class="custom-form-field">
           <div class="customHeader z-depth-2">
-            <h4 class="card-title">
-              <i class="fa fa-user-circle" aria-hidden="true"></i>
+            <div class="card-title h4-responsive">
+              <i class="fa fa-user-circle" aria-hidden="true" style="padding-right: 10px"></i>
               <strong>Create User</strong>
-            </h4>
+            </div>
           </div>
+
           <hr>
-          <div class="row">
 
-            <div class="md-form col-md-6">
-              <label for="UserName">UserName</label>
-              <input mdbInputDirective type="text" formControlName="UserName" class="form-control" mdbActive>
-            </div>
-          </div>
           <div class="row">
-            <div class="md-form col-md-6">
-              <label for="Password">Password</label>
-              <input mdbInputDirective type="password" formControlName="Password" class="form-control" mdbActive>
-            </div>
-            <div class="md-form col-md-6">
-              <label for="confirmpassword">Confirm Password</label>
-              <input mdbInputDirective type="password" id="confirmpassword" (focusout)="check()" formControlName="ConfirmPassword" class="form-control" mdbActive>
-            </div>
-          </div>
-          <div class="row">
-            <div class="md-form col-md-6">
-              <label for="Email">Your email</label>
-              <input mdbInputDirective type="email" formControlName="Email" class="form-control" mdbActive>
-            </div>
-
-            <div class="md-form col-md-6">
-              <label for="MobileNo">Mobile No</label>
-              <input mdbInputDirective type="tel" formControlName="MobileNo" class="form-control" mdbActive>
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <input matInput  placeholder="Username" formControlName="UserName">
+              </mat-form-field>
             </div>
           </div>
 
           <div class="row">
-            <div class="md-form col-md-6">
-              <label for="Department">Department</label>
-              <input mdbInputDirective type="text" formControlName="Department" class="form-control" mdbActive>
+
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <input matInput  placeholder="Password" type="password" formControlName="Password">
+              </mat-form-field>
             </div>
 
-            <div class="md-form col-md-6">
-              <mat-select placeholder="User Role" name="UserRole" formControlName="UserRole" ngDefaultControl>
-                <mat-option *ngFor="let role of userRoles" [value]="role.value">
-                  {{role.viewValue}}
-                </mat-option>
-              </mat-select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="md-form col-md-6">
-              <label for="Designation">Designation</label>
-              <input mdbInputDirective type="text" formControlName="Designation" class="form-control" mdbActive>
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <input matInput  placeholder="Confirm Password" type="password" id="confirmpassword" (focusout)="check()" formControlName="ConfirmPassword">
+              </mat-form-field>
             </div>
 
-            <div class="md-form col-md-6">
-              <mat-select placeholder="Company" name="UserCompany" formControlName="UserCompany" ngDefaultControl>
-                <mat-option *ngFor="let cmp of companies" [value]="cmp.value">
-                  {{cmp.viewValue}}
-                </mat-option>
-              </mat-select>
-              <!-- Company
-                <br/>
-                <select formControlName="company">
-                  <option *ngFor="let cmp of companies" [ngValue]="cmp.value">
-                    {{ cmp.viewValue }}
-                  </option>
-                </select> -->
-              <!-- <label for="company">Company</label>
-              <input mdbInputDirective type="text" id="company" formControlName="company"
-                class="form-control" mdbActive> -->
-            </div>
           </div>
+
           <div class="row">
-            <div class="md-form col-md-6">
-              <label for="LandLineNo">Landline</label>
-              <input mdbInputDirective type="tel" formControlName="LandLineNo" class="form-control" mdbActive>
+
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <input matInput  placeholder="Email" type="email" formControlName="Email">
+              </mat-form-field>
             </div>
+
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <input matInput  placeholder="Mobile No" type="tel" formControlName="MobileNo">
+              </mat-form-field>
+            </div>
+
+          </div>
+
+          <div class="row">
+            
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <input matInput  placeholder="Department" formControlName="Department">
+              </mat-form-field>
+            </div>
+
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <mat-select placeholder="User Role" name="UserRole" formControlName="UserRole" ngDefaultControl>
+                  <mat-option *ngFor="let role of userRoles" [value]="role.value">
+                    {{role.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+          </div>
+          
+          <div class="row">
+          
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <input matInput  placeholder="Designation" formControlName="Designation">
+              </mat-form-field>
+            </div>
+
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <mat-select placeholder="Company" name="UserCompany" formControlName="UserCompany" ngDefaultControl>
+                  <mat-option *ngFor="let cmp of companies" [value]="cmp.value">
+                    {{cmp.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+       
+          </div>
+       
+          <div class="row">
+       
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <input matInput  placeholder="Landline" type="tel" formControlName="LandLineNo">
+              </mat-form-field>
+            </div>
+       
           </div>
 
           <div class="text-right">
@@ -99,9 +117,6 @@
           </div>
 
         </form>
-        <!--Contact Form-->
-
-
       </div>
 
     </div>

@@ -6,6 +6,8 @@ import { Angular5Csv } from 'angular5-csv/Angular5-csv';
 import * as crypto from 'crypto-js';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 
 @Injectable()
 export class EngineService implements OnInit {
@@ -34,7 +36,7 @@ export class EngineService implements OnInit {
   currentRoute: string;
 
   private subject = new Subject<any>();
-  constructor(private http: Http, private _cookieService: CookieService, private router: Router) {
+  constructor(private http: Http, private httpC: HttpClient, private _cookieService: CookieService, private router: Router) {
     this.setHeaders();
   }
 
@@ -193,15 +195,18 @@ export class EngineService implements OnInit {
     this.excel = new Angular5Csv(this.excelData, excelName, this.excelOptions);
   }
 
-  uploadFile(fileToUpload: File): Promise<any> {
-    // this.URL = this.baseUrl + 'Project/PutProject';
-    // console.log(fileToUpload);
-    // this.URL = 'http://192.168.0.13:8002/';
-    this.URL = 'http://192.168.0.250:8002/';
+  uploadFile(fileItem: File): Promise<any> {
+    const header = new HttpHeaders();
+    header.append('Access-Control-Allow-Origin', '*');
+    header.append('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+    header.append('Allow', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+    this.headers.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+    const url = this.baseUrl + 'Upload/UploadFiles';
+
     const formData: FormData = new FormData();
-    formData.append('fileKey', fileToUpload, fileToUpload.name);
-    return this.http
-      .post(this.URL, formData, this.options)
+    formData.append('fileItem', fileItem, fileItem.name);
+
+    return this.httpC.post(url, formData, { headers: header })
       .toPromise();
   }
 }

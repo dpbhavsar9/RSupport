@@ -4,6 +4,13 @@ label {
 
 .customHeader {
   background: linear-gradient(to right, rgb(15, 4, 116), rgb(25, 19, 119));
+  margin: -110px 1rem 0px 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .jumbotron {
+    margin-top: 30px;
+  }
 }
 
 .danger {

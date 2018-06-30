@@ -203,9 +203,9 @@ export class TeamComponent implements OnInit, OnDestroy {
     const dialogRef = this
       .dialog
       .open(EditTeamComponent, {
-        maxWidth: '80%',
-        minWidth: 320,
-        height: 'auto',
+        minWidth: '60%',
+        maxWidth: '95%',
+        panelClass: 'editDialog',
         data: row,
         hasBackdrop: true,
         closeOnNavigation: true

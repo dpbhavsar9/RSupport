@@ -3,10 +3,10 @@
 
 
   <!--Contact Form-->
-  <form [formGroup]="editProjectForm" (ngSubmit)="updateProject()" class="md-form">
+  <form [formGroup]="editProjectForm" (ngSubmit)="updateProject()" class="custom-form-field">
 
     <mat-dialog-title>
-      <div class="customHeader h4">
+      <div class="customHeader h4-responsive">
         <i class="fa fa-industry" aria-hidden="true"></i>
         <strong>Edit Project</strong>
       </div>
@@ -16,15 +16,14 @@
     <mat-dialog-content>
 
       <div class="row">
-        <div class="md-form col">
+        <div class="custom-form-field col">
           <div class="card animated zoomIn">
-            <div class="card-header">
-              Project Title
-            </div>
             <div class="card-body">
               <div class="row">
-                <div class="md-form col">
-                  <input mdbInputDirective type="text" class="form-control" placeholder="Title" formControlName="ProjectName" mdbActive>
+                <div class="custom-form-field col">
+                  <mat-form-field>
+                    <input matInput placeholder="Title" formControlName="ProjectName">
+                  </mat-form-field>
                 </div>
               </div>
             </div>
@@ -34,29 +33,30 @@
 
       <div class="row">
 
-        <div class="md-form col-md-6">
+        <div class="custom-form-field col-md-6">
           <div class="card animated zoomIn">
-            <div class="card-header">Company</div>
             <div class="card-body">
-              <mat-select placeholder="Company" name="ProjectCompany" formControlName="ProjectCompany" (selectionChange)="updateDropdown()" ngDefaultControl>
-                <mat-option *ngFor="let company of companyList" [value]="company.Oid">
-                  {{company.CompanyName}}
-                </mat-option>
-              </mat-select>
+              <mat-form-field>
+                <mat-select placeholder="Company" name="ProjectCompany" formControlName="ProjectCompany" (selectionChange)="updateDropdown()">
+                  <mat-option *ngFor="let company of companyList" [value]="company.Oid">
+                    {{company.CompanyName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
           </div>
         </div>
 
-        <div class="md-form col-md-6">
+        <div class="custom-form-field col-md-6">
           <div class="card animated zoomIn">
-            <div class="card-header">Project</div>
             <div class="card-body">
-              <mat-select placeholder="Project Leader" name="ProjectLeader" formControlName="ProjectLeader" (selectionChange)="updateDropdown()"
-                ngDefaultControl>
-                <mat-option *ngFor="let user of usersList" [value]="user.Oid">
-                  {{user.UserName}}
-                </mat-option>
-              </mat-select>
+              <mat-form-field>
+                <mat-select placeholder="Project Leader" name="ProjectLeader" formControlName="ProjectLeader" (selectionChange)="updateDropdown()">
+                  <mat-option *ngFor="let user of usersList" [value]="user.Oid">
+                    {{user.UserName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
           </div>
 
@@ -65,35 +65,30 @@
       </div>
 
       <div class="row">
-        <div class="md-form col-md-6">
+        <div class="custom-form-field col-md-6">
           <div class="card animated zoomIn">
-            <div class="card-header">Clientside Coordinator</div>
             <div class="card-body">
-              <mat-select placeholder="Client Coordinator" name="ClientProjectCoordinator" formControlName="ClientProjectCoordinator" ngDefaultControl>
-                <mat-option *ngFor="let user of clientUsersList" [value]="user.Oid">
-                  {{user.UserName}}
-                </mat-option>
-              </mat-select>
+              <mat-form-field>
+                <mat-select placeholder="Client Coordinator" name="ClientProjectCoordinator" formControlName="ClientProjectCoordinator">
+                  <mat-option *ngFor="let user of clientUsersList" [value]="user.Oid">
+                    {{user.UserName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
           </div>
         </div>
 
-
-        <!-- <div class="md-form col-md-2">
-              <label for="Status">Status</label>
-              <input mdbInputDirective type="text" formControlName="Status"
-                class="form-control" mdbActive>
-            </div> -->
-
-        <div class="md-form col-md-6">
+        <div class="custom-form-field col-md-6">
           <div class="card animated zoomIn">
-            <div class="card-header">Status</div>
             <div class="card-body">
-              <mat-select placeholder="Status" name="Status" formControlName="Status" ngDefaultControl>
-                <mat-option *ngFor="let status of status" [value]="status.value">
-                  {{status.viewValue}}
-                </mat-option>
-              </mat-select>
+              <mat-form-field>
+                <mat-select placeholder="Status" name="Status" formControlName="Status">
+                  <mat-option *ngFor="let status of status" [value]="status.value">
+                    {{status.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
           </div>
         </div>
@@ -102,14 +97,12 @@
 
       <div class="row">
 
-        <div class="md-form col-md-12">
+        <div class="custom-form-field col-md-12">
           <div class="card animated zoomIn">
-            <div class="card-header">
-              Description
-            </div>
             <div class="card-body">
-              <textarea mdbInputDirective type="text" class="md-textarea
-            form-control" formControlName="ProjectDescription" rows="3"></textarea>
+              <mat-form-field>
+                <textarea matInput formControlName="ProjectDescription" rows="3"></textarea>
+              </mat-form-field>
             </div>
           </div>
         </div>

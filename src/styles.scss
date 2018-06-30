@@ -76,6 +76,10 @@ body {
   padding-top: 1.4rem;
 }
 
+.cascadingHeader {
+  margin: -110px 1rem 0px 1rem;
+}
+
 .customHeader {
   margin-top: -40px;
 }
@@ -139,6 +143,16 @@ body {
     padding: 0 0 0 0 !important;
     margin: 0;
     background: transparent;
+    overflow: hidden;
+  }
+  overflow:hidden;
+}
+
+.editDialog {
+  margin-top: 80px !important;
+  .mat-dialog-container {
+    margin: 0;
+    background: white;
     overflow: hidden;
   }
   overflow:hidden;

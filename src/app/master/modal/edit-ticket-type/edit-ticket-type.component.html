@@ -1,10 +1,10 @@
 <div class="customDialog">
 
   <!--Contact Form-->
-  <form [formGroup]="updateTicketTypeForm" (ngSubmit)="updateTicketType()" class="md-form">
+  <form [formGroup]="updateTicketTypeForm" (ngSubmit)="updateTicketType()" class="custom-form-field">
 
     <mat-dialog-title>
-      <div class="customHeader h4">
+      <div class="customHeader h4-responsive">
         <i class="fa fa-ticket" aria-hidden="true"></i>
         <strong>Edit Ticket Type</strong>
       </div>
@@ -12,38 +12,41 @@
 
     <mat-dialog-content>
       <div class="row">
-        <div class="md-form col-12">
+        <div class="custom-form-field col-12">
           <div class="card">
-            <div class="card-header">Type Name</div>
             <div class="card-body">
-              <input mdbInputDirective type="text" formControlName="TypeName" class="form-control" mdbActive>
+              <mat-form-field>
+              <input matInput placeholder="Type" formControlName="TypeName">
+            </mat-form-field>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="md-form col-lg-6">
+        <div class="custom-form-field col-lg-6">
           <div class="card">
-            <div class="card-header">Select company</div>
             <div class="card-body">
+              <mat-form-field>
               <mat-select placeholder="Company" name="CompanyID" formControlName="CompanyID" (selectionChange)="loadProjects()" ngDefaultControl>
                 <mat-option *ngFor="let company of companyList" [value]="company.Oid">
                   {{company.CompanyName}}
                 </mat-option>
               </mat-select>
+            </mat-form-field>
             </div>
           </div>
         </div>
 
-        <div class="md-form col-lg-6">
+        <div class="custom-form-field col-lg-6">
           <div class="card">
-            <div class="card-header">Select Project</div>
             <div class="card-body">
+              <mat-form-field>
               <mat-select placeholder="Project" name="ProjectID" formControlName="ProjectID" ngDefaultControl>
                 <mat-option *ngFor="let item of projectList" [value]="item.Oid">
                   {{item.ProjectName}}
                 </mat-option>
               </mat-select>
+            </mat-form-field>
             </div>
           </div>
         </div>
@@ -52,13 +55,14 @@
       <div class="row">
         <div class="col-6">
           <div class="card">
-            <div class="card-header">Status</div>
             <div class="card-body">
+              <mat-form-field>
               <mat-select placeholder="Status" name="Status" formControlName="Status" ngDefaultControl>
                 <mat-option *ngFor="let status of status" [value]="status.value">
                   {{status.viewValue}}
                 </mat-option>
               </mat-select>
+            </mat-form-field>
             </div>
           </div>
         </div>
@@ -79,5 +83,4 @@
 
   </form>
   <!--Contact Form-->
-
 </div>

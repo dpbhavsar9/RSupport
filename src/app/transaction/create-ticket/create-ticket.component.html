@@ -146,9 +146,9 @@
           </div>
 
           <div class="custom-form-field text-right animated zoomIn" [hidden]="createTicketForm.get('TeamID').value == null">
-            <!-- <input mdbInputDirective type="file" id="file" (change)="handleFileInput($event.target.files); uploadFileToActivity()"> -->
+          
             <mat-form-field>
-                <input matInput type="url" id="file" (change)="handleFileInput($event.target.files); uploadFileToActivity()">
+                <input matInput type="url" id="file" (change)="handleFileInput($event.target.files);">
             </mat-form-field>
             <button class="btn indigo waves-light" type="submit" mdbWavesEffect [disabled]="!createTicketForm.valid">
               Save

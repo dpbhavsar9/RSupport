@@ -2,7 +2,7 @@
 
 
   <!--Contact Form-->
-  <form [formGroup]="editUserForm" (ngSubmit)="updateUser()" class="md-form">
+  <form [formGroup]="editUserForm" (ngSubmit)="updateUser()" class="custom-form-field">
 
     <mat-dialog-title>
       <div class="customHeader h4">
@@ -14,26 +14,28 @@
     <mat-dialog-content>
 
       <div class="row">
-        <div class="col md-form">
+        <div class="col custom-form-field">
           <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
               <div class="card">
-                <div class="card-header">UserName</div>
                 <div class="card-body">
-                  <input mdbInputDirective type="text" formControlName="UserName" class="form-control" mdbActive>
+                  <mat-form-field>
+                    <input placeholder="User" formControlName="UserName" matInput>
+                  </mat-form-field>
                 </div>
               </div>
             </div>
 
             <div class="col-lg-9 col-md-6 col-sm-12 col-xs-12">
               <div class="card">
-                <div class="card-header">Company</div>
                 <div class="card-body">
-                  <mat-select placeholder="Company" name="UserCompany" formControlName="UserCompany" ngDefaultControl>
-                    <mat-option *ngFor="let cmp of companies" [value]="cmp.value">
-                      {{cmp.viewValue}}
-                    </mat-option>
-                  </mat-select>
+                  <mat-form-field>
+                    <mat-select placeholder="Company" name="UserCompany" formControlName="UserCompany" >
+                      <mat-option *ngFor="let cmp of companies" [value]="cmp.value">
+                        {{cmp.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
               </div>
             </div>
@@ -41,52 +43,42 @@
           </div>
         </div>
       </div>
-      <!-- <div class="row">
-        <div class="md-form col-md-3">
-          Active
-        </div>
-        <div class="md-form col-md-9">
-          <select [(bgModel)]="clientSelectedValue">
-            <option *ngFor="let d of isClientOptions" [ngValue]="d.data">{{d.data}}</option>
-          </select>
-        </div>
-      </div> -->
       <div class="row">
-        <div class="md-form col">
+        <div class="custom-form-field col">
           <div class="card">
-            <div class="card-header">
-              Mobile No
-            </div>
+
             <div class="card-body">
-              <input mdbInputDirective type="number" formControlName="MobileNo" class="form-control" mdbActive>
+              <mat-form-field>
+                <input placeholder="Mobile No" type="number" formControlName="MobileNo" matInput>
+              </mat-form-field>
             </div>
           </div>
         </div>
-        <div class="md-form col">
+        <div class="custom-form-field col">
           <div class="card">
-            <div class="card-header">
-              Email
-            </div>
             <div class="card-body">
-              <input mdbInputDirective type="text" id="Email" formControlName="Email" class="form-control" mdbActive>
+              <mat-form-field>
+                <input type="email" placeholder="Email" formControlName="Email" matInput>
+              </mat-form-field>
             </div>
           </div>
         </div>
       </div>
 
       <div class="row">
-        <div class="md-form col">
+        <div class="custom-form-field col">
           <div class="card">
-            <div class="card-header">Please add Department and Designation</div>
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <label for="Department">Department</label>
-                  <input mdbInputDirective type="text" formControlName="Department" class="form-control" mdbActive>
+                  <mat-form-field>
+                    <input placeholder="Department" formControlName="Department" matInput>
+                  </mat-form-field>
                 </div>
                 <div class="col">
-                  <label for="Designation">Designation</label>
-                  <input mdbInputDirective type="text" formControlName="Designation" class="form-control" mdbActive>
+                  <mat-form-field>
+                    <input placeholder="Designation" formControlName="Designation" matInput>
+                  </mat-form-field>
                 </div>
               </div>
             </div>
@@ -94,17 +86,16 @@
         </div>
       </div>
       <div class="row">
-        <div class="md-form col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="custom-form-field col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <div class="card animated zoomIn">
-            <div class="card-header">
-              Status
-            </div>
             <div class="card-body">
-              <mat-select placeholder="Status" name="Status" formControlName="Status" ngDefaultControl>
-                <mat-option *ngFor="let item of statusList" [value]="item.value">
-                  {{item.viewValue}}
-                </mat-option>
-              </mat-select>
+              <mat-form-field>
+                <mat-select placeholder="Status" name="Status" formControlName="Status" >
+                  <mat-option *ngFor="let item of statusList" [value]="item.value">
+                    {{item.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
           </div>
         </div>

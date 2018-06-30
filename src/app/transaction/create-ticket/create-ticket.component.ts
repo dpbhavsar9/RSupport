@@ -42,18 +42,6 @@ export class CreateTicketComponent implements OnInit {
     // this.loadTeams();
   }
 
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
-  }
-
-  uploadFileToActivity() {
-    this.engineService.uploadFile(this.fileToUpload).then(res => {
-      // console.log(res);
-    }).catch(err => {
-      // console.log(err);
-    });
-  }
-
   prepareForm() {
     this.createTicketForm = new FormGroup({
 
@@ -141,6 +129,17 @@ export class CreateTicketComponent implements OnInit {
         this.alertService.danger('Server response error!');
       });
     // TicketType Dropdown - end
+  }
+
+  handleFileInput(files: FileList) {
+    const fileItem = files.item(0);
+    // console.log("---1------Handle", fileItem)
+    this.fileToUpload = fileItem;
+    this.engineService.uploadFile(this.fileToUpload).then(res => {
+      console.log('----- File Upload -----', JSON.stringify(res._body));
+    }).catch(err => {
+      console.log('----- Error Uploading File -----', err);
+    });
   }
 
   updateTicketType() {
