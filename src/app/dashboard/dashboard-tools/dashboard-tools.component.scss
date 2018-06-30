@@ -1,55 +1,71 @@
-.moddef{
+.moddef {
   background: #26C6DA;
 }
-.modpri{
+
+.modpri {
   background: rgb(238, 160, 81);
-} 
-.modwar{
+}
+
+.modwar {
   background: #ec7676;
 }
-.modsuc{
+
+.modsuc {
   background: rgb(95, 192, 98);
 }
-.modgre{
+
+.modgre {
   background: rgb(153, 173, 184);
 }
 
-hr{
+hr {
   color: #b30000 !important;
 }
+
 .row {
   align-items: center;
   justify-content: center;
 }
 
- .fontclass{
-   font-family: Calibri;
-   //font-family: '../../../assets/fonts/Adamina-Regular.ttf';
-   font-size: 20px;
- }
+.fontclass {
+  font-family: Calibri; //font-family: '../../../assets/fonts/Adamina-Regular.ttf';
+  font-size: 20px;
+}
 
- .big{
-   font-family: '../../../assets/fonts/FjallaOne-Regular.ttf';
-   font-weight: bold;
-   font-size: 20px;
- }
+.big {
+  font-family: Calibri;
+  font-weight: bold;
+  font-size: 20px;
+}
 
- td{font-family: Calibri;
+td {
+  font-family: Calibri;
   color: rgb(74, 85, 90);
   font-weight: bold;
-  font-size: 18px;}
+  font-size: 18px;
+}
 
-  th{
+th {
   font-family: Calibri;
   font-weight: bold;
   font-size: 18px;
-  }
+}
 
-  .space{
-    margin-right: 2.8rem;
-    margin-left: 2.8rem;
+.space {
+  margin-right: 1.5rem;
+  margin-left: 1.5rem;
+}
+
+.modalsize {
+  width: 65%;
+}
+
+@media only screen and (max-width: 600px) {
+  .modalsize {
+    width: 98%;
   }
-  
+}
+
 .badge-default {
   background: linear-gradient(to bottom, rgb(2, 161, 182), #26C6DA);
 }

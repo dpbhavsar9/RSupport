@@ -6,107 +6,72 @@
 
       <div class="jumbotron hoverable">
 
-        <!--Contact Form-->
-        <form [formGroup]="createProjectForm" (ngSubmit)="createProject()" class="md-form">
+        <form [formGroup]="createProjectForm" (ngSubmit)="createProject()" class="custom-form-field">
+
           <div class="customHeader z-depth-2">
-            <h4 class="card-title">
-
+            <div class="h4-responsive card-title">
               <i class="fa fa-industry" aria-hidden="true"></i>
-              <strong>
-                Create Project</strong>
-            </h4>
+              <strong>Create Project</strong>
+            </div>
           </div>
+
           <hr>
+
           <div class="row">
-
-            <!--
-            <div class="md-form col-md-3">
-
-              <label for="ProjectID">ProjectID</label>
-              <input mdbInputDirective type="text" formControlName="ProjectID" class="form-control" mdbActive>
-            </div>-->
-
-            <div class="md-form col">
-              <label for="ProjectName">Name</label>
-              <input mdbInputDirective type="text" formControlName="ProjectName" class="form-control" mdbActive>
-              <!-- <div *ngIf="!createProjectForm.get('ProjectName').valid && createProjectForm.get('ProjectName').touched">
-                <p class="danger">Required, Minimum length 6, Maximum Length 12</p>
-              </div> -->
+            <div class="custom-form-field col">
+              <mat-form-field>
+                <input matInput formControlName="ProjectName" placeholder="Name">
+              </mat-form-field>
             </div>
           </div>
+
           <div class="row">
-            <div class="md-form col-md-12">
-              <textarea mdbInputDirective type="text" class="md-textarea
-                form-control" rows="3" formControlName="ProjectDescription" mdbActive></textarea>
-              <label for="ProjectDescription">Description</label>
-              <!-- <div *ngIf="!createProjectForm.get('ProjectDescription').valid && createProjectForm.get('ProjectDescription').touched">
-                <p class="danger">Required</p>
-              </div> -->
+            <div class="custom-form-field col-md-12">
+              <mat-form-field>
+                <textarea matInput rows="3" placeholder="Description" formControlName="ProjectDescription"></textarea>
+              </mat-form-field>
             </div>
           </div>
 
           <div class="row">
 
-            <div class="md-form col-md-6">
-              <mat-select placeholder="Company" name="ProjectCompany" formControlName="ProjectCompany" (selectionChange)="updateDropdown()" ngDefaultControl>
-                <mat-option *ngFor="let company of companyList" [value]="company.Oid">
-                  {{company.CompanyName}}
-                </mat-option>
-              </mat-select>
-
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <mat-select placeholder="Company" formControlName="ProjectCompany" (selectionChange)="updateDropdown()">
+                  <mat-option *ngFor="let company of companyList" [value]="company.Oid">
+                    {{company.CompanyName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
 
-
-            <div class="md-form col-md-6">
-              <mat-select placeholder="Project Leader" name="ProjectLeader" formControlName="ProjectLeader" ngDefaultControl>
-                <mat-option *ngFor="let user of usersList" [value]="user.Oid">
-                  {{user.UserName}}
-                </mat-option>
-              </mat-select>
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <mat-select placeholder="Project Leader" formControlName="ProjectLeader">
+                  <mat-option *ngFor="let user of usersList" [value]="user.Oid">
+                    {{user.UserName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
 
           </div>
 
           <div class="row">
 
-            <div class="md-form col-md-6">
-              <mat-select placeholder="Clientside Coordinator" name="ClientProjectCoordinator" formControlName="ClientProjectCoordinator"
-                ngDefaultControl>
-                <mat-option *ngFor="let user of clientUsersList" [value]="user.Oid">
-                  {{user.UserName}}
-                </mat-option>
-              </mat-select>
-
-              <!-- <div *ngIf="!createProjectForm.get('ClientProjectCoordinator').valid && createProjectForm.get('ClientProjectCoordinator').touched">
-                <p class="danger">Required</p>
-              </div> -->
-
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <mat-select placeholder="Clientside Coordinator" formControlName="ClientProjectCoordinator">
+                  <mat-option *ngFor="let user of clientUsersList" [value]="user.Oid">
+                    {{user.UserName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
-
-
-            <!-- <div class="md-form col-md-2">
-            <label for="Status">Status</label>
-            <input mdbInputDirective type="text" formControlName="Status"
-              class="form-control" mdbActive>
-          </div> -->
-
-            <!-- <div class="md-form col-md-6">
-
-              <mat-select placeholder="Status" name="Status" formControlName="Status" ngDefaultControl>
-                <mat-option *ngFor="let status of status" [value]="status.value">
-                  {{status.viewValue}}
-                </mat-option>
-              </mat-select>
-
-            </div> -->
 
           </div>
 
-          <div class="text-right">
-
-            <div class="btn btn-primary">
-              <input mdbInputDirective type="file" id="file" (change)="handleFileInput($event.target.files)"> Choose File
-            </div>
+          <div class="custom-form-field text-right">
 
             <button class="btn indigo waves-light" type="submit" mdbWavesEffect [disabled]="!createProjectForm.valid">
               Save
@@ -117,89 +82,10 @@
           </div>
 
         </form>
-        <!--Contact Form-->
-
 
       </div>
 
     </div>
 
   </div>
-
 </div>
-
-
-
-<!-- 
- <button type="button" class="btn btn-primary waves-light"
-            data-toggle="modal" data-target="#basicExample"
-            (click)="fluid.show()"
-            mdbWavesEffect>
-            !
-          </button>
-<div mdbModal #fluid="mdb-modal" class="modal fade right"
-  id="fullHeightModalRight" tabindex="-1" role="dialog"
-  aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-full-height modal-right" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title w-100" id="myModalLabel">Conditions</h4>
-        <button type="button" class="close" data-dismiss="modal"
-          aria-label="Close" (click)="fluid.hide()">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Please enter data as described below.
-        </p>
-        <blockquote class="blockquote" [ngClass]="{
-          'bq-success':createProjectForm.valid== true,
-          'bq-danger': createProjectForm.valid== false
-          }">
-          Status: {{createProjectForm.valid ? 'Valid' : 'Invalid'}}
-        </blockquote>
-        <ul class="list-group z-depth-0">
-          <li class="list-group-item justify-content-between">
-            ProjectName
-            <span class="badge badge-primary badge-pill">{{createProjectForm.get('ProjectName').valid
-              ? 'OK' : 'Invalid'}}</span>
-            <hr>
-            <p>Required</p>
-          </li>
-          <li class="list-group-item justify-content-between">
-            Project Description
-            <span class="badge badge-primary badge-pill">{{createProjectForm.get('ProjectDescription').valid
-              ? 'OK' : 'Invalid'}}</span>
-          </li>
-          <li class="list-group-item justify-content-between">
-            Project Company
-            <span class="badge badge-primary badge-pill">{{createProjectForm.get('ProjectCompany').valid
-              ? 'OK' : 'Invalid'}}</span>
-          </li>
-          <li class="list-group-item justify-content-between">
-            Project Leader
-            <span class="badge badge-primary badge-pill">{{createProjectForm.get('ProjectLeader').valid
-              ? 'OK' : 'Invalid'}}</span>
-          </li>
-          <li class="list-group-item justify-content-between">
-            Client Project Coordinator
-            <span class="badge badge-primary badge-pill">{{createProjectForm.get('ClientProjectCoordinator').valid
-              ? 'OK' : 'Invalid'}}</span>
-          </li>
-          <li class="list-group-item justify-content-between">
-            Status
-            <span class="badge badge-primary badge-pill">
-              {{createProjectForm.get('ClientProjectCoordinator').valid ? 'OK'
-              :
-              'Invalid'}}</span>
-          </li>
-        </ul>
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-primary waves-light"
-          data-dismiss="modal" (click)="fluid.hide()" mdbWavesEffect>Close</button>
-      </div>
-    </div>
-  </div>
-</div> -->

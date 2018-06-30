@@ -97,7 +97,7 @@
 
         </mat-select>
       </mat-form-field>
-      <mat-checkbox color="primary" matTooltip="Grid view of tickets"  [(ngModel)]="condensedView">Condensed View</mat-checkbox>
+      <mat-checkbox color="primary" matTooltip="Grid view of tickets" [(ngModel)]="condensedView">Condensed View</mat-checkbox>
       <i class="fa fa-bar-chart" matTooltip="Click to see Chart" (click)="toggleChart()" style="padding-bottom: 10px"></i>
       <i class="fa fa-refresh" matTooltip="Clear and refresh" (click)="clearSerchCriteria()" style="padding-bottom: 10px;"></i>
     </div>
@@ -468,12 +468,11 @@
 </div>
 
 
+
 <div mdbModal #demoBasic="mdb-modal" class="modal fade fontclass" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-
-  <div class="modal-dialog modal-fluid" role="document" style="width: 63%">
+  <div class="modal-dialog modal-fluid modalsize" role="document">
     <div class="modal-content">
-
       <div class="modal-header" [ngClass]="{
         'moddef':modalData.TicketStatus=='1',
         'modpri':modalData.TicketStatus=='2',
@@ -502,6 +501,7 @@
         <table class="table table-responsive">
           <thead>
             <tr class="fontclass">
+              <th></th>
               <th>Create</th>
               <th>
                 <span [ngClass]="{'space': modalData.AssignByName == ''}">Assign</span>
@@ -523,88 +523,115 @@
 
           <tbody>
             <tr>
-
-              <td class="w-20">
-                <div>
-                  Date:&nbsp;{{modalData.CreatedDate | date }}
-                  <br> Time:&nbsp;{{modalData.CreatedDate | date: 'shortTime'}}
-                  <hr> By:&nbsp;{{modalData.CreatedByName | titlecase}}
-                </div>
+              <td>Date&nbsp;:&nbsp;</td>
+              <td>
+                <div>{{modalData.CreatedDate | date }}</div>
               </td>
-
-              <td class="w-20">
+              <td>
                 <div *ngIf="modalData.AssignByName == ''">
-                  <span class="space">-----</span>
-                  <br>
-                  <span class="space">-----</span>
-                  <hr>
-                  <span class="space">-----</span>
+                  <span class="space"></span>
                 </div>
-                <div *ngIf="modalData.AssignByName !== ''">
-                  Date:&nbsp;{{modalData.AssignDate | date }}
-                  <br> Time:&nbsp;{{modalData.AssignDate | date: 'shortTime'}}
-                  <hr> By:&nbsp;{{modalData.AssignByName | titlecase}}
-                </div>
+                <div *ngIf="modalData.AssignByName !== ''">{{modalData.AssignDate | date }}</div>
               </td>
-
-              <td class="w-20">
+              <td>
                 <div *ngIf="modalData.WIPByName == ''">
-                  <span class="space">-----</span>
-                  <br>
-                  <span class="space">-----</span>
-                  <hr>
-                  <span class="space">-----</span>
+                  <span class="space"></span>
                 </div>
-                <div *ngIf="modalData.WIPByName !== ''">
-                  Date:&nbsp;{{modalData.WIPDate | date}}
-                  <br> Time:&nbsp;{{modalData.WIPDate | date: 'shortTime'}}
-                  <hr> By:&nbsp;{{modalData.WIPByName | titlecase}}
-                </div>
+                <div *ngIf="modalData.WIPByName !== ''">{{modalData.WIPDate | date }}</div>
               </td>
-
-              <td class="w-20">
+              <td>
                 <div *ngIf="modalData.HoldByName == ''">
-                  <span class="space">-----</span>
-                  <br>
-                  <span class="space">-----</span>
-                  <hr>
-                  <span class="space">-----</span>
+                  <span class="space"></span>
                 </div>
-                <div *ngIf="modalData.HoldByName !== ''">
-                  Date:&nbsp;{{modalData.HoldDate | date}}
-                  <br> Time:&nbsp;{{modalData.HoldDate | date: 'shortTime'}}
-                  <hr> By:&nbsp;{{modalData.HoldByName | titlecase}}
-                </div>
+                <div *ngIf="modalData.HoldByName !== ''">{{modalData.HoldDate | date }}</div>
               </td>
-
-              <td class="w-20">
+              <td>
                 <div *ngIf="modalData.CloseByName == ''">
-                  <span class="space">-----</span>
-                  <br>
-                  <span class="space">-----</span>
-                  <hr>
-                  <span class="space">-----</span>
+                  <span class="space"></span>
                 </div>
-                <div *ngIf="modalData.CloseByName !== ''">
-                  Date:&nbsp;{{modalData.CloseDate | date}}
-                  <br> Time:&nbsp;{{modalData.CloseDate | date: 'shortTime'}}
-                  <hr> By:&nbsp;{{modalData.CloseByName | titlecase}}
-                </div>
+                <div *ngIf="modalData.CloseByName !== ''">{{modalData.CloseDate | date }}</div>
               </td>
-
-              <td class="w-20">
+              <td>
                 <div *ngIf="modalData.CancelByName == ''">
-                  <span class="space">-----</span>
-                  <br>
-                  <span class="space">-----</span>
-                  <hr>
-                  <span class="space">-----</span>
+                  <span class="space"></span>
                 </div>
-                <div *ngIf="modalData.CancelByName !== ''">
-                  Date:&nbsp;{{modalData.CancelDate | date}}
-                  <br> Time:&nbsp;{{modalData.CancelDate | date: 'shortTime'}}
-                  <hr> By:&nbsp;{{modalData.CancelByName | titlecase}}
+                <div *ngIf="modalData.CancelByName !== ''">{{modalData.CancelDate | date }}</div>
+              </td>
+            </tr>
+
+
+            <tr>
+              <td>Time&nbsp;:&nbsp;</td>
+              <td>
+                <div>{{modalData.CreatedDate | date: 'shortTime'}}</div>
+              </td>
+              <td>
+                <div *ngIf="modalData.AssignByName == ''">
+                  <span class="space"></span>
                 </div>
+                <div *ngIf="modalData.AssignByName !== ''">{{modalData.AssignDate | date: 'shortTime'}}</div>
+              </td>
+              <td>
+                <div *ngIf="modalData.WIPByName == ''">
+                  <span class="space"></span>
+                </div>
+                <div *ngIf="modalData.WIPByName !== ''">{{modalData.WIPDate | date: 'shortTime'}}</div>
+              </td>
+              <td>
+                <div *ngIf="modalData.HoldByName == ''">
+                  <span class="space"></span>
+                </div>
+                <div *ngIf="modalData.HoldByName !== ''">{{modalData.HoldDate | date: 'shortTime'}}</div>
+              </td>
+              <td>
+                <div *ngIf="modalData.CloseByName == ''">
+                  <span class="space"></span>
+                </div>
+                <div *ngIf="modalData.CloseByName !== ''">{{modalData.CloseDate | date: 'shortTime'}}</div>
+              </td>
+              <td>
+                <div *ngIf="modalData.CancelByName == ''">
+                  <span class="space"></span>
+                </div>
+                <div *ngIf="modalData.CancelByName !== ''">{{modalData.CancelDate | date: 'shortTime'}}</div>
+              </td>
+            </tr>
+
+
+            <tr>
+              <td>By&nbsp;:&nbsp;</td>
+              <td>
+                <div>{{modalData.CreatedByName | titlecase}}</div>
+              </td>
+              <td>
+                <div *ngIf="modalData.AssignByName == ''">
+                  <span class="space"></span>
+                </div>
+                <div *ngIf="modalData.AssignByName !== ''">{{modalData.AssignByName | titlecase}}</div>
+              </td>
+              <td>
+                <div *ngIf="modalData.WIPByName == ''">
+                  <span class="space"></span>
+                </div>
+                <div *ngIf="modalData.WIPByName !== ''">{{modalData.WIPByName | titlecase}}</div>
+              </td>
+              <td>
+                <div *ngIf="modalData.HoldByName == ''">
+                  <span class="space"></span>
+                </div>
+                <div *ngIf="modalData.HoldByName !== ''">{{modalData.HoldByName | titlecase}}</div>
+              </td>
+              <td>
+                <div *ngIf="modalData.CloseByName == ''">
+                  <span class="space"></span>
+                </div>
+                <div *ngIf="modalData.CloseByName !== ''">{{modalData.CloseByName | titlecase}}</div>
+              </td>
+              <td>
+                <div *ngIf="modalData.CancelByName == ''">
+                  <span class="space"></span>
+                </div>
+                <div *ngIf="modalData.CancelByName !== ''">{{modalData.CancelByName | titlecase}}</div>
               </td>
             </tr>
 

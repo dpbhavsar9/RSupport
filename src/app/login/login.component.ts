@@ -6,6 +6,7 @@ import { Http } from '@angular/http';
 import { CookieService } from 'ngx-cookie';
 import { EngineService } from '../services/engine.service';
 import * as crypto from 'crypto-js';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private alertService: AlertService,
+    private spinner: NgxSpinnerService,
     private router: Router,
     private http: Http,
     private engineService: EngineService,
@@ -48,7 +50,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    // this.spinner.show();
+    this.spinner.show();
     this.UserName = this.loginForm.get('UserName').value;
     this.Password = this.loginForm.get('Password').value;
 
@@ -72,12 +74,14 @@ export class LoginComponent implements OnInit {
         const stringData = JSON.stringify(data);
         const Encrypt = crypto.AES.encrypt(stringData, this.cryptkey);
         this._cookieService.put('response', Encrypt.toString());
+        this.spinner.hide();
         this.router.navigate(['dashboard']);
-
       } else {
+        this.spinner.hide();
         this.alertService.info('Please try again later');
       }
     }).catch(error => {
+      this.spinner.hide();
       this.alertService.danger('Enter Valid Credentials');
       this.loggedIn = false;
       this._cookieService.removeAll();

@@ -7,89 +7,93 @@
       <div class="jumbotron z-depth-5 hoverable">
 
         <!--Contact Form-->
-        <form [formGroup]="createCompanyForm" (ngSubmit)="createCompany()" class="md-form">
-          <div class="customHeader z-depth-2">
-            <h4 class="card-title">
-              <i class="fa fa-building-o" aria-hidden="true"></i>
+        <form [formGroup]="createCompanyForm" (ngSubmit)="createCompany()" class="custom-form-field">
+          <div class="customHeader z-depth-1">
+            <div class="h4-responsive card-title">
+              <i class="fa fa-building-o" aria-hidden="true" style="padding-right: 10px"></i>
               <strong>Create Company</strong>
-
-            </h4>
+            </div>
           </div>
+
           <hr>
-          <div class="row">
 
-            <!--
-            <div class="md-form col-md-3">
-              <label for="companyId">ID</label>
-              <input mdbInputDirective type="text" formControlName="companyId" class="form-control" mdbActive>
-            </div>  -->
-
-            <div class="md-form col">
-              <label for="CompanyName">Company</label>
-              <input mdbInputDirective type="text" formControlName="CompanyName" class="form-control" mdbActive>
-            </div>
-          </div>
           <div class="row">
-            <div class="md-form col-md-3">
-              IsClient
-            </div>
-            <div class="md-form col-md-2">
-              <mat-select placeholder="IsClient" formControlName="IsClient" ngDefaultControl>
-                <mat-option *ngFor="let d of isClientOptions" [value]="d.data">
-                  {{d.data}}
-                </mat-option>
-              </mat-select>
-
-              <!-- <select [(bgModel)]="clientSelectedValue">
-                  <option *ngFor="let d of isClientOptions" [ngValue]="d.data">{{d.data}}</option>
-                </select> -->
-            </div>
-          </div>
-          <div class="row">
-            <div class="md-form col">
-              <label for="Add1">Address 1</label>
-              <input mdbInputDirective type="text" id="Add1" formControlName="Add1" class="form-control" mdbActive>
-            </div>
-          </div>
-          <div class="row">
-            <div class="md-form col">
-              <label for="Add2">Address 2</label>
-              <input mdbInputDirective type="text" id="Add2" formControlName="Add2" class="form-control" mdbActive>
-            </div>
-          </div>
-          <div class="row">
-            <div class="md-form col">
-              <label for="Add3">Address 3</label>
-              <input mdbInputDirective type="text" id="Add3" formControlName="Add3" class="form-control" mdbActive>
+            <div class="custom-form-field col">
+              <mat-form-field>
+                <input matInput formControlName="CompanyName" placeholder="Company" autofocus="true" autocomplete="off">
+              </mat-form-field>
             </div>
           </div>
 
           <div class="row">
-            <div class="md-form col">
-              <label for="City">City</label>
-              <input mdbInputDirective type="text" id="City" formControlName="City" class="form-control" mdbActive>
-            </div>
-
-            <div class="md-form col-md-6">
-              <label for="State">State</label>
-              <input mdbInputDirective type="text" id="State" formControlName="State" class="form-control" mdbActive>
-            </div>
-          </div>
-          <div class="row">
-            <div class="md-form col-md-6">
-              <label for="Country">Country</label>
-              <input mdbInputDirective type="text" id="Country" formControlName="Country" class="form-control" mdbActive>
-            </div>
-
-            <div class="md-form col-md-6">
-              <label for="Pincode">Pincode</label>
-              <input mdbInputDirective type="number" id="Pincode" formControlName="Pincode" class="form-control" mdbActive>
+            <div class="custom-form-field col-md-2">
+              <mat-form-field>
+                <mat-select placeholder="IsClient" formControlName="IsClient">
+                  <mat-option *ngFor="let d of isClientOptions" [value]="d.data">
+                    {{d.data}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
           </div>
+
           <div class="row">
-            <div class="md-form col-md-6">
-              <label for="LandLineNo">Landline</label>
-              <input mdbInputDirective type="number" id="LandLineNo" formControlName="LandLineNo" class="form-control" mdbActive>
+            <div class="custom-form-field col">
+              <mat-form-field>
+                <input matInput id="Add1" placeholder="Address Line 1" formControlName="Add1">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="custom-form-field col">
+              <mat-form-field>
+                <input matInput id="Add2" placeholder="Address Line 2" formControlName="Add2">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="custom-form-field col">
+              <mat-form-field>
+                <input matInput id="Add3" placeholder="Address Line 3" formControlName="Add3">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="custom-form-field col">
+              <mat-form-field>
+                <input matInput id="City" placeholder="City" formControlName="City">
+              </mat-form-field>
+            </div>
+
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <input matInput id="State" placeholder="State" formControlName="State">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <input matInput id="Country" placeholder="Country" formControlName="Country">
+              </mat-form-field>
+            </div>
+
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <input matInput type="number" id="Pincode" placeholder="Pincode" formControlName="Pincode">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="custom-form-field col-md-6">
+              <mat-form-field>
+                <input matInput id="LandLineNo" placeholder="Landline No" formControlName="LandLineNo">
+              </mat-form-field>
             </div>
           </div>
 

@@ -35,10 +35,10 @@
           <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="card-text">
 
             <mat-form-field style="width: 100%" >
-              <input matInput formControlName="UserName" placeholder="Username" value="" autofocus>
+              <input matInput formControlName="UserName" placeholder="Username" value="" autofocus="true" autocomplete="off">
             </mat-form-field>
             <mat-form-field style="width: 100%" >
-              <input matInput='password' formControlName="Password" placeholder="Password" value="">
+              <input matInput='password' type="password" formControlName="Password" placeholder="Password" value="">
             </mat-form-field>
 
             <div class="text-right">
