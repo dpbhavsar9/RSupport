@@ -99,7 +99,7 @@ export class CreateTeamComponent implements OnInit {
   }
 
   createTeam() {
-
+    this.engineService.validateUser();
     if (this.createTeamForm.status === 'VALID') {
 
       this.url = 'Team/PostTeam';

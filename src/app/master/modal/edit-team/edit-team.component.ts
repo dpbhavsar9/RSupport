@@ -128,7 +128,7 @@ export class EditTeamComponent implements OnInit {
   }
 
   updateTeam() {
-
+    this.engineService.validateUser();
     if (this.updateTeamForm.status === 'VALID') {
 
       for (let i = 0; i < this.finalUsersList.length; i++) {

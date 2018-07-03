@@ -461,7 +461,7 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
   }
 
   private openTicketMessage(index, pindex) {
-
+this.engineService.validateUser();
     const row = this.source[index].data[pindex];
 
     const data = {
@@ -490,6 +490,7 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
   }
 
   changePriority(i, p, priority) {
+    this.engineService.validateUser();
     const row = this.source[i].data[p];
     const Oid = row['Oid'];
     const by = this._cookieService.get('Oid');
@@ -502,6 +503,7 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
   }
 
   processTicket(id, status) {
+    this.engineService.validateUser();
     let data;
     let message;
     const by = this._cookieService.get('Oid');

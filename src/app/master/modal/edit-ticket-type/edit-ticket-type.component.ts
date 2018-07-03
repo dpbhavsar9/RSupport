@@ -79,7 +79,7 @@ export class EditTicketTypeComponent implements OnInit {
 
 
   updateTicketType() {
-
+    this.engineService.validateUser();
     if (this.updateTicketTypeForm.status === 'VALID') {
 
       this.url = 'Ticket/PutTicketType';

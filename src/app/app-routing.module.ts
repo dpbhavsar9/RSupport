@@ -21,8 +21,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { EditAuthGuard } from './services/edit-auth-guard.service';
 import { MasterAuthGuard } from './services/master-auth-guard.service';
 
-
-
 const appRoutes: Routes = [
   {
     path: '', component: WelcomeComponent,

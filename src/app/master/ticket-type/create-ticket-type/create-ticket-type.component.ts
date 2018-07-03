@@ -75,7 +75,7 @@ export class CreateTicketTypeComponent implements OnInit {
 
 
   createTicketType() {
-
+    this.engineService.validateUser();
     if (this.createTicketTypeForm.status === 'VALID') {
 
       this.url = 'Ticket/PostTicketType';

@@ -20,6 +20,10 @@ export class EditCompanyComponent implements OnInit {
   isClientOptions = [
     { value: true, viewValue: 'Yes' },
     { value: false, viewValue: 'No' }];
+    statusList = [
+      { value: 'A', viewValue: 'Active' },
+      { value: 'C', viewValue: 'Inactive' }
+    ];
 
   constructor(private alertService: AlertService,
     public dialogRef: MatDialogRef<EditCompanyComponent>,
@@ -73,6 +77,7 @@ export class EditCompanyComponent implements OnInit {
   selectionChanged(event: Event) { }
 
   editCompany() {
+    this.engineService.validateUser();
     // console.log(this.editCompanyForm.value);
     this.url = 'Company/PutCompany';
     this.engineService.updateData(this.url, this.editCompanyForm.value).then(() => {

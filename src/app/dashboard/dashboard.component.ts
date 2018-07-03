@@ -99,6 +99,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   updateDashboardState(state: string) {
+    this.engineService.validateUser();
     this.engineService.updateDashboardState(state);
     this.dashboardState = state;
   }
@@ -149,6 +150,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   submitPass() {
+    this.engineService.validateUser();
     const curPass = this.passForm.get('currPass').value;
     const newPass = this.passForm.get('newPass').value;
 

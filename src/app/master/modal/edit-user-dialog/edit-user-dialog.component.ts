@@ -53,6 +53,7 @@ export class EditUserDialogComponent implements OnInit {
   }
 
   updateUser() {
+    this.engineService.validateUser();
     // console.log(this.editUserForm.value);
     if (this.editUserForm.status === 'VALID') {
 

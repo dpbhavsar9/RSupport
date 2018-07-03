@@ -73,7 +73,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   createUser() {
-
+    this.engineService.validateUser();
     if (this.createUserForm.status === 'VALID') {
       if (this.createUserForm.get('Password').value !== this.createUserForm.get('ConfirmPassword').value) {
         return this.alertService.danger('Password and Confirm Password not matched!');

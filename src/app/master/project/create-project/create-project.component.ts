@@ -82,6 +82,7 @@ export class CreateProjectComponent implements OnInit {
   }
 
   createProject() {
+    this.engineService.validateUser();
     // console.log(this.createProjectForm.value);
     this.url = 'Project/PostProject';
 

@@ -5,7 +5,7 @@
 
     <mat-dialog-title>
       <div class="customHeader z-depth-1 h4-responsive">
-        <i class="fa fa-building-o" aria-hidden="true"></i>
+        <i class="fa fa-building-o" aria-hidden="true" style="padding-right: 10px"></i>
         <strong>Edit Company</strong>
       </div>
     </mat-dialog-title>
@@ -119,6 +119,28 @@
                 </div>
               </div>
 
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="custom-form-field col">
+          <div class="card animated zoomIn">
+            <div class="card-header">
+              Status
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                  <mat-form-field>
+                    <mat-select placeholder="Status" formControlName="Status">
+                      <mat-option *ngFor="let item of statusList" [value]="item.value">
+                        {{item.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
             </div>
           </div>
         </div>

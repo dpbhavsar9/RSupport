@@ -167,6 +167,7 @@ export class CreateTicketComponent implements OnInit {
     }
   }
   uploadFileToActivity() {
+    this.engineService.validateUser();
     this.engineService.uploadFile(this.fileToUpload, this.data).then(res => {
       console.log('----- File Upload -----', JSON.stringify(res._body));
     }).catch(err => {
@@ -180,7 +181,7 @@ export class CreateTicketComponent implements OnInit {
   }
 
   createTicket() {
-
+    this.engineService.validateUser();
     if (this.createTicketForm.status === 'VALID') {
       // console.log(this.createTicketForm.value);
       this.url = 'Ticket/PostTicket';
@@ -194,7 +195,7 @@ export class CreateTicketComponent implements OnInit {
         this.data.TicketBacklogID = res2.TicketBacklogID;
 
         if (response.status === 201 || response.status === 200) {
-          this.alertService.success('Ticket successfully created!');
+          // this.alertService.success('Ticket successfully created!');
           this.ticketSaved = true;
         }
       }).catch(error => {

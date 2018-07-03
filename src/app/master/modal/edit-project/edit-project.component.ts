@@ -114,6 +114,7 @@ export class EditProjectComponent implements OnInit {
 
 
   updateProject() {
+    this.engineService.validateUser();
     this.url = 'Project/PutProject';
     this.engineService.updateData(this.url, this.editProjectForm.value).then(response => {
       if (response.status === 201 || response.status === 200) {

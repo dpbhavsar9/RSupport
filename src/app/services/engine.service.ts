@@ -100,6 +100,18 @@ export class EngineService implements OnInit {
     }
   }
 
+  validateUser() {
+    const Decrypt = crypto.AES.decrypt(this._cookieService.get('response').toString(), this._cookieService.get('Oid') + 'India');
+    const decryptData = Decrypt.toString(crypto.enc.Utf8);
+    const Oid = JSON.parse(decryptData).Oid.toString();
+    if (this._cookieService.get('Oid') !== Oid) {
+      this._cookieService.removeAll();
+      this.router.navigate(['']);
+    } else {
+      return true;
+    }
+  }
+
   // Authorization completed
 
   getCookieData() {

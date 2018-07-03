@@ -13,7 +13,10 @@ import {
   MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule,
   MatSelectModule, MatProgressSpinnerModule,
   MatInputModule,
-  MatCheckboxModule, MAT_CHECKBOX_CLICK_ACTION, MatSlideToggleModule, MatTooltipModule
+  MatCheckboxModule,
+  MAT_CHECKBOX_CLICK_ACTION,
+  MatSlideToggleModule,
+  MatTooltipModule
 } from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
 import { AppComponent } from './app.component';

@@ -141,6 +141,7 @@ export class MeslogComponent implements OnInit, OnDestroy {
   }
 
   sendMessage() {
+    this.engineService.validateUser();
     const data = {
       AttachmentFlag: false,
       MessageLog: this.chatForm.get('chatmessage').value,

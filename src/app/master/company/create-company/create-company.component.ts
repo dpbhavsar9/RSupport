@@ -50,7 +50,7 @@ export class CreateCompanyComponent implements OnInit {
   selectionChanged(event: Event) { }
 
   createCompany() {
-
+    this.engineService.validateUser();
     this.url = 'Company/PostCompany';
     this.engineService.postData(this.url, this.createCompanyForm.value).then(response => {
       if (response.status === 201 || response.status === 200) {

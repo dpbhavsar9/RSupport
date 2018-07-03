@@ -167,7 +167,7 @@
              
           </div>
         </div>
-            <button class="btn indigo waves-light" type="submit" *ngIf="!ticketSaved" mdbWavesEffect [disabled]="!createTicketForm.valid">
+            <button class="btn indigo waves-light" type="submit" *ngIf="!ticketSaved" mdbWavesEffect [disabled]="!createTicketForm.valid" (click)="style.show()">
               Save
             </button>
             <button type="button" class="btn btn-danger waves-light" routerLink="../" mdbWavesEffect>
@@ -185,6 +185,52 @@
   </div>
 
 </div>
+
+<div mdbModal #style="mdb-modal" class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-notify modal-success" role="document" *ngIf="ticketSaved">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="heading lead">Ticket Successfully created</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="style.hide()">
+                    <span aria-hidden="true" class="white-text">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                   <div class="card-text">
+                     <strong>Ticket No: {{data.TicketNo}}</strong>
+                   </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a type="button" class="btn btn-outline-secondary" data-dismiss="modal" (click)="style.hide()" mdbWavesEffect>OK</a>
+            </div>
+        </div>
+    </div>
+    <div class="modal-dialog modal-notify modal-info" role="document" *ngIf="!ticketSaved">
+      <div class="modal-content">
+          <div class="modal-header">
+              <p class="heading lead">Ticket creation in progress</p>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="style.hide()">
+                  <span aria-hidden="true" class="white-text">×</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div class="text-center">
+                  <i class="fa fa-refresh fa-4x mb-3 animated rotateIn"></i>
+                 <div class="card-text">
+                   <strong>Processing...</strong>
+                 </div>
+              </div>
+          </div>
+          <div class="modal-footer justify-content-center">
+              <a type="button" class="btn btn-outline-secondary" data-dismiss="modal" (click)="style.hide()" mdbWavesEffect>OK</a>
+          </div>
+      </div>
+  </div>
+</div>
+
 <!-- 
 <div>
   <label>PDF src</label>
