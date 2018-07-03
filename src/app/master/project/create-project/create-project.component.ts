@@ -94,19 +94,4 @@ export class CreateProjectComponent implements OnInit {
       this.alertService.danger('Project creation failed!' + error);
     });
   }
-
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
-  }
-
-  uploadFileToActivity() {
-    this.engineService.uploadFile(this.fileToUpload).then(res => {
-      // console.log(res);
-      return this.alertService.success('File uploaded successfully');
-    }).catch(err => {
-      // console.log(err);
-      return this.alertService.danger('File upload failed');
-    });
-  }
-
 }

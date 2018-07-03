@@ -4,14 +4,14 @@
 
     <logo>
 
-      <img src="assets/images/rsupport.png" style="max-width: 25px; max-height: 30px">
-      &nbsp;
-      <a class="logo navbar-brand" style="text-decoration: underlinetomato; color: red; ">
-        <strong>R-Support </strong>
+      <img src="assets/images/rsupport.png" style="max-width: 35px; padding-bottom: 2px; max-height: 35px; vertical-align: middle;"> 
+      <a class="logo navbar-brand" style="text-decoration: underlinetomato; color: red; font-weight: bold">
+        <strong style="border-bottom: 2px solid tomato">R-Support </strong>
       </a>
 
       <ul class="navbar-nav mr-auto" style="display: inline;">
-        <li *ngIf="userRole!=='Administrator'"matTooltip="Tickets for me to work"  class="nav-item btn-group" (click)="updateDashboardState('mytickets')" [routerLink]="['/dashboard']">
+        <li *ngIf="userRole!=='Administrator'" matTooltip="Tickets for me to work" class="nav-item btn-group" (click)="updateDashboardState('mytickets')"
+          [routerLink]="['/dashboard']">
           <a id="navbar-dynamic-download" class="nav-link waves-effect waves-light btn btn-sm" [ngClass]="{
               'badge-dashboard' : cloneDashboardState==='mytickets'
               }">
@@ -20,7 +20,8 @@
           </a>
         </li>
 
-        <li *ngIf="userRole!=='Administrator'" matTooltip="Tickets created by me" class="nav-item dropdown btn-group" (click)="updateDashboardState('byme')" [routerLink]="['/dashboard']">
+        <li *ngIf="userRole!=='Administrator'" matTooltip="Tickets created by me" class="nav-item dropdown btn-group" (click)="updateDashboardState('byme')"
+          [routerLink]="['/dashboard']">
           <span *ngIf="openTicketCounter!=0" class="badge badge-light openTicketCounter">
             <!-- data-toggle="modal" data-target="#basicExample" (click)="demoBasic.show()" -->
             <strong>{{openTicketCounter}}</strong>
@@ -53,10 +54,10 @@
     <links>
 
 
-      <ul class="navbar-nav mr-auto" style="margin-top: 10px;">
+      <ul class="navbar-nav mr-auto" style="margin-top: 5px;">
 
         <li class="nav-item dropdown btn-group" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" *ngIf="userRole!=='User'"  class="nav-link
+          <a dropdownToggle mdbWavesEffect type="button" *ngIf="userRole!=='User'" class="nav-link
             dropdown-toggle waves-light  btn btn-sm" id="masterButton" mdbWavesEffect>
             Master
             <span class="caret"></span>
@@ -83,7 +84,8 @@
 
       <ul class="navbar-nav">
         <div data-target="#basicExample" (click)="basicModal.show(); resetForm();">
-          <span data-toggle="modal" style="cursor: pointer;margin-left: 15px !important;padding: 6px;" class="badge badge-pill badge-light" id="logoutBadge">
+          <span data-toggle="modal" style="cursor: pointer;margin-left: 15px !important;margin-right: 15px !important; padding-top: 5px; padding-bottom: 5px;" class="badge badge-pill badge-light"
+            id="logoutBadge">
             <i class="fa fa-user" aria-hidden="true"></i>{{userName | titlecase}}</span>
         </div>
       </ul>
@@ -101,7 +103,7 @@
 
   <div mdbModal #basicModal="mdb-modal" class="modal modal-sm fade card-header" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
     aria-hidden="true" [config]="{backdrop: true}">
-    <div class="modal-dialog" role="document" >
+    <div class="modal-dialog" role="document">
       <div class="modal-content" id="logoutModal">
         <form [formGroup]="passForm" (ngSubmit)="submitPass()">
           <!--Header-->
@@ -118,9 +120,9 @@
           </div>
           <!--Body-->
           <div class="modal-body mb-0">
-           
+
             <div style="display: block;" *ngIf="changePasswordVisible">
-           
+
               <div>
                 <i class="fa fa-lock"></i>
                 <mat-form-field style="width: 80%;">
@@ -143,11 +145,11 @@
 
             </div>
             <div class="modal-footer">
-             
+
               <button *ngIf="!changePasswordVisible" class="btn btn-sm btn-outline-danger" style="float: right;" (click)="toggleChangePasswordVisible()">
                 Change Password </button>
-                <button class="btn btn-sm btn-danger" style="float: right;" (click)="basicModal.hide(); logout()" data-toggle="tooltip" data-html="true">
-                    Logout </button>
+              <button class="btn btn-sm btn-danger" style="float: right;" (click)="basicModal.hide(); logout()" data-toggle="tooltip" data-html="true">
+                Logout </button>
               <button type="submit" *ngIf="changePasswordVisible" [disabled]="!passForm.valid" class="btn btn-sm btn-primary mb-2 waves-effect waves-light">Update
                 <i class="fa fa-send ml-1"></i>
               </button>

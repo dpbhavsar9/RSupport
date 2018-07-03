@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { EngineService } from '../../services/engine.service';
 import { CookieService } from 'ngx-cookie';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
+import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry  } from 'ngx-file-drop';
 
 @Component({
   selector: 'app-create-ticket',
@@ -24,6 +25,13 @@ export class CreateTicketComponent implements OnInit {
   fileToUpload: File = null;
   // tslint:disable-next-line:max-line-length
   priorityList: any[] = [{ value: 'High', viewValue: 'High' }, { value: 'Medium', viewValue: 'Medium' }, { value: 'Low', viewValue: 'Low' }];
+  data = {
+    TicketID: '',
+    TicketNo: '',
+    TicketBacklogID: ''
+  };
+  ticketSaved = false;
+  files: UploadFile[] = [];
 
   // tslint:disable-next-line:max-line-length
   constructor(private alertService: AlertService,
@@ -131,14 +139,38 @@ export class CreateTicketComponent implements OnInit {
     // TicketType Dropdown - end
   }
 
+  public dropped(event: UploadEvent) {
+    this.files = event.files;
+    for (const droppedFile of event.files) {
+      // Is it a file?
+      if (droppedFile.fileEntry.isFile) {
+        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+        fileEntry.file((file: File) => {
+          // console.log("----File----",droppedFile.relativePath, file);
+          this.fileToUpload = file;
+          this.uploadFileToActivity();
+        });
+      } else {
+        // It was a directory (empty directories are added, otherwise only files)
+        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+        // console.log(droppedFile.relativePath, fileEntry);
+      }
+    }
+  }
+
   handleFileInput(files: FileList) {
-    const fileItem = files.item(0);
-    // console.log("---1------Handle", fileItem)
-    this.fileToUpload = fileItem;
-    this.engineService.uploadFile(this.fileToUpload).then(res => {
+    // for(let i inp files){
+    for (let i = 0; i < files.length; i++) {
+      const fileItem = files.item(i);
+      this.fileToUpload = fileItem;
+      this.uploadFileToActivity();
+    }
+  }
+  uploadFileToActivity() {
+    this.engineService.uploadFile(this.fileToUpload, this.data).then(res => {
       console.log('----- File Upload -----', JSON.stringify(res._body));
     }).catch(err => {
-      console.log('----- Error Uploading File -----', err);
+      console.log('----- Error UploadingFile -----', JSON.stringify(err));
     });
   }
 
@@ -153,10 +185,17 @@ export class CreateTicketComponent implements OnInit {
       // console.log(this.createTicketForm.value);
       this.url = 'Ticket/PostTicket';
       this.engineService.postData(this.url, this.createTicketForm.value).then(response => {
+        console.log('--------Response---------', JSON.stringify(response));
+        const res = response.json();
+        const res2 = JSON.parse(res);
+        console.log('--------Response---------', JSON.stringify(res2));
+        this.data.TicketID = res2.TicketID;
+        this.data.TicketNo = res2.TicketNo;
+        this.data.TicketBacklogID = res2.TicketBacklogID;
+
         if (response.status === 201 || response.status === 200) {
-          this.dashboard.ngOnInit();
           this.alertService.success('Ticket successfully created!');
-          this.router.navigate(['dashboard']);
+          this.ticketSaved = true;
         }
       }).catch(error => {
         // console.log(error);
@@ -165,4 +204,3 @@ export class CreateTicketComponent implements OnInit {
     }
   }
 }
-

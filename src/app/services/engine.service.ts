@@ -195,17 +195,22 @@ export class EngineService implements OnInit {
     this.excel = new Angular5Csv(this.excelData, excelName, this.excelOptions);
   }
 
-  uploadFile(fileItem: File): Promise<any> {
+  uploadFile(fileItem: File, data): Promise<any> {
     const header = new HttpHeaders();
     header.append('Access-Control-Allow-Origin', '*');
     header.append('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
     header.append('Allow', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
     this.headers.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+    // this.headers.append('Content-Type', 'application/json; charset=utf-8');
     const url = this.baseUrl + 'Upload/UploadFiles';
 
     const formData: FormData = new FormData();
-    formData.append('fileItem', fileItem, fileItem.name);
+    formData.append('TicketID', data.TicketID);
+    formData.append('TicketNo', data.TicketNo);
+    formData.append('TicketBacklogID', data.TicketBacklogID);
+    formData.append('fileItem', fileItem, data.TicketNo + '_' + fileItem.name);
 
+    // 'http://localhost:3979/api/Upload/UploadFiles'
     return this.httpC.post(url, formData, { headers: header })
       .toPromise();
   }

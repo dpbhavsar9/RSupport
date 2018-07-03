@@ -13,45 +13,52 @@
     </div>
   </header>
   <div style="margin-left: 5px; margin-right: 5px; padding: 0px; margin: 0px; background-color: white">
-      <form [formGroup]="chatForm" (ngSubmit)="sendMessage()">
-        <div style="margin-left: 10px; display: flex; flex-direction: row">
-          <input matInput style="display: inline;" formControlName="chatmessage" placeholder='Message' autocomplete="off" autofocus />
-          <i class="fa fa-paperclip fa-2x"></i>
-          <button [disabled]="!chatForm.valid" class="btn btn-sm btn-primary" type="submit" style="display: inline">
-            <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-          </button>
-        </div>
-      </form>
-    </div>
+    <form [formGroup]="chatForm" (ngSubmit)="sendMessage()">
+      <div style="margin-left: 10px; display: flex; flex-direction: row">
+        <input matInput style="display: inline;" formControlName="chatmessage" placeholder='Message' autocomplete="off" autofocus
+        />
+        <!-- <button type="button" class="btn btn-sm btn-outline-default waves-effect"><i class="fa fa-paperclip pr-2" aria-hidden="true"></i></button> -->
+        
+        <input class="btn btn-sm btn-outline-primary" style="display: inline" type="file" *ngIf="showAttachment">
+        <a class="icons-sm fb-ic" style="padding-top: 5px; color: #009688" (click)="toggleShowAttachment()">
+          <i class="fa fa-paperclip fa-2x" style="padding-top: 5px; color: #009688"> </i>
+        </a>
+        <button [disabled]="!chatForm.valid" class="btn btn-sm btn-primary waves-effect" type="submit" style="display: inline">
+          <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+        </button>
+      </div>
+
+    </form>
+  </div>
 </mat-dialog-title>
 
 
-  <div  class="scroll2">
-    <mat-dialog-content>
-      <ol class="discussion">
-        <li *ngFor="let mes of message;" [ngClass]="{'self': mes.check == 'other', 'other': mes.check == 'self'}">
-          <div class="avatar">
-            <!--<img src="../../assets/images/google.png" />-->
-            <div id="container" [ngClass]="{'s': mes.check == 'other', 'l': mes.check == 'self'}">
-              <div id="name">
-                {{mes.UserLetter | titlecase}}
-              </div>
+<div class="scroll2">
+  <mat-dialog-content>
+    <ol class="discussion">
+      <li *ngFor="let mes of message;" [ngClass]="{'self': mes.check == 'other', 'other': mes.check == 'self'}">
+        <div class="avatar">
+          <!--<img src="../../assets/images/google.png" />-->
+          <div id="container" [ngClass]="{'s': mes.check == 'other', 'l': mes.check == 'self'}">
+            <div id="name">
+              {{mes.UserLetter | titlecase}}
             </div>
           </div>
-          <div class="messages">
-            <p>{{mes.MessageLog}}</p>
-            <div class="messageFooter">
-              {{mes.UserName | titlecase}} •
-              <time>{{ mes.OperationDate | timeAgo}}</time>
-            </div>
+        </div>
+        <div class="messages">
+          <p>{{mes.MessageLog}}</p>
+          <div class="messageFooter">
+            {{mes.UserName | titlecase}} •
+            <time>{{ mes.OperationDate | timeAgo}}</time>
           </div>
-        </li>
-      </ol>
-    </mat-dialog-content>
-    </div>
+        </div>
+      </li>
+    </ol>
+  </mat-dialog-content>
+</div>
 
 
-  
 
 
-    <!-- end chat-message -->
+
+<!-- end chat-message -->

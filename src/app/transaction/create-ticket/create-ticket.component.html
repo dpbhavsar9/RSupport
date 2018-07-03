@@ -1,4 +1,4 @@
-<--<div class="container-fluid mt-5 pt-5 animated fadeIn zoomIn">
+<--<div class="container-fluid mt-5 pt-5 animated zoomIn">
 
   <div class="row d-flex justify-content-center">
 
@@ -32,7 +32,7 @@
           <div class="row"> -->
             <div class="custom-form-field col-6">
               <div [hidden]="createTicketForm.get('CompanyID').value == null">
-                <div class="card animated zoomIn">
+                <div class="card animated fadeIn">
                   <div class="card-header">Please select project</div>
                   <div class="card-body">
                     <mat-select placeholder="Project" name="ProjectID" formControlName="ProjectID" (selectionChange)="updateTicketType();loadTeams()">
@@ -48,7 +48,7 @@
           <div class="row">
             <div class="custom-form-field col-md-6">
               <div [hidden]="createTicketForm.get('ProjectID').value == null">
-                <div class="card animated zoomIn">
+                <div class="card animated fadeIn">
                   <div class="card-header">Please select ticket type</div>
                   <div class="card-body">
                     <mat-select placeholder="TicketType" name="TicketType" formControlName="TicketType" ngDefaultControl>
@@ -62,7 +62,7 @@
             </div>
             <div class="custom-form-field col-md-6">
               <div [hidden]="createTicketForm.get('TicketType').value == null">
-                <div class="card animated zoomIn">
+                <div class="card animated fadeIn">
                   <div class="card-header">Please provide priority</div>
                   <div class="card-body">
                     <mat-select placeholder="Priority" name="Priority" formControlName="Priority" ngDefaultControl>
@@ -79,7 +79,7 @@
           <div class="row">
             <div class="custom-form-field col-12">
               <div [hidden]="createTicketForm.get('Priority').value == null">
-                <div class="card animated zoomIn">
+                <div class="card animated fadeIn">
                   <div class="card-header">Please add subject line</div>
                   <div class="card-body">
                     <div class="row">
@@ -97,7 +97,7 @@
           <div class="row">
             <div class="custom-form-field col-12">
               <div [hidden]="createTicketForm.get('Subject').value == null">
-                <div class="card animated zoomIn">
+                <div class="card animated fadeIn">
                   <div class="card-header">Description</div>
                   <div class="card-body">
                     <div class="row">
@@ -117,7 +117,7 @@
           <div class="row">
             <div class="custom-form-field col-md-6">
               <div [hidden]="createTicketForm.get('TicketDescription').value == null">
-                <div class="card animated zoomIn">
+                <div class="card animated fadeIn">
                   <div class="card-header">Please select team</div>
                   <div class="card-body">
                     <mat-select placeholder="Team" name="TeamID" formControlName="TeamID" (selectionChange)="loadTeamMembers()" ngDefaultControl>
@@ -131,7 +131,7 @@
             </div>
             <div class="custom-form-field col-md-6">
               <div [hidden]="createTicketForm.get('TeamID').value == null">
-                <div class="card animated zoomIn">
+                <div class="card animated fadeIn">
                   <div class="card-header">Assign ticket to</div>
                   <div class="card-body">
                     <mat-select placeholder="AssignUser" name="AssignTo" formControlName="AssignTo" ngDefaultControl>
@@ -145,7 +145,7 @@
             </div>
           </div>
 
-          <div class="custom-form-field text-right animated zoomIn" [hidden]="createTicketForm.get('TeamID').value == null">
+          <!-- <div class="custom-form-field text-right animated fadeIn" [hidden]="createTicketForm.get('TeamID').value == null">
           
             <mat-form-field>
                 <input matInput type="url" id="file" (change)="handleFileInput($event.target.files);">
@@ -156,7 +156,23 @@
             <button type="button" class="btn btn-danger waves-light" routerLink="../" mdbWavesEffect>
               Close
             </button>
+          </div> -->
+
+          <div class="text-right animated zoomIn" *ngIf="ticketSaved">
+            <input mdbInputDirective type="file" id="file" (change)="handleFileInput($event.target.files);" multiple>
+            <div class="center">
+              <file-drop headertext="Drop files here" (onFileDrop)="dropped($event)">
+                  <span>optional content (don't set headertext then)</span>
+              </file-drop>
+             
           </div>
+        </div>
+            <button class="btn indigo waves-light" type="submit" *ngIf="!ticketSaved" mdbWavesEffect [disabled]="!createTicketForm.valid">
+              Save
+            </button>
+            <button type="button" class="btn btn-danger waves-light" routerLink="../" mdbWavesEffect>
+              Close
+            </button>
 
         </form>
         <!--Contact Form-->

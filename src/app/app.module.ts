@@ -55,6 +55,7 @@ import { AlertComponent } from './master/modal/alert/alert.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { EditAuthGuard } from './services/edit-auth-guard.service';
 import { MasterAuthGuard } from './services/master-auth-guard.service';
+import { FileDropModule } from 'ngx-file-drop';
 
 @NgModule({
   declarations: [
@@ -108,6 +109,7 @@ import { MasterAuthGuard } from './services/master-auth-guard.service';
     MatSlideToggleModule,
     MatTooltipModule,
     NgxSpinnerModule,
+    FileDropModule,
     AlertModule.forRoot({ maxMessages: 5, timeout: 3000 })
   ],
   // tslint:disable-next-line:max-line-length

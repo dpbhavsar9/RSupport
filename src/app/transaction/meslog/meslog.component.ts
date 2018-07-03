@@ -38,6 +38,7 @@ export class MeslogComponent implements OnInit, OnDestroy {
   subscribe: any;
   ticketStatus: string;
   ticketData: any = [];
+  showAttachment = false;
 
   // tslint:disable-next-line:max-line-length
   constructor(private engineService: EngineService,
@@ -72,6 +73,10 @@ export class MeslogComponent implements OnInit, OnDestroy {
     this.chatForm = new FormGroup({
       chatmessage: new FormControl(null, Validators.required)
     });
+  }
+
+  toggleShowAttachment() {
+    this.showAttachment = !this.showAttachment;
   }
 
   checkMessage(id) {
