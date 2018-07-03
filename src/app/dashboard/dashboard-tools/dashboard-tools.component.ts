@@ -434,7 +434,7 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
     }
     this.engineService.getData(this.url).toPromise()
       .then(res => {
-        // console.log(res);
+        console.log(res);
         this.updateTickets(res);
         this.updateFilter();
         if (!this.manualUpdateFlag) {
@@ -461,7 +461,7 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
   }
 
   private openTicketMessage(index, pindex) {
-this.engineService.validateUser();
+    this.engineService.validateUser();
     const row = this.source[index].data[pindex];
 
     const data = {
@@ -496,10 +496,23 @@ this.engineService.validateUser();
     const by = this._cookieService.get('Oid');
     const data = { Oid: Oid, Priority: priority, By: by };
     this.url = 'Ticket/ChangePriority';
-        this.engineService.updateData(this.url, data).then(result => {
-          this.manualUpdateFlag = true;
-          this.refreshData();
-        });
+    this.engineService.updateData(this.url, data).then(result => {
+      this.manualUpdateFlag = true;
+      this.refreshData();
+    });
+  }
+
+  assignTicket(i, p, assignTo) {
+    this.engineService.validateUser();
+    const row = this.source[i].data[p];
+    const Oid = row['Oid'];
+    const by = this._cookieService.get('Oid');
+    const data = { Oid: Oid, AssignTo: assignTo, By: by };
+    this.url = 'Ticket/AssignTicket';
+    this.engineService.updateData(this.url, data).then(result => {
+      this.manualUpdateFlag = true;
+      this.refreshData();
+    });
   }
 
   processTicket(id, status) {

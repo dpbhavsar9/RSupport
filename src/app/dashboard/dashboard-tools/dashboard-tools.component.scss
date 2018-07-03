@@ -1,3 +1,14 @@
+#counterCard:hover {
+  // border-bottom: 3px solid #26C6DA;
+  background-color: #94f5ed;
+  transition: cubic-bezier(1, 0, 0, 1) 1s;
+}
+
+#counterCard {
+  border-bottom: 3px solid transparent;
+  transition: 0.3s;
+}
+
 .moddef {
   background: #26C6DA;
 }

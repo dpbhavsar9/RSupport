@@ -3,13 +3,13 @@
 
     <div class="row justify-content-center animated rotateInDownLeft" style="padding-top: 25px">
       <div class="col" *ngFor="let item of data; let id= index;" style="padding-top: 10px; ">
-        <div class="card hoverable" style="margin-bottom: 10px;
-           cursor: pointer; " (click)="updateTicketLogTypeSelector(id)">
+        <div class="card hoverable " style="margin-bottom: 10px;
+           cursor: pointer; " (click)="updateTicketLogTypeSelector(id)" id="counterCard">
           <div class="card-body text-center" style="background-color: rgba(255,255,255,0.4); ">
             <div class="h2-responsive" style="color: rgb(3, 0, 34)">
               <strong>{{item.Count}}</strong>
             </div>
-            <span class="card-text">{{item.TicketStatus}}</span>
+            <span class="card-text" style="color: #32375f"><strong>{{item.TicketStatus}}</strong></span>
           </div>
           <div class="" [ngClass]="{
             'badge-default2':item.TicketStatus==='Open' ,
@@ -171,7 +171,10 @@
                                     <span>Cancel</span>
                                   </button>
                                   <mat-divider></mat-divider>
-                                  <button mat-menu-item style="font-style: oblique" [disabled]="src.status==='Close' || src.status==='Cancel'" [matMenuTriggerFor]="subMenu">
+                                  <button mat-menu-item style="font-style: oblique" [disabled]="(src.status==='Cancel' || src.status==='Close' || dashboardState==='byme') && Oid !== TeamLeader" [matMenuTriggerFor]="assignMenu">
+                                    <span style="margin-right: 10px">Assign Ticket</span>
+                                  </button>
+                                  <button mat-menu-item style="font-style: oblique" [disabled]="src.status==='Close' || src.status==='Cancel'" [matMenuTriggerFor]="priorityMenu">
                                     <span style="margin-right: 10px">Change Priority</span>
                                   </button>
                                   <button mat-menu-item style="font-style: oblique" (click)="openTicketMessage(i,p)">
@@ -179,10 +182,13 @@
                                     <i class="fa fa-comment"></i>
                                   </button>
                                 </mat-menu>
-                                <mat-menu #subMenu="matMenu">
+                                <mat-menu #priorityMenu="matMenu">
                                     <button mat-menu-item (click)="changePriority(i, p, 'High')">High</button>
                                     <button mat-menu-item (click)="changePriority(i, p, 'Medium')">Medium</button>
                                     <button mat-menu-item (click)="changePriority(i, p, 'Low')">Low</button>
+                                  </mat-menu>
+                                  <mat-menu #assignMenu="matMenu" >
+                                    <button mat-menu-item *ngFor="let item of data.TeamMembers; let id= index;" (click)="assignTicket(i, p, item.UserID)">{{item.UserName | titlecase}}</button>
                                   </mat-menu>
                                 <span *ngIf="data.Priority!==''" class="badge" matTooltip="Priority" [ngClass]="{
                                       'red': data.Priority === 'High',
