@@ -13,8 +13,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class EngineService implements OnInit {
   headers: Headers;
   options: RequestOptions;
-  baseUrl = 'http://192.168.0.250:8002/api/';
-  // baseUrl = 'http://192.168.0.13:8002/api/';
+  // baseUrl = 'http://192.168.0.250:8002/api/';
+  baseUrl = 'http://192.168.0.13:8002/api/';
   URL: string;
   users: any;
   excel: any;
@@ -207,22 +207,22 @@ export class EngineService implements OnInit {
     this.excel = new Angular5Csv(this.excelData, excelName, this.excelOptions);
   }
 
-  uploadFile(fileItem: File, data): Promise<any> {
+  uploadFile(fileItem: File, data, filename): Promise<any> {
     const header = new HttpHeaders();
     header.append('Access-Control-Allow-Origin', '*');
     header.append('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
     header.append('Allow', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
     this.headers.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
     // this.headers.append('Content-Type', 'application/json; charset=utf-8');
-    const url = this.baseUrl + 'Upload/UploadFiles';
+   const url = this.baseUrl + 'Upload/UploadFiles';
 
-    const formData: FormData = new FormData();
-    formData.append('TicketID', data.TicketID);
-    formData.append('TicketNo', data.TicketNo);
-    formData.append('TicketBacklogID', data.TicketBacklogID);
-    formData.append('fileItem', fileItem, data.TicketNo + '_' + fileItem.name);
+   const formData: FormData = new FormData();
+   formData.append('TicketID', data.TicketID);
+   formData.append('TicketNo', data.TicketNo);
+   formData.append('TicketBacklogID', data.TicketBacklogID);
+    formData.append('FileName', filename);
+   formData.append('fileItem', fileItem, filename);
 
-    // 'http://localhost:3979/api/Upload/UploadFiles'
     return this.httpC.post(url, formData, { headers: header })
       .toPromise();
   }

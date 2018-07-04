@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { EngineService } from '../../services/engine.service';
 import { CookieService } from 'ngx-cookie';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry  } from 'ngx-file-drop';
+import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 
 @Component({
   selector: 'app-create-ticket',
@@ -148,7 +148,8 @@ export class CreateTicketComponent implements OnInit {
         fileEntry.file((file: File) => {
           // console.log("----File----",droppedFile.relativePath, file);
           this.fileToUpload = file;
-          this.uploadFileToActivity();
+          const filename = file.name;
+          this.uploadFileToActivity(filename);
         });
       } else {
         // It was a directory (empty directories are added, otherwise only files)
@@ -159,19 +160,22 @@ export class CreateTicketComponent implements OnInit {
   }
 
   handleFileInput(files: FileList) {
-    // for(let i inp files){
+
     for (let i = 0; i < files.length; i++) {
       const fileItem = files.item(i);
       this.fileToUpload = fileItem;
-      this.uploadFileToActivity();
+      const filename = fileItem.name;
+
+      this.uploadFileToActivity(filename);
     }
+
   }
-  uploadFileToActivity() {
-    this.engineService.validateUser();
-    this.engineService.uploadFile(this.fileToUpload, this.data).then(res => {
-      console.log('----- File Upload -----', JSON.stringify(res._body));
+  uploadFileToActivity(filename) {
+
+    this.engineService.uploadFile(this.fileToUpload, this.data, filename).then(res => {
+      console.log('----- File Upload -----' + JSON.stringify(res._body));
     }).catch(err => {
-      console.log('----- Error UploadingFile -----', JSON.stringify(err));
+      console.log('----- Error UploadingFile -----' + JSON.stringify(err));
     });
   }
 
