@@ -19,6 +19,8 @@ import { MeslogComponent } from '../../transaction/meslog/meslog.component';
 })
 export class DashboardToolsComponent implements OnInit, OnDestroy {
 
+  datanotupdate = false;
+  attachment: Array<any>=[];
   url: string;
   selected = 'Open';
   ticketLogTypeSelector = 'WIP';
@@ -51,7 +53,9 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
   private timerSubscription: Subscription;
   subscription: Subscription;
   private toggle = 'none';
+
   dashboardState: string = this.dashboardComponent.dashboardState;
+
   userRole: string;
   userName: string;
   val = '';
@@ -116,6 +120,52 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
     const cookieData = crypto.AES.decrypt(this._cookieService.get('response'), this._cookieService.get('Oid') + 'India');
     this.Oid = JSON.parse(cookieData.toString(crypto.enc.Utf8)).Oid;
     this.userName = JSON.parse(cookieData.toString(crypto.enc.Utf8)).UserName;
+  }
+
+  
+  ngOnInit() {
+    this.dashboardComponent.cloneDashboardState = this.dashboardState;
+    this.Oid = this._cookieService.get('Oid');
+    const Decrypt = crypto.AES.decrypt(this._cookieService.get('response').toString(), this.Oid + 'India');
+    const decryptData = Decrypt.toString(crypto.enc.Utf8);
+    this.userRole = JSON.parse(decryptData).UserRole;
+    this.userName = JSON.parse(decryptData).UserName;
+    if (this.userRole !== 'Administrator') {
+      this.refreshData();
+      this.subscription = this.engineService.getDashboardState().subscribe(dashboardState => {
+        this.dashboardState = dashboardState.dashboardState.toString();
+        this.refreshData();
+      });
+    }
+  }
+
+  private subscribeToData(): void {
+    const timerVar = timer(2 * 60 * 1000);
+    this.timerSubscription = timerVar.subscribe(() => {
+      this.refreshData();
+    });
+  }
+
+  private refreshData(): void {
+
+    if (this.dashboardState === 'byme') {
+      this.url = 'Ticket/GetMyTickets/' + this._cookieService.get('Oid');
+      this.allocationType = 'Team';
+    } else if (this.dashboardState === 'mytickets') {
+      this.url = 'Ticket/GetTeamTickets/' + this._cookieService.get('Oid');
+    }
+    this.engineService.getData(this.url).toPromise()
+      .then(res => {
+        //console.log(res);
+        this.updateTickets(res);
+        this.updateFilter();
+        if (!this.manualUpdateFlag) {
+          this.subscribeToData();
+        }
+        this.manualUpdateFlag = false;
+      }).catch(err => {
+        this.alertService.danger('Server response error @refreshData');
+      });
   }
 
   toggleChart() {
@@ -402,49 +452,6 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
     this.ticketLogTypeSelector = this.data[id].TicketStatus;
   }
 
-  ngOnInit() {
-    this.dashboardComponent.cloneDashboardState = this.dashboardState;
-    this.Oid = this._cookieService.get('Oid');
-    const Decrypt = crypto.AES.decrypt(this._cookieService.get('response').toString(), this.Oid + 'India');
-    const decryptData = Decrypt.toString(crypto.enc.Utf8);
-    this.userRole = JSON.parse(decryptData).UserRole;
-    this.userName = JSON.parse(decryptData).UserName;
-    if (this.userRole !== 'Administrator') {
-      this.refreshData();
-      this.subscription = this.engineService.getDashboardState().subscribe(dashboardState => {
-        this.dashboardState = dashboardState.dashboardState.toString();
-        this.refreshData();
-      });
-    }
-  }
-
-  private subscribeToData(): void {
-    const timerVar = timer(2 * 60 * 1000);
-    this.timerSubscription = timerVar.subscribe(() => {
-      this.refreshData();
-    });
-  }
-
-  private refreshData(): void {
-
-    if (this.dashboardState === 'byme') {
-      this.url = 'Ticket/GetMyTickets/' + this._cookieService.get('Oid');
-    } else if (this.dashboardState === 'mytickets') {
-      this.url = 'Ticket/GetTeamTickets/' + this._cookieService.get('Oid');
-    }
-    this.engineService.getData(this.url).toPromise()
-      .then(res => {
-        console.log(res);
-        this.updateTickets(res);
-        this.updateFilter();
-        if (!this.manualUpdateFlag) {
-          this.subscribeToData();
-        }
-        this.manualUpdateFlag = false;
-      }).catch(err => {
-        this.alertService.danger('Server response error @refreshData');
-      });
-  }
 
   private selectRow(row) {
     this.val = row.TicketNo;
@@ -578,9 +585,21 @@ export class DashboardToolsComponent implements OnInit, OnDestroy {
   }
 
   public updateModal(data) {
+   
+    this.datanotupdate = true;
+
+    this.attachment.length = 0;
+    //this.url = "http://192.168.0.250:8002/api/Ticket/GetAttachment/"+data.TicketNo;
+    this.url = "Ticket/GetAttachment/"+data.TicketNo;
+    this.engineService.getAttachments(this.url).subscribe(res=>{
+         this.attachment = res;       
+    });
     // console.log(data);
     this.modalData = data;
+    
   }
+
+  
 
   ngOnDestroy() {
     if (this.userRole !== 'Administrator') {

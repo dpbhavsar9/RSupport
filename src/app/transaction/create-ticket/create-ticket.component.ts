@@ -4,8 +4,7 @@ import { AlertService } from 'ngx-alerts';
 import { Router } from '@angular/router';
 import { EngineService } from '../../services/engine.service';
 import { CookieService } from 'ngx-cookie';
-import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import { UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 
 @Component({
   selector: 'app-create-ticket',
@@ -14,6 +13,12 @@ import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry 
 })
 export class CreateTicketComponent implements OnInit {
 
+  checkfilesuccess: boolean = false;
+  checkfilefail: boolean = false;
+  filenamesuccess: Array<{ name: string }> = [];
+  filenamefail: Array<{ name: string }> = [];
+
+  dfiles = [];
   url: any;
   createTicketForm: FormGroup;
   companyList: any[] = [];
@@ -35,9 +40,9 @@ export class CreateTicketComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
   constructor(private alertService: AlertService,
-    private router: Router,
+    
     private engineService: EngineService,
-    private dashboard: DashboardComponent,
+   
     private _cookieService: CookieService) { }
 
   ngOnInit() {
@@ -139,44 +144,71 @@ export class CreateTicketComponent implements OnInit {
     // TicketType Dropdown - end
   }
 
-  public dropped(event: UploadEvent) {
+  /* dropped(event: UploadEvent) {
+
     this.files = event.files;
+
     for (const droppedFile of event.files) {
-      // Is it a file?
+      
       if (droppedFile.fileEntry.isFile) {
+
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-          // console.log("----File----",droppedFile.relativePath, file);
+         fileEntry.file(async (file: File) => {
           this.fileToUpload = file;
           const filename = file.name;
-          this.uploadFileToActivity(filename);
+          let res = await this.uploadFileToActivity(filename);
+          console.log("------Dropped-------")
         });
+
       } else {
-        // It was a directory (empty directories are added, otherwise only files)
+
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        // console.log(droppedFile.relativePath, fileEntry);
+
       }
     }
-  }
+  }*/
 
-  handleFileInput(files: FileList) {
+  async handleFileInput(files: FileList) {
 
     for (let i = 0; i < files.length; i++) {
       const fileItem = files.item(i);
       this.fileToUpload = fileItem;
       const filename = fileItem.name;
 
-      this.uploadFileToActivity(filename);
+
+      let res = await this.uploadFileToActivity(filename);
+      //console.log("--------handlefile2--------" + res)
     }
-
   }
-  uploadFileToActivity(filename) {
 
-    this.engineService.uploadFile(this.fileToUpload, this.data, filename).then(res => {
-      console.log('----- File Upload -----' + JSON.stringify(res._body));
+
+  async uploadFileToActivity(filename): Promise<any> {
+
+    //console.log("------upload file activity method calling---------")
+    this.filenamesuccess.length = 0;
+    this.filenamefail.length = 0;
+    
+     this.engineService.uploadFile(this.fileToUpload, this.data, filename).then(res => {
+      //console.log('----- File Upload -----' + JSON.stringify(res));
+      if (JSON.stringify(res) === '"Success"') {
+        this.filenamesuccess.push({ name: filename });
+        this.checkfilesuccess = true;
+      }
+      else if (JSON.stringify(res) === '"Fail"') {
+        this.filenamefail.push({ name: filename });
+        this.checkfilefail = true;
+      }
+      setTimeout(() => {
+        //console.log('hide');
+        this.checkfilesuccess = false;
+        this.checkfilefail = false;
+      }, 6000);
+
     }).catch(err => {
-      console.log('----- Error UploadingFile -----' + JSON.stringify(err));
+      //console.log('----- Error UploadingFile -----' + JSON.stringify(err));
+      //this.alertService.danger("Error While Uploading Files");
     });
+   
   }
 
   updateTicketType() {

@@ -87,7 +87,7 @@
       </mat-form-field>
       <mat-form-field>
 
-        <mat-select placeholder="Allocation" name="SortType" (selectionChange)="updateFilter()" [(ngModel)]="allocationType" ngDefaultControl>
+        <mat-select placeholder="Allocation" name="SortType" (selectionChange)="updateFilter()" [(ngModel)]="allocationType" ngDefaultControl [disabled]="dashboardState==='byme'">
 
           <mat-option value="Team">Team</mat-option>
 
@@ -138,8 +138,12 @@
                                    align-items: center; color: #32375f">
 
                               <strong (click)="demoBasic.show(); updateModal(data);">{{data.Subject}}</strong>
+
+
+
                               <div style="display: flex; flex-direction: row; flex-wrap: row">
 
+                                <div class="mobilebadge">
                                 <div class="text-center card-text z-depth-1" style="border-radius: 5px; padding-left: 5px; padding-right: 5px; margin-right: 5px; cursor: pointer;"
                                   mat-icon-button [matMenuTriggerFor]="menu">
                                   <strong>Actions&nbsp;
@@ -147,64 +151,95 @@
                                   </strong>
                                 </div>
 
-                                <mat-menu class="actionsButton" #menu="matMenu">
+                                <span *ngIf="data.Priority!==''" class="badge" matTooltip="Priority" [ngClass]="{
+                                  'red': data.Priority === 'High',
+                                  'blue': data.Priority === 'Medium',
+                                  'green': data.Priority === 'Low'}" 
+                                  style="width:75px;">{{data.Priority}}</span>
+                                </div>
 
-                                  <button mat-menu-item [disabled]="!(src.status=== 'Open' && 
+                                <mat-menu  #menu="matMenu">
+
+                                  <button class="actionsButton" mat-menu-item [hidden]="!(src.status=== 'Open' && 
                                           dashboardState==='mytickets')" (click)="processTicket(data.Oid,2)">
                                     <span>Take Ticket</span>
                                   </button>
-                                  <button class="actionsButton" mat-menu-item [disabled]="!(((src.status=== 'Hold' || src.status==='Close') && userRole==='Manager') || (src.status==='Hold' &&  userRole==='User' && dashboardState==='mytickets') || ((src.status=== 'Hold' || src.status==='Close') && userRole==='User' && dashboardState==='mytickets' && Oid===data.TeamLeader.toString()))"
+                                  <button class="actionsButton" mat-menu-item [hidden]="!(((src.status=== 'Hold' || src.status==='Close') && userRole==='Manager') || (src.status==='Hold' &&  userRole==='User' && dashboardState==='mytickets') || ((src.status=== 'Hold' || src.status==='Close') && userRole==='User' && dashboardState==='mytickets' && Oid===data.TeamLeader.toString()))"
                                     (click)="processTicket(data.Oid,1)">
                                     <span>Re-open</span>
                                   </button>
-                                  <button class="actionsButton" mat-menu-item [disabled]="!((src.status==='Open' || src.status==='WIP') && (userRole==='Manager'
+                                  <button class="actionsButton" mat-menu-item [hidden]="!((src.status==='Open' || src.status==='WIP') && (userRole==='Manager'
                                           || (dashboardState==='mytickets' && userRole==='User' && Oid===data.TeamLeader.toString())))"
                                     (click)="processTicket(data.Oid,3)">
                                     <span>Hold</span>
                                   </button>
-                                  <button class="actionsButton" mat-menu-item [disabled]="!((userRole==='Manager' || (src.status==='WIP' && (dashboardState==='mytickets' && userRole==='User'))) && src.status!=='Close' && src.status!=='Cancel')"
+                                  <button class="actionsButton" mat-menu-item [hidden]="!((userRole==='Manager' || (src.status==='WIP' && (dashboardState==='mytickets' && userRole==='User'))) && src.status!=='Close' && src.status!=='Cancel')"
                                     (click)="processTicket(data.Oid,4)">
                                     <span>Close</span>
                                   </button>
-                                  <button class="actionsButton" mat-menu-item [disabled]="!(userRole==='Manager' || (dashboardState==='mytickets' && userRole==='User' && Oid===data.TeamLeader.toString()) && (src.TicketStatus==='Open' || src.TicketStatus==='WIP' || src.TicketStatus==='Hold'))"
+                                  <button class="actionsButton" mat-menu-item [hidden]="!(userRole==='Manager' || (dashboardState==='mytickets' && userRole==='User' && Oid===data.TeamLeader.toString()) && (src.TicketStatus==='Open' || src.TicketStatus==='WIP' || src.TicketStatus==='Hold'))"
                                     (click)="processTicket(data.Oid,5)">
                                     <span>Cancel</span>
                                   </button>
                                   <mat-divider></mat-divider>
-                                  <button mat-menu-item style="font-style: oblique" [disabled]="(src.status==='Cancel' || src.status==='Close' || dashboardState==='byme') && Oid !== TeamLeader" [matMenuTriggerFor]="assignMenu">
+                                  <button 
+                                     class="actionsButton"
+                                     style="font-style: oblique" 
+                                     mat-menu-item   
+                                     [matMenuTriggerFor]="assignMenu"
+                                     [hidden]="(src.status==='Cancel' || src.status==='Close' || dashboardState==='byme') && Oid !== TeamLeader">
                                     <span style="margin-right: 10px">Assign Ticket</span>
                                   </button>
-                                  <button mat-menu-item style="font-style: oblique" [disabled]="src.status==='Close' || src.status==='Cancel'" [matMenuTriggerFor]="priorityMenu">
+                                  <button class="actionsButton" mat-menu-item style="font-style: oblique" [hidden]="src.status==='Close' || src.status==='Cancel'" [matMenuTriggerFor]="priorityMenu">
                                     <span style="margin-right: 10px">Change Priority</span>
                                   </button>
-                                  <button mat-menu-item style="font-style: oblique" (click)="openTicketMessage(i,p)">
+                                  <button class="actionsButton" mat-menu-item style="font-style: oblique" (click)="openTicketMessage(i,p)">
                                     <span style="margin-right: 10px">Message</span>
                                     <i class="fa fa-comment"></i>
                                   </button>
                                 </mat-menu>
                                 <mat-menu #priorityMenu="matMenu">
-                                    <button mat-menu-item (click)="changePriority(i, p, 'High')">High</button>
-                                    <button mat-menu-item (click)="changePriority(i, p, 'Medium')">Medium</button>
-                                    <button mat-menu-item (click)="changePriority(i, p, 'Low')">Low</button>
+                                    <button class="actionsButton" mat-menu-item (click)="changePriority(i, p, 'High')">High</button>
+                                    <button class="actionsButton" mat-menu-item (click)="changePriority(i, p, 'Medium')">Medium</button>
+                                    <button class="actionsButton" mat-menu-item (click)="changePriority(i, p, 'Low')">Low</button>
                                   </mat-menu>
                                   <mat-menu #assignMenu="matMenu" >
-                                    <button mat-menu-item *ngFor="let item of data.TeamMembers; let id= index;" (click)="assignTicket(i, p, item.UserID)">{{item.UserName | titlecase}}</button>
+                                    <button class="actionsButton" mat-menu-item *ngFor="let item of data.TeamMembers; let id= index;" (click)="assignTicket(i, p, item.UserID)">{{item.UserName | titlecase}}</button>
                                   </mat-menu>
-                                <span *ngIf="data.Priority!==''" class="badge" matTooltip="Priority" [ngClass]="{
-                                      'red': data.Priority === 'High',
-                                      'blue': data.Priority === 'Medium',
-                                      'green': data.Priority === 'Low'
-                                    }" style="width:75px;">{{data.Priority}}</span>
+                                
                               </div>
-
-                            </div>
-                            <div class="card-text text-center" style="padding: 10px;  margin-top: 5px; border-bottom: 1px solid rgba(255, 255, 255, 0); margin-right: 10px; display: flex; align-items: center; border-radius: 5px; "
-                              (click)="demoBasic.show(); updateModal(data);">
-                              <strong>Description:</strong>&nbsp;{{data.TicketDescription}}
                             </div>
 
-                            <div class="card-text" style="padding-left: 10px; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; font-size: medium; justify-items: center;">
-                              <div class="badge-light2 mr-1" matTooltip="Time after creation of ticket" (click)="demoBasic.show(); updateModal(data);">
+                            <!-- ========== For Mobile View ========== -->
+                            <div class="mobilebadge1">
+                                <div class="text-center card-text z-depth-1" style="border-radius: 5px; padding-left: 5px; padding-right: 5px; margin-right: 5px; cursor: pointer;"
+                                  mat-icon-button [matMenuTriggerFor]="menu">
+                                  <strong>Actions&nbsp;
+                                    <i class="fa fa-caret-down"></i>
+                                  </strong>
+                                </div>
+
+                                <span *ngIf="data.Priority!==''" class="badge" matTooltip="Priority" [ngClass]="{
+                                  'red': data.Priority === 'High',
+                                  'blue': data.Priority === 'Medium',
+                                  'green': data.Priority === 'Low'}" 
+                                  style="width:75px;">{{data.Priority}}</span>
+                                </div>
+                            <!-- ========== For Mobile View ========== -->
+
+
+                            <div class="card-text  description" 
+                               (click)="demoBasic.show(); updateModal(data);">
+                              <strong>Description:</strong>&nbsp;
+                              <div style="display: inline; text-align: justify;
+                              text-justify: inter-word;">{{data.TicketDescription}}</div>
+                            </div>
+
+                            <div class="card-text" style="margin-left: 5px; display: flex; flex-direction: row; 
+                                                          flex-wrap: wrap; justify-content: flex-start; font-size: medium; 
+                                                          justify-items: center;">
+                              <div class="badge-light2 mr-1" matTooltip="Time after creation of ticket"
+                                   (click)="demoBasic.show(); updateModal(data);">
                                 <time>
                                   <strong>{{ data.CreatedDate | timeAgo}}</strong>
                                 </time>
@@ -218,15 +253,24 @@
                               <div class="badge-light2 mr-1" matTooltip="Ticket created by" (click)="demoBasic.show(); updateModal(data);">
                                 Created By: {{ data.CreatedByName | titlecase}}
                               </div>
-                              <div class="row badge-light2 mr-1" matTooltip="Last communication" (click)="openTicketMessage(i,p)">
-                                {{data.Message.OperationByName | titlecase}}: {{data.Message.MessageLog}} -
-                                <time> {{data.Message.OperationDate | timeAgo }} </time>
-                              </div>
-
                             </div>
-                            <div class="row" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between">
 
-                              <div style="display: flex; flex-direction: row; justify-content: flex-end; flex-wrap: wrap; padding-right: 10px;">
+                            <div class="description card-text mesoperation" (click)="openTicketMessage(i,p)">
+                              <strong>{{data.Message.OperationByName | titlecase}}: </strong>&nbsp;
+                              <div style="display: inline; text-align: justify;
+                              text-justify: inter-word;">{{data.Message.MessageLog}}<time> - {{data.Message.OperationDate | timeAgo }} </time></div>
+                            </div>
+
+                           <!-- <div class="row badge-light2 mr-1" matTooltip="Last communication" (click)="openTicketMessage(i,p)">
+                         <div style="display: inline; text-align: justify;
+                                text-justify: inter-word;">{{data.Message.OperationByName | titlecase}}: {{data.Message.MessageLog}}</div>
+                                <time> - {{data.Message.OperationDate | timeAgo }} </time>
+                              </div> -->
+
+                            
+                            <div class="row" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between">
+                              <div style="display: flex; flex-direction: row; justify-content: flex-end; flex-wrap: wrap; 
+                                    padding-right: 10px;">
 
 
                                 <!-- <button class="btn btn-sm btn-outline-info" *ngIf="src.status=== 'Open' && 
@@ -483,8 +527,12 @@
 
 
 
-<div mdbModal #demoBasic="mdb-modal" class="modal fade fontclass" id="basicExample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
+<div mdbModal #demoBasic="mdb-modal" class="modal fade fontclass" id="basicExample" 
+     tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+
+  <!-- =====================   TicketDetailData   ===============================-->
+  <!-- <div  *ngIf="!datanotupdate"> -->
   <div class="modal-dialog modal-fluid modalsize" role="document">
     <div class="modal-content">
       <div class="modal-header" [ngClass]="{
@@ -652,9 +700,46 @@
           </tbody>
         </table>
 
+        <div *ngIf="attachment.length>0" class="attachmentstyle">
+          <strong class="font-weight-bold">Attachments&nbsp;:</strong>
+          <div style="display: inline;margin-left: 10px;" *ngFor="let item of attachment;" >
+            <a href="http://rsapi.rlmc.in/api/Upload/UploadFiles/{{item.ta.AttchmentName}}"><u>{{item.ta.AttchmentName}}</u></a>
+          </div> 
+        </div>
 
       </div>
-
     </div>
   </div>
+  <!-- </div> -->
+<!-- =====================   TicketDetailData   ===============================-->
+
+
+
+   <!---  =================     Processing Modal    =================  -->
+   <!-- <div  *ngIf="datanotupdate">
+   <div class="modal-dialog modal-notify modal-info" role="document"> 
+    <div class="modal-content">
+     <div class="modal-header">
+       <p class="heading lead">Ticket creation in progress</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="style.hide()">
+         <span aria-hidden="true" class="white-text">×</span>
+       </button>
+     </div>
+     <div class="modal-body">
+       <div class="text-center">
+         <i class="fa fa-refresh fa-4x mb-3 animated rotateIn infinite"></i>
+         <div class="card-text">
+           <strong>Processing...</strong>
+         </div>
+       </div>
+     </div>
+     <div class="modal-footer justify-content-center">
+       <a type="button" class="btn btn-outline-secondary" data-dismiss="modal" (click)="style.hide()" mdbWavesEffect>OK</a>
+     </div> 
+   </div>
+ </div>
+</div> -->
+  <!--  =================   Processing Modal  ================= -->
+
+
 </div>

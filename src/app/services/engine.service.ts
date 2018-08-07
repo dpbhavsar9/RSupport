@@ -13,8 +13,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class EngineService implements OnInit {
   headers: Headers;
   options: RequestOptions;
-  // baseUrl = 'http://192.168.0.250:8002/api/';
-  baseUrl = 'http://192.168.0.13:8002/api/';
+  //baseUrl = 'http://192.168.0.250:8002/api/';
+  baseUrl = 'http://rsapi.rlmc.in/api/';
   URL: string;
   users: any;
   excel: any;
@@ -169,9 +169,13 @@ export class EngineService implements OnInit {
     this.URL = this.baseUrl + url;
     return this.http.get(this.URL, this.options)
       .pipe(map((res: any) => res.json()));
-
   }
 
+  getAttachments(url: string): Observable<any> {
+    this.URL = this.baseUrl + url;
+    return this.http.get(this.URL, this.options)
+      .pipe(map((res: any) => res.json()));
+  }
   // getKanbanSource() {
   //   this.URL = this.baseUrl + 'Ticket/GetTicStatus';
   //   return this.http.get(this.URL, this.options).map(res => res.json());
@@ -208,6 +212,7 @@ export class EngineService implements OnInit {
   }
 
   uploadFile(fileItem: File, data, filename): Promise<any> {
+    //console.log("---------------UPload Files------------------")
     const header = new HttpHeaders();
     header.append('Access-Control-Allow-Origin', '*');
     header.append('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
@@ -215,12 +220,13 @@ export class EngineService implements OnInit {
     this.headers.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
     // this.headers.append('Content-Type', 'application/json; charset=utf-8');
    const url = this.baseUrl + 'Upload/UploadFiles';
-
+  
    const formData: FormData = new FormData();
    formData.append('TicketID', data.TicketID);
    formData.append('TicketNo', data.TicketNo);
    formData.append('TicketBacklogID', data.TicketBacklogID);
-    formData.append('FileName', filename);
+   formData.append('FileName', filename);
+   formData.append('By',this._cookieService.get('Oid'));
    formData.append('fileItem', fileItem, filename);
 
     return this.httpC.post(url, formData, { headers: header })
